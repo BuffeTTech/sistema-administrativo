@@ -33,8 +33,8 @@
             <div>
                 <x-input-label for="document_type" :value="__('Documento')" />
                 <select name="document_type" id="document_type">
-                    <option value="cpf">CPF</option>
-                    <option value="cnpj">CNPJ</option>
+                    <option value="CPF">CPF</option>
+                    <option value="CNPJ">CNPJ</option>
                 </select>
                 <x-input-error :messages="$errors->get('document_type')" class="mt-2" />
             </div>

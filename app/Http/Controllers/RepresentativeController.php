@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DTO\Mails\CreateRepresentativeMailDTO;
+use App\Enums\UserStatus;
 use App\Http\Requests\Representative\{StoreRepresentativeRequest, UpdateRepresentativeRequest};
 use App\Mail\RepresentativeCreated;
 use App\Models\Address;
@@ -40,7 +41,7 @@ class RepresentativeController extends Controller
      */
     public function index(Request $request)
     {
-        $representatives = $this->representative->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
+        $representatives = $this->representative->with('user')->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
 
         return view('representative.index', compact('representatives'));
     }
@@ -68,14 +69,15 @@ class RepresentativeController extends Controller
             'document'=>$request->document,
             'document_type'=>$request->document_type,
             'phone1'=>$phone->id,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($password),
+            'status'=>UserStatus::ACTIVE->name
         ]);
 
         $representative = $this->representative->create(['user_id'=>$user->id]);
 
         $dto = new CreateRepresentativeMailDTO(password: $password);
 
-        // Envio de emails funcionando!
+        // // Envio de emails funcionando!
 
         // Mail::to($request->email)->queue(new RepresentativeCreated($dto));
 
@@ -85,17 +87,23 @@ class RepresentativeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Representative $representative)
+    public function show(Request $request)
     {
-        //
+        $representative = $this->representative->with(['user.user_phone1','user.user_phone2', 'user.user_address'])->find($request->representative);
+        return view('representative.show', compact('representative'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Representative $representative)
+    public function edit(Request $request)
     {
-        //
+        $representative = $this->representative->with(['user.user_phone1','user.user_phone2', 'user.user_address'])->find($request->representative);
+        if(!$representative) {
+            return back()->with('errors', 'User not found');
+        }
+        
+        return view('representative.update', compact(['representative']));
     }
 
     /**
@@ -103,14 +111,44 @@ class RepresentativeController extends Controller
      */
     public function update(UpdateRepresentativeRequest $request, Representative $representative)
     {
-        //
+        $id = $request->representative;
+        $representative = $this->representative->with('user')->find($id)->first();
+        if(!$representative) {
+            return back()->with('errors', 'User not found');
+        }
+
+        $user = $this->user->find($representative->user->id);
+            
+        if($request->phone1) {
+            if($representative->user->phone1) {
+                $this->phone->find($representative->user->phone1)->update(['number'=>$request->phone1]);
+            } else {
+                $user->update(['phone1'=>$this->phone->create(['number'=>$request->phone1])->id]);
+            }
+        }
+        if($request->phone2) {
+            if($representative->user->phone2) {
+                $this->phone->find($representative->user->phone2)->update(['number'=>$request->phone2]);
+            } else {
+                $user->update(['phone2'=>$this->phone->create(['number'=>$request->phone2])->id]);
+            }
+        }
+
+        $user->update($request->except(['phone1', 'phone2']));
+
+        return back()->with('msg', "Update successfully");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Representative $representative)
+    public function destroy(Request $request)
     {
-        //
+        if (!$representative = $this->representative->with('user')->find($request->representative)->first()) {
+            return back()->with('errors', 'User not found');
+        }
+
+        $this->user->find($representative->user->id)->update(['status'=>UserStatus::UNACTIVE->name]);
+        return redirect()->route('representative.index');
     }
 }
