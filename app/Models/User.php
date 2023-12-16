@@ -22,6 +22,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'document',
+        'document_type',
+        'phone1',
+        'phone2',
+        'address',
+        'status'
     ];
 
     /**
@@ -43,4 +49,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function representative() {
+        return $this->hasOne(User::class);
+    }
+
+    public function user_phone1() {
+        return $this->belongsTo(Phone::class, 'phone1');
+    }
+    public function user_phone2() {
+        return $this->belongsTo(Phone::class, 'phone2');
+    }
+    public function user_address() {
+        return $this->belongsTo(Address::class);
+    }
 }
