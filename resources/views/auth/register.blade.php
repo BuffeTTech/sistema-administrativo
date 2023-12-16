@@ -16,6 +16,21 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <div>
+            <x-input-label for="document" :value="__('Documento')" />
+            <x-text-input id="document" class="block mt-1 w-full" type="text" name="document" :value="old('document')" required autofocus autocomplete="document" />
+            <x-input-error :messages="$errors->get('document')" class="mt-2" />
+        </div>
+
+        <div>
+            <x-input-label for="document_type" :value="__('Documento')" />
+            <select name="document_type" id="document_type">
+                <option value="CPF">CPF</option>
+                <option value="CNPJ">CNPJ</option>
+            </select>
+            <x-input-error :messages="$errors->get('document_type')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
