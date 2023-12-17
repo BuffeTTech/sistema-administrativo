@@ -28,11 +28,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        if ($this->shouldBlockIfUserUnactive($request->email)) {
-            throw ValidationException::withMessages([
-                'email' => ['User unactive!'],
-            ]);
-        }
+        // if ($this->shouldBlockIfUserUnactive($request->email)) {
+        //     throw ValidationException::withMessages([
+        //         'email' => ['User unactive!'],
+        //     ]);
+        // }
 
         $request->authenticate();
 
@@ -55,10 +55,10 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-    protected function shouldBlockIfUserUnactive(string $email): bool
-    {
-        $user = User::where('email', $email)->first();
-        return $user->status === UserStatus::UNACTIVE->name;
-    }
+    // protected function shouldBlockIfUserUnactive(string $email): bool
+    // {
+    //     $user = User::where('email', $email)->first();
+    //     return $user->status == UserStatus::UNACTIVE->name;
+    // }
 
 }

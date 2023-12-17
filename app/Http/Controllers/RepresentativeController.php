@@ -22,8 +22,7 @@ class RepresentativeController extends Controller
         protected Phone $phone,
         protected Address $address
     )
-    {
-    }
+    {}
 
     private function generatePassword($qtd) {
         $password = "";
@@ -41,6 +40,8 @@ class RepresentativeController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Representative::class);
+        
         $representatives = $this->representative->with('user')->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
 
         return view('representative.index', compact('representatives'));
@@ -51,6 +52,8 @@ class RepresentativeController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Representative::class);
+
         return view('representative.create');
     }
 
@@ -89,6 +92,8 @@ class RepresentativeController extends Controller
      */
     public function show(Request $request)
     {
+        $this->authorize('view', Representative::class);
+
         $representative = $this->representative->with(['user.user_phone1','user.user_phone2', 'user.user_address'])->find($request->representative);
         return view('representative.show', compact('representative'));
     }
@@ -98,6 +103,8 @@ class RepresentativeController extends Controller
      */
     public function edit(Request $request)
     {
+        $this->authorize('update', Representative::class);
+        
         $representative = $this->representative->with(['user.user_phone1','user.user_phone2', 'user.user_address'])->find($request->representative);
         if(!$representative) {
             return back()->with('errors', 'User not found');
@@ -144,6 +151,8 @@ class RepresentativeController extends Controller
      */
     public function destroy(Request $request)
     {
+        $this->authorize('delete', Representative::class);
+
         if (!$representative = $this->representative->with('user')->find($request->representative)->first()) {
             return back()->with('errors', 'User not found');
         }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Representative;
 
 use App\Enums\DocumentType;
+use App\Models\Representative;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -14,7 +15,7 @@ class UpdateRepresentativeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('update', Representative::class);
     }
 
     /**
