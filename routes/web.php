@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepresentativeController;
+use App\Http\Controllers\HandoutController; 
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,5 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('representative', RepresentativeController::class);
 });
 
+
+Route::resource('handout', HandoutController::class);
 
 require __DIR__.'/auth.php';
