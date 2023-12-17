@@ -15,7 +15,7 @@ class UpdateRepresentativeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', Representative::class);
+        return $this->user()->can('update', Representative::class);
     }
 
     /**
