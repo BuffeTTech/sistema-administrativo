@@ -15,6 +15,8 @@ class HandoutController extends Controller
     }
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Handout::class);
+
         $handouts = $this->handout->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
         
         return view('handout.index',compact('handouts'));
@@ -25,6 +27,8 @@ class HandoutController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Handout::class);
+
         return view('handout.create'); 
     }
 
@@ -49,6 +53,8 @@ class HandoutController extends Controller
      */
     public function show(Request $request)
     {
+        $this->authorize('view', Handout::class);
+
         $handout = $this->handout->find($request->handout); 
 
         return view('handout.show', compact('handout'));
@@ -59,6 +65,8 @@ class HandoutController extends Controller
      */
     public function edit(Request $request)
     {
+        $this->authorize('update', Handout::class);
+
         $handout = $this->handout->find($request->handout);
         if (!$handout){
             return back()->with('errors', 'Handout not found');
@@ -87,6 +95,8 @@ class HandoutController extends Controller
      */
     public function destroy(Handout $handout)
     {
+        $this->authorize('delete', Handout::class);
+
         if(!$handout){
             return back()->with('errors', 'Handout not found');
         }

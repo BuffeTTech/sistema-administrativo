@@ -13,15 +13,25 @@ class HandoutPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
+
+        return $user->can('list handout');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Handout $handout): bool
+    public function view(User $user): bool
     {
-        //
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
+
+        return $user->can('show handout');
     }
 
     /**
@@ -29,38 +39,35 @@ class HandoutPolicy
      */
     public function create(User $user): bool
     {
-        //
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
+        return $user->can('create handout');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Handout $handout): bool
+    public function update(User $user): bool
     {
-        //
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
+        return $user->can('update handout');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Handout $handout): bool
+    public function delete(User $user): bool
     {
-        //
-    }
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Handout $handout): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Handout $handout): bool
-    {
-        //
+        return $user->can('delete handout');
     }
 }
