@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Representative;
 
+use App\Enums\DocumentType;
+use App\Models\Representative;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRepresentativeRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class StoreRepresentativeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('create', Representative::class);
     }
 
     /**
@@ -22,7 +25,13 @@ class StoreRepresentativeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'document' => ['required', 'string'],
+            'document_type' => [
+                'required',
+                Rule::in(array_column(DocumentType::cases(), 'name'))
+            ],
         ];
     }
 }
