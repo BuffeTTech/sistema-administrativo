@@ -9,6 +9,7 @@ use App\Enums\UserStatus;
 use App\Models\Phone;
 use App\Models\Representative;
 use App\Models\User;
+use Database\Factories\HandoutFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -35,7 +36,7 @@ class DatabaseSeeder extends Seeder
         //     'status'=>UserStatus::ACTIVE->name
         // ]);
         // $administrative->assignRole('administrative');
-
+      
         // $phone = Phone::create(['number'=>'(19) 99999-9999']);
         // $representative = User::factory()->create([
         //     'name' => 'Guilherme',
@@ -52,5 +53,10 @@ class DatabaseSeeder extends Seeder
         // $representative_table = Representative::create(['user_id'=>$representative->id]);
 
         User::factory()->count(30)->create();
+      
+        // $handout = Handout::factory()->create([
+        //     'title' => 'Primeiro comunicado',
+        //     'body' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at metus luctus massa pretium facilisis. Aliquam in ultrices velit, id consequat risus. Nullam vitae tellus ultricies libero blandit rhoncus eu dictum est. Nunc non sem faucibus, molestie orci at, rutrum massa. Donec sed aliquet metus. Sed in laoreet diam, eget euismod dui. Suspendisse iaculis tempor semper.'
+        // ]);
     }
 }
