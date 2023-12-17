@@ -16,24 +16,25 @@ class PermissionSeeder extends Seeder
             Role::create(['name' => $role]);
         }
 
-        // // Permissions
-        // $permissionsWithRole = [
-        //     'permission' => [
-        //         'user',
-        //         'commercial'
-        //     ]
-        // ];
+        // Permissions
+        $permissionsWithRole = [
+            'list representative' => ['commercial'],
+            'show representative' => ['commercial'],
+            'create representative' => ['commercial'],
+            'update representative' => ['commercial'],
+            'delete representative' => ['commercial'],
+        ];
 
-        // foreach ($permissionsWithRole as $permission => $roles_permission) {
-        //     $createdPermission = Permission::create(['name' => $permission]);
+        foreach ($permissionsWithRole as $permission => $roles_permission) {
+            $createdPermission = Permission::create(['name' => $permission]);
 
-        //     foreach ($roles_permission as $roleName) {
-        //         $role = Role::findByName($roleName);
+            foreach ($roles_permission as $roleName) {
+                $role = Role::findByName($roleName);
         
-        //         if ($role) {
-        //             $role->givePermissionTo($createdPermission);
-        //         }
-        //     }
-        // }
+                if ($role) {
+                    $role->givePermissionTo($createdPermission);
+                }
+            }
+        }
     }
 }

@@ -29,7 +29,7 @@ return new class extends Migration
                 table: 'phones', indexName: 'users_phone2'
             );
             $table->foreignId('address')->nullable()->constrained(
-                table: 'address', indexName: 'users_address'
+                table: 'addresses', indexName: 'users_address'
             );
             $table->rememberToken();
             $table->timestamps();

@@ -33,6 +33,7 @@
                                 </tr>
                                 @else   
                                     @foreach($representatives->items() as $representative)
+                                    <tr>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $representative->id }}</td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                                             <a href="{{ route('representative.show', [$representative->id]) }}" class="font-bold text-blue-500 hover:underline">
@@ -44,14 +45,23 @@
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $representative->user->document }}</td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center"><x-status.user_status :status="$representative->user->status" /></td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
+                                            @can('show representative')
                                             <a href="{{ route('representative.show', $representative->id) }}" title="Visualizar '{{$representative->user->name}}'">👁️</a>
-                                            <a href="{{ route('representative.edit', $representative->id) }}" title="Editar '{{$representative->user->name}}'">✏️</a>
-                                            <form action="{{ route('representative.destroy', $representative->id) }}" method="post" class="inline">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" title="Deletar '{{ $representative->user->name }}'">❌</button>
-                                            </form>
+                                            @endcan
+                                            @if($representative->user->status !== \App\Enums\UserStatus::UNACTIVE->name)
+                                                @can('update representative')
+                                                    <a href="{{ route('representative.edit', $representative->id) }}" title="Editar '{{$representative->user->name}}'">✏️</a>
+                                                @endcan
+                                                @can('delete representative')
+                                                    <form action="{{ route('representative.destroy', $representative->id) }}" method="post" class="inline">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" title="Deletar '{{ $representative->user->name }}'">❌</button>
+                                                    </form>
+                                                @endcan
+                                            @endif
                                         </td>
+                                    </tr>
                                     @endforeach
                                 @endif
                             </tbody>
