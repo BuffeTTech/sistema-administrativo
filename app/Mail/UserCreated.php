@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\DTO\Mails\CreateRepresentativeMailDTO;
+use App\DTO\Mails\CreateUserMailDTO;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -11,7 +11,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
-class RepresentativeCreated extends Mailable
+class UserCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class RepresentativeCreated extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        protected CreateRepresentativeMailDTO $dto
+        protected CreateUserMailDTO $dto
     )
     {
         //
@@ -31,8 +31,8 @@ class RepresentativeCreated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('jeffrey@example.com', 'Jeffrey Way'),
-            subject: 'No Reply',
+            from: new Address('noreply@buffets.com', 'Buffet topzera'),
+            subject: 'Usuário Criado',
         );
     }
 
@@ -42,9 +42,10 @@ class RepresentativeCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.noreply.representative_created',
+            view: 'emails.noreply.user_created',
             with: [
-                'password'=>$this->dto->password
+                'password'=>$this->dto->password,
+                'user_type'=>$this->dto->user_type
             ]
         );
     }

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Representative;
+use App\Models\Commercial;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class RepresentativePolicy
+class CommercialPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,20 +18,20 @@ class RepresentativePolicy
             return false;
         }
 
-        return $user->can('list representative');
+        return $user->can('list commercial');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user): bool
+    public function view(User $user, Commercial $commercial): bool
     {
         // se usuario não estiver logado
         if ($user === null) {
             return false;
         }
 
-        return $user->can('show representative');
+        return $user->can('show commercial');
     }
 
     /**
@@ -44,32 +44,32 @@ class RepresentativePolicy
             return false;
         }
 
-        return $user->can('create representative');
+        return $user->can('create commercial');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user): bool
+    public function update(User $user, Commercial $commercial): bool
     {
         // se usuario não estiver logado
         if ($user === null) {
             return false;
         }
 
-        return $user->can('update representative');
+        return $user->can('update commercial');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user, Commercial $commercial): bool
     {
         // se usuario não estiver logado
         if ($user === null) {
             return false;
         } 
         
-        return $user->can('delete representative');
+        return $user->can('delete commercial');
     }
 }
