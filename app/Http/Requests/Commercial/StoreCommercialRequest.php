@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Http\Requests\Representative;
+namespace App\Http\Requests\Commercial;
 
 use App\Enums\DocumentType;
-use App\Models\Representative;
+use App\Models\Commercial;
 use App\Models\User;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use LaravelLegends\PtBrValidator\Rules\FormatoCpf;
+use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRepresentativeRequest extends FormRequest
+class StoreCommercialRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', Representative::class);
+        return $this->user()->can('create', Commercial::class);        
     }
 
     /**
@@ -40,6 +39,6 @@ class StoreRepresentativeRequest extends FormRequest
                 Rule::in(array_column(DocumentType::cases(), 'name'))
             ],
             'phone1' => ['required', 'string', 'celular_com_ddd']
-        ];
+        ];  //
     }
 }

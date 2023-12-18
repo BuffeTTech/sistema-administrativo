@@ -5,12 +5,16 @@ namespace Database\Factories;
 use App\Enums\DocumentType;
 use App\Enums\UserStatus;
 use App\Models\Address;
+use App\Models\Commercial;
 use App\Models\Phone;
 use App\Models\Representative;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+
+use Faker\Generator as Faker;
+use Faker\Provider\pt_BR\Person;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -29,12 +33,14 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $this->faker->addProvider(new Person($this->faker));
+
         return [
-            'name' => fake()->name(),
+            'name' => $this->faker->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'document' => Str::random(10),
+            'document' => $this->faker->cpf(),
             'document_type' => DocumentType::CPF->name,
             'status' => fake()->randomElement(array_column(UserStatus::cases(), 'name')),
             'remember_token' => Str::random(10),
@@ -71,6 +77,8 @@ class UserFactory extends Factory
 
             if($role_chosed == "representative") {
                 Representative::create(['user_id'=>$user->id]);                
+            } else if($role_chosed == "commercial") {
+                Commercial::create(['user_id'=>$user->id]);
             }
 
             $user->assignRole($role_chosed);

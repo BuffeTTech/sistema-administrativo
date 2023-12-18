@@ -53,6 +53,9 @@ class User extends Authenticatable
     public function representative() {
         return $this->hasOne(User::class);
     }
+    public function commercial() {
+        return $this->hasOne(User::class);
+    }
 
     public function user_phone1() {
         return $this->belongsTo(Phone::class, 'phone1');

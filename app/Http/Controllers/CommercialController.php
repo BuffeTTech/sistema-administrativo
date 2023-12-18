@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Mails\CreateUserMailDTO;
 use App\Enums\UserStatus;
-use App\Http\Requests\Representative\{StoreRepresentativeRequest, UpdateRepresentativeRequest};
+use App\Http\Requests\Commercial\StoreCommercialRequest;
+use App\Http\Requests\Commercial\UpdateCommercialRequest;
+use App\DTO\Mails\CreateUserMailDTO;
 use App\Mail\UserCreated;
 use App\Models\Address;
+use App\Models\Commercial;
 use App\Models\Phone;
-use App\Models\Representative;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
-class RepresentativeController extends Controller
+class CommercialController extends Controller
 {
     public function __construct(
         protected User $user,
-        protected Representative $representative,
+        protected Commercial $commercial,
         protected Phone $phone,
         protected Address $address
     )
@@ -40,11 +41,11 @@ class RepresentativeController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Representative::class);
+        $this->authorize('viewAny', Commercial::class);
         
-        $representatives = $this->representative->with('user')->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
+        $commercials = $this->commercial->with('user')->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
 
-        return view('representative.index', compact('representatives'));
+        return view('commercial.index', compact('commercials'));
     }
 
     /**
@@ -52,15 +53,15 @@ class RepresentativeController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Representative::class);
+        $this->authorize('create', Commercial::class);
 
-        return view('representative.create');
+        return view('commercial.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRepresentativeRequest $request)
+    public function store(StoreCommercialRequest $request)
     {
         $phone = $this->phone->create(['number'=>$request->phone1]);
 
@@ -75,11 +76,11 @@ class RepresentativeController extends Controller
             'password' => Hash::make($password),
             'status'=>UserStatus::ACTIVE->name
         ]);
-        $user->assignRole('representative');
+        $user->assignRole('commercial');
 
-        $representative = $this->representative->create(['user_id'=>$user->id]);
+        $this->commercial->create(['user_id'=>$user->id]);
 
-        $dto = new CreateUserMailDTO(password: $password, user_type: 'representante comercial');
+        $dto = new CreateUserMailDTO(password: $password, user_type: 'commercial');
 
         // // Envio de emails funcionando!
 
@@ -93,10 +94,10 @@ class RepresentativeController extends Controller
      */
     public function show(Request $request)
     {
-        $this->authorize('view', Representative::class);
+        $this->authorize('view', Commercial::class);
 
-        $representative = $this->representative->with(['user.user_phone1','user.user_phone2', 'user.user_address'])->find($request->representative);
-        return view('representative.show', compact('representative'));
+        $commercial = $this->commercial->with(['user.user_phone1','user.user_phone2', 'user.user_address'])->find($request->commercial);
+        return view('commercial.show', compact('commercial'));
     }
 
     /**
@@ -104,39 +105,39 @@ class RepresentativeController extends Controller
      */
     public function edit(Request $request)
     {
-        $this->authorize('update', Representative::class);
+        $this->authorize('update', Commercial::class);
         
-        $representative = $this->representative->with(['user.user_phone1','user.user_phone2', 'user.user_address'])->find($request->representative);
-        if(!$representative) {
+        $commercial = $this->commercial->with(['user.user_phone1','user.user_phone2', 'user.user_address'])->find($request->commercial);
+        if(!$commercial) {
             return back()->with('errors', 'User not found');
         }
         
-        return view('representative.update', compact(['representative']));
+        return view('commercial.update', compact(['commercial']));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRepresentativeRequest $request, Representative $representative)
+    public function update(UpdateCommercialRequest $request, Commercial $commercial)
     {
-        $id = $request->representative;
-        $representative = $this->representative->with('user')->find($id)->first();
-        if(!$representative) {
+        $id = $request->commercial;
+        $commercial = $this->commercial->with('user')->find($id)->first();
+        if(!$commercial) {
             return back()->with('errors', 'User not found');
         }
 
-        $user = $this->user->find($representative->user->id);
+        $user = $this->user->find($commercial->user->id);
             
         if($request->phone1) {
-            if($representative->user->phone1) {
-                $this->phone->find($representative->user->phone1)->update(['number'=>$request->phone1]);
+            if($commercial->user->phone1) {
+                $this->phone->find($commercial->user->phone1)->update(['number'=>$request->phone1]);
             } else {
                 $user->update(['phone1'=>$this->phone->create(['number'=>$request->phone1])->id]);
             }
         }
         if($request->phone2) {
-            if($representative->user->phone2) {
-                $this->phone->find($representative->user->phone2)->update(['number'=>$request->phone2]);
+            if($commercial->user->phone2) {
+                $this->phone->find($commercial->user->phone2)->update(['number'=>$request->phone2]);
             } else {
                 $user->update(['phone2'=>$this->phone->create(['number'=>$request->phone2])->id]);
             }
@@ -152,13 +153,13 @@ class RepresentativeController extends Controller
      */
     public function destroy(Request $request)
     {
-        $this->authorize('delete', Representative::class);
+        $this->authorize('delete', Commercial::class);
 
-        if (!$representative = $this->representative->with('user')->find($request->representative)->first()) {
+        if (!$commercial = $this->commercial->with('user')->find($request->commercial)->first()) {
             return back()->with('errors', 'User not found');
         }
 
-        $this->user->find($representative->user->id)->update(['status'=>UserStatus::UNACTIVE->name]);
-        return redirect()->route('representative.index');
+        $this->user->find($commercial->user->id)->update(['status'=>UserStatus::UNACTIVE->name]);
+        return redirect()->route('commercial.index');
     }
 }
