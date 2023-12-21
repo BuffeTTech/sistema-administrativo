@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\BuffetController;
 use App\Http\Controllers\CommercialController;
+use App\Http\Controllers\HandoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepresentativeController;
-use App\Http\Controllers\HandoutController; 
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,8 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     Route::resource('representative', RepresentativeController::class);
-    Route::resource('handout', HandoutController::class);
+    Route::resource('buffet', BuffetController::class);
     Route::resource('commercial', CommercialController::class);
+    Route::resource('handout', HandoutController::class);
 });
 
 
