@@ -61,12 +61,13 @@ class UserFactory extends Factory
             ]);
             $address = Address::create([
                 "zipcode"=>fake()->postcode(),
-                "adress"=>fake()->streetName(),
+                "street"=>fake()->streetName(),
                 "number"=>fake()->buildingNumber(),
                 "neighborhood"=>fake()->secondaryAddress(),
                 "state"=>fake()->state(),
                 "city"=>fake()->city(),
                 "country"=>fake()->country(),
+                "complement"=>""
             ]);
 
             $user->update([

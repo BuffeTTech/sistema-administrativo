@@ -15,7 +15,9 @@ return new class extends Migration
         Schema::create('buffets', function (Blueprint $table) {
             $table->id();
             $table->string('trading_name');
-            $table->string('document');
+            $table->string('email')->unique();
+            $table->string('document')->unique();
+            $table->srting('password');
             $table->foreignId('owner_id')->nullable()->constrained(
                 table: 'users', indexName: 'buffets_owner_id'     
             );
