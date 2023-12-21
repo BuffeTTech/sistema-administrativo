@@ -12,8 +12,7 @@ class HandoutController extends Controller
     public function __construct(
         protected Handout $handout,
     )
-    {
-    }
+    {}
     public function index(Request $request)
     {
         $this->authorize('viewAny', Handout::class);
