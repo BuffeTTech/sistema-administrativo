@@ -43,7 +43,7 @@
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center"><x-status.buffet_status :status="$buffet->status" /></td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                                             @can('show buffet')
-                                            <a href="{{ route('buffet.show', $buffet->id) }}" title="Visualizar '{{$buffet->traiding_name}}'">👁️</a>
+                                            <a href="{{ route('buffet.show', $buffet->id) }}" title="Visualizar '{{$buffet->trading_name}}'">👁️</a>
                                             @endcan
                                             @if($buffet->user->status !== \App\Enums\UserStatus::UNACTIVE->trading_name)
                                                 @can('update buffet')
