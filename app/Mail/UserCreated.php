@@ -8,10 +8,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-class UserCreated extends Mailable
+class UserCreated extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -21,9 +21,7 @@ class UserCreated extends Mailable
     public function __construct(
         protected CreateUserMailDTO $dto
     )
-    {
-        //
-    }
+    {}
 
     /**
      * Get the message envelope.
@@ -42,7 +40,7 @@ class UserCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.noreply.user_created',
+            markdown: 'mail.user-created',
             with: [
                 'password'=>$this->dto->password,
                 'user_type'=>$this->dto->user_type
