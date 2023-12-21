@@ -13,9 +13,10 @@ class Handout extends Model
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
 
-    protected $fillable = [
-        'title',
-        'body', 
-    ];
+    protected $guarded = [];
+
+    public function author() {
+        return $this->belongsTo(User::class, 'author_id');
+    }
 
 }
