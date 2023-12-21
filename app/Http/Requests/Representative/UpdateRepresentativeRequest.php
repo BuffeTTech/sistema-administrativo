@@ -25,14 +25,22 @@ class UpdateRepresentativeRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->id;
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
             'document' => ['required', 'string'],
+            'document' => [
+                'required',
+                'string',
+                'cpf_ou_cnpj',
+                ],
             'document_type' => [
                 'required',
                 Rule::in(array_column(DocumentType::cases(), 'name'))
             ],
+            'phone1' => ['required', 'string', 'celular_com_ddd'],
+            'phone2' => ['nullable', 'string', 'celular_com_ddd'],
         ];
     }
 }

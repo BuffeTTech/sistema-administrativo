@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Handout;
+use App\Models\Commercial;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class HandoutPolicy
+class CommercialPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,20 +18,20 @@ class HandoutPolicy
             return false;
         }
 
-        return $user->can('list handout');
+        return $user->can('list commercial');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user): bool
+    public function view(User $user, Commercial $commercial): bool
     {
         // se usuario não estiver logado
         if ($user === null) {
             return false;
         }
 
-        return $user->can('show handout');
+        return $user->can('show commercial');
     }
 
     /**
@@ -43,31 +43,33 @@ class HandoutPolicy
         if ($user === null) {
             return false;
         }
-        return $user->can('create handout');
+
+        return $user->can('create commercial');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user): bool
+    public function update(User $user, Commercial $commercial): bool
     {
         // se usuario não estiver logado
         if ($user === null) {
             return false;
         }
-        return $user->can('update handout');
+
+        return $user->can('update commercial');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user, Commercial $commercial): bool
     {
         // se usuario não estiver logado
         if ($user === null) {
             return false;
-        }
-
-        return $user->can('delete handout');
+        } 
+        
+        return $user->can('delete commercial');
     }
 }

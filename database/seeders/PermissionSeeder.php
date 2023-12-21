@@ -23,6 +23,11 @@ class PermissionSeeder extends Seeder
             'create representative' => ['commercial'],
             'update representative' => ['commercial'],
             'delete representative' => ['commercial'],
+            'list handout' => ['commercial', 'representative'],
+            'show handout' => ['commercial', 'representative'],
+            'create handout' => ['commercial'],
+            'update handout' => ['commercial'],
+            'delete handout' => ['commercial'],
         ];
 
         foreach ($permissionsWithRole as $permission => $roles_permission) {

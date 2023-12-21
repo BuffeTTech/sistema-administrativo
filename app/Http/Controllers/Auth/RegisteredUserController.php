@@ -36,7 +36,11 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'document' => ['required', 'string'],
+            'document' => [
+                'required',
+                'string',
+                'cpf_ou_cnpj'
+            ],
             'document_type' => [
                 'required',
                 Rule::in(array_column(DocumentType::cases(), 'name'))

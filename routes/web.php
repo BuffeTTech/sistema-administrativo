@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepresentativeController;
 use App\Http\Controllers\HandoutController; 
@@ -30,9 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     Route::resource('representative', RepresentativeController::class);
+    Route::resource('handout', HandoutController::class);
+    Route::resource('commercial', CommercialController::class);
 });
 
 
-Route::resource('handout', HandoutController::class);
 
 require __DIR__.'/auth.php';

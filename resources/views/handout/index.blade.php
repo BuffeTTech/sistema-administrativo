@@ -20,6 +20,7 @@
                                     <th class="w-20 p-3 text-sm font-semibold tracking-wide text-center">ID</th>
                                     <th class="p-3 text-sm font-semibold tracking-wide text-center">Título</th>
                                     <th class="p-3 text-sm font-semibold tracking-wide text-center">Corpo</th>
+                                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
@@ -28,23 +29,34 @@
                                     <td colspan="7" class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">Nenhum comunicado encontrado</td>
                                 </tr>
                                 @else   
+                                    @php
+                                        $limite_char = 60; // O número de caracteres que você deseja exibir
+                                    @endphp
                                     @foreach($handouts->items() as $handout)
-                                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $handout->id }}</td>
-                                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                                            <a href="{{ route('handout.show', [$handout->id]) }}" class="font-bold text-blue-500 hover:underline">
-                                                {{ $handout->title }}
-                                            </a>
-                                        </td>
-                                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $handout->body }}</td>
-                                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                                            <a href="{{ route('handout.show', $handout->id) }}" title="Visualizar '{{$handout->title}}'">👁️</a>
-                                            <a href="{{ route('handout.edit', $handout->id) }}" title="Editar '{{$handout->title}}'">✏️</a>
-                                            <form action="{{ route('handout.destroy', $handout->id) }}" method="post" class="inline">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" title="Deletar '{{ $handout->ttle }}'">❌</button>
-                                            </form>
-                                        </td>
+                                        <tr>
+                                            <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $handout->id }}</td>
+                                            <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
+                                                <a href="{{ route('handout.show', [$handout->id]) }}" class="font-bold text-blue-500 hover:underline">
+                                                    {{ $handout->title }}
+                                                </a>
+                                            </td>
+                                            <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-left">{!! mb_strimwidth($handout->body, 0, $limite_char, " ...") !!}</td>
+                                            <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
+                                                @can('show handout')
+                                                    <a href="{{ route('handout.show', $handout->id) }}" title="Visualizar '{{$handout->title}}'">👁️</a>
+                                                @endcan
+                                                @can('update handout')
+                                                    <a href="{{ route('handout.edit', $handout->id) }}" title="Editar '{{$handout->title}}'">✏️</a>
+                                                @endcan
+                                                @can('delete handout')
+                                                <form action="{{ route('handout.destroy', $handout->id) }}" method="post" class="inline">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" title="Deletar '{{ $handout->ttle }}'">❌</button>
+                                                </form>
+                                                @endcan
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 @endif
                             </tbody>

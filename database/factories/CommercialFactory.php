@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Handout>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Commercial>
  */
-class HandoutFactory extends Factory
+class CommercialFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class HandoutFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(),
-            'body' => fake()->text(),
+            //
         ];
     }
 }
