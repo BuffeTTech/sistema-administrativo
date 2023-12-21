@@ -77,7 +77,7 @@ class RepresentativeController extends Controller
         ]);
         $user->assignRole('representative');
 
-        $representative = $this->representative->create(['user_id'=>$user->id]);
+        $this->representative->create(['user_id'=>$user->id]);
 
         $dto = new CreateUserMailDTO(password: $password, user_type: 'representante comercial');
 
