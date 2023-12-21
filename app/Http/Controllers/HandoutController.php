@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\HandoutStatus;
 use App\Http\Requests\Handout\{StoreHandoutRequest, UpdateHandoutRequest};
 use App\Models\Handout;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request; 
 class HandoutController extends Controller
 {
@@ -17,7 +18,7 @@ class HandoutController extends Controller
     {
         $this->authorize('viewAny', Handout::class);
 
-        $handouts = $this->handout->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
+        $handouts = $this->handout->with('author')->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
         
         return view('handout.index',compact('handouts'));
     }
@@ -37,15 +38,20 @@ class HandoutController extends Controller
      */
     public function store(StoreHandoutRequest $request)
     {
-        $handout = $this->handout->create([
+        $send_in = $request->has('send_in') ? Carbon::parse($request->input('send_in')) : Carbon::now();
+
+        $data = [
             'title' => $request->title, 
             'body' => $request->body,
-            //'status' => HandoutStatus::ACTIVE->name
-        ]);
+            'send_in' => $send_in, 
+            'author_id' => auth()->user()->id, 
+            'status' => $send_in->greaterThanOrEqualTo(Carbon::now()->subSeconds(5)) ? HandoutStatus::ACTIVE->name : HandoutStatus::PENDENT->name
+        ];
+        $this->handout->create($data);
 
         //return back()->with('success', 'Comunicado cadastrado com sucesso!');
 
-        return redirect()->route('handout.index', compact(['handout']));
+        return redirect()->route('handout.index');
     }
 
     /**
@@ -85,7 +91,17 @@ class HandoutController extends Controller
             return back()->with('errors', 'Handout not found');
         }
 
-        $handout->update($request->all());
+        
+        $send_in = $request->has('send_in') ? Carbon::parse($request->input('send_in')) : Carbon::now();
+
+        $data = [
+            'title' => $request->title, 
+            'body' => $request->body,
+            'send_in' => $send_in, 
+            'author_id' => auth()->user()->id, 
+            'status' => $send_in->greaterThanOrEqualTo(Carbon::now()->subSeconds(5)) ? HandoutStatus::ACTIVE->name : HandoutStatus::PENDENT->name
+        ];
+        $this->handout->create($data);
 
         return back()->with('msg', 'Updated successfully'); 
     }
@@ -101,7 +117,7 @@ class HandoutController extends Controller
             return back()->with('errors', 'Handout not found');
         }
 
-        //$this->find($handout->id)->update(['status'=>HandoutStatus::UNACTIVE->name]);
+        $this->find($handout->id)->update(['status'=>HandoutStatus::UNACTIVE->name]);
         return redirect()->route('handout.index'); 
     }
 }
