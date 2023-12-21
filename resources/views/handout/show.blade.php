@@ -13,6 +13,8 @@
                         <h1>Visualizar comunicado</h1>
                         <div><p><strong>Título do comunicado: </strong>{{$handout->title}}</p>
                             <p><strong>Corpo: </strong>{{$handout->body}}</p>
+                            <p><strong>Autor: </strong>{{ $handout->author->name }}</p>
+                            <p><strong>Status: </strong><x-status.handout_status :status="$handout->status" /></p>
                         </div>
                     </div>
                 </div>
