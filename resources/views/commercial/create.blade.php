@@ -1,7 +1,7 @@
 <x-app-layout>
-    <h1>Criar Representante</h1>
+    <h1>Criar Nosso Comercial</h1>
     <div>
-        <form method="POST" action="{{ route('representative.store') }}">
+        <form method="POST" action="{{ route('commercial.store') }}">
             @csrf
 
             @if (session('success'))
@@ -41,7 +41,7 @@
 
             <div>
                 <x-input-label for="phone1" :value="__('Telefone')" />
-                <x-text-input id="phone1" class="block mt-1 w-full" type="text" name="phone1" :value="old('phone1')" required autofocus autocomplete="phone1" onkeypress="mascaraMutuario(this,cpfCnpj)" />
+                <x-text-input id="phone1" class="block mt-1 w-full" type="text" name="phone1" :value="old('phone1')" required autofocus autocomplete="phone1" />
                 <x-input-error :messages="$errors->get('phone1')" class="mt-2" />
             </div>
 

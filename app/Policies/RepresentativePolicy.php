@@ -13,6 +13,11 @@ class RepresentativePolicy
      */
     public function viewAny(User $user): bool
     {
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
+
         return $user->can('list representative');
     }
 
@@ -21,6 +26,11 @@ class RepresentativePolicy
      */
     public function view(User $user): bool
     {
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
+
         return $user->can('show representative');
     }
 
@@ -29,6 +39,11 @@ class RepresentativePolicy
      */
     public function create(User $user): bool
     {
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
+
         return $user->can('create representative');
     }
 
@@ -37,6 +52,11 @@ class RepresentativePolicy
      */
     public function update(User $user): bool
     {
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        }
+
         return $user->can('update representative');
     }
 
@@ -45,6 +65,11 @@ class RepresentativePolicy
      */
     public function delete(User $user): bool
     {
+        // se usuario não estiver logado
+        if ($user === null) {
+            return false;
+        } 
+        
         return $user->can('delete representative');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Handout;
 
+use App\Models\Handout;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreHandoutRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreHandoutRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('create', Handout::class);
     }
 
     /**
