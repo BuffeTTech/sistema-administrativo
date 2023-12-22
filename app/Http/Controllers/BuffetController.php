@@ -44,7 +44,7 @@ class BuffetController extends Controller
      */
     public function index(Request $request)
     {
-        // $this->authorize('viewAny', Buffet::class);
+         $this->authorize('viewAny', Buffet::class);
         
         $buffets = $this->buffet->with('owner')->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
         return view('buffet.index', compact('buffets'));
@@ -55,7 +55,7 @@ class BuffetController extends Controller
      */
     public function create()
     {
-        // $this->authorize('create', Buffet::class);
+         $this->authorize('create', Buffet::class);
         
         return view('buffet.create');
     }
@@ -65,8 +65,8 @@ class BuffetController extends Controller
      */
     public function store(StoreBuffetRequest $request)
     {
-        // $this->authorize('create', Buffet::class);
-        $phone = $this->phone->create(['number'=>$request->phone1]);
+        
+        //$phone = $this->phone->create(['number'=>$request->phone1]); 
 
         $password = $this->generatePassword(3);
 
@@ -128,7 +128,7 @@ class BuffetController extends Controller
      */
     public function show(Request $request)
     {
-        //$this->authorize('view', Buffet::class);
+        $this->authorize('view', Buffet::class);
 
         $buffet = $this->buffet->with(['owner', 'owner.user_phone1','owner.user_phone2', 'owner.user_address', 'buffet_phone1', 'buffet_phone2', 'buffet_address'])->find($request->buffet);
         return view('buffet.show',compact('buffet'));
@@ -139,6 +139,7 @@ class BuffetController extends Controller
      */
     public function edit(Request $request)
     {
+        $this->authorize('update', Buffet::class);
         $buffet = $this->buffet->with(['buffet_phone1','buffet_phone2', 'buffet_address'])->find($request->buffet)->first();
         if(!$buffet) {
             return back()->with('errors', 'User not found');
@@ -200,7 +201,7 @@ class BuffetController extends Controller
      */
     public function destroy(Request $request)
     {
-        // $this->authorize('delete', Buffet::class);
+        $this->authorize('delete', Buffet::class);
         if (!$buffet = $this->buffet->with('owner')->find($request->buffet)) {
             return back()->with('errors', 'Bufffet not found');
         }
