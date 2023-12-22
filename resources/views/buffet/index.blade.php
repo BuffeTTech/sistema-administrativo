@@ -22,6 +22,7 @@
                                     <th class="p-3 text-sm font-semibold tracking-wide text-center">Documento</th>
                                     <th class="p-3 text-sm font-semibold tracking-wide text-center">Dono</th>
                                     <th class="p-3 text-sm font-semibold tracking-wide text-center">Telefone</th>
+                                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Status</th>
                                     <th class="p-3 text-sm font-semibold tracking-wide text-center">Ações</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,8 @@
                                             </a>
                                         </td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $buffet->document }}</td>
+                                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $buffet->owner->name }}</td>
+                                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $buffet->buffet_phone1->number }}</td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center"><x-status.buffet_status :status="$buffet->status" /></td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                                             @can('show buffet')
