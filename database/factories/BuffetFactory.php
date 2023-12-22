@@ -10,6 +10,7 @@ use App\Models\Phone;
 use App\Models\User;
 use Faker\Provider\pt_BR\Company;
 use Faker\Provider\pt_BR\Person;
+use Faker\Provider\pt_BR\PhoneNumber;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,7 +27,8 @@ class BuffetFactory extends Factory
     {
         $this->faker->addProvider(new Person($this->faker));
         $this->faker->addProvider(new Company($this->faker));
-        $users = User::pluck('id')->where('status', UserStatus::ACTIVE->name)->toArray();
+        $this->faker->addProvider(new PhoneNumber($this->faker));
+        $users = User::pluck('id')->toArray();
 
         return [
             'trading_name' => $this->faker->name(),
@@ -40,10 +42,10 @@ class BuffetFactory extends Factory
     {
         return $this->afterCreating(function(Buffet $buffet){
             $phone1 = Phone::create([
-                'number'=>fake()->phoneNumber()
+                'number'=>$this->faker->phoneNumber()
             ]);
             $phone2 = Phone::create([
-                'number'=>fake()->phoneNumber()
+                'number'=>$this->faker->phoneNumber()
             ]);
             $address = Address::create([
                 "zipcode"=>fake()->postcode(),
