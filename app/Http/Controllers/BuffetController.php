@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Mails\CreateUserMailDTO;
 use App\Enums\BuffetStatus;
 use App\Enums\UserStatus;
-use App\Http\Requests\StoreBuffetRequest;
-use App\Http\Requests\UpdateBuffetRequest;
+use App\Http\Requests\Buffet\StoreBuffetRequest;
+use App\Http\Requests\Buffet\UpdateBuffetRequest;
 use App\Mail\UserCreated;
 use App\Models\Address;
 use App\Models\Buffet;
@@ -74,11 +73,9 @@ class BuffetController extends Controller
 
         $this->buffet->create(['user_id'=>$user->id]);
 
-        $dto = new CreateUserMailDTO(password: $password, user_type: 'buffet');
-
         // // Envio de emails funcionando!
 
-        Mail::to($request->email)->queue(new UserCreated($dto));
+        Mail::to($request->email)->queue(new UserCreated(password: $password, user: $user));
 
     }
 

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('trading_name');
             $table->string('email')->unique();
             $table->string('document')->unique();
-            $table->srting('password');
             $table->foreignId('owner_id')->nullable()->constrained(
                 table: 'users', indexName: 'buffets_owner_id'     
             );

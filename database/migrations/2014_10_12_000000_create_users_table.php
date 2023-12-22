@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('document_type', array_column(DocumentType::cases(), 'name'));
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('status', array_column(UserStatus::cases(), 'name'));
-            $table->string('password');
+            $table->string('password')->nullable();     // como as senhas são geradas após a confirmação do e-mail, ela pode ser nula
             $table->foreignId('phone1')->nullable()->constrained(
                 table: 'phones', indexName: 'users_phone1'
             );

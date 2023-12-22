@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\DTO\Mails\CreateUserMailDTO;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,7 +19,8 @@ class UserCreated extends Mailable implements ShouldQueue
      * Create a new message instance.
      */
     public function __construct(
-        protected CreateUserMailDTO $dto
+        protected string $password,
+        protected User $user,
     )
     {}
 
@@ -42,8 +43,7 @@ class UserCreated extends Mailable implements ShouldQueue
         return new Content(
             markdown: 'mail.user-created',
             with: [
-                'password'=>$this->dto->password,
-                'user_type'=>$this->dto->user_type
+                'password'=>$this->password
             ]
         );
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Buffet;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBuffetRequest extends FormRequest
+class UpdateBuffetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

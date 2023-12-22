@@ -38,7 +38,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            // 'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'document' => $this->faker->cpf(),
             'document_type' => DocumentType::CPF->name,
@@ -73,7 +73,7 @@ class UserFactory extends Factory
             $user->update([
                 'phone1'=>$phone1->id,
                 'phone2'=>$phone2->id,
-                // 'address'=>$address->id,
+                'address'=>$address->id,
             ]);
 
             if($role_chosed == "representative") {

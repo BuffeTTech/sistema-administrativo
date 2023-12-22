@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\UserStatus;
 use App\Http\Requests\Commercial\StoreCommercialRequest;
 use App\Http\Requests\Commercial\UpdateCommercialRequest;
-use App\DTO\Mails\CreateUserMailDTO;
 use App\Mail\UserCreated;
 use App\Models\Address;
 use App\Models\Commercial;
@@ -14,6 +13,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+
+use function Laravel\Prompts\password;
 
 class CommercialController extends Controller
 {
@@ -80,11 +81,9 @@ class CommercialController extends Controller
 
         $this->commercial->create(['user_id'=>$user->id]);
 
-        $dto = new CreateUserMailDTO(password: $password, user_type: 'commercial');
-
         // // Envio de emails funcionando!
 
-        Mail::to($request->email)->queue(new UserCreated($dto));
+        Mail::to($request->email)->queue(new UserCreated(password: $password, user: $user));
 
         return back()->with('success', 'Usuário cadastrado com sucesso!');
     }

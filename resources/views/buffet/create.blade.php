@@ -147,14 +147,16 @@
 
         zipcode.addEventListener('focusout', async (e) => {
             try {
-                const onlyNumbers = /^[0-9]+$/;
-                const cepValid = /^[0-9]{8}$/;
+                // const onlyNumbers = /^[0-9]+$/;
+                // const cepValid = /^[0-9]{8}$/;
 
-                if(!onlyNumbers.test(zipcode.value) || !cepValid.test(zipcode.value)) {
-                    throw {cep_error: 'CEP inválido'}
-                }
+                // if(!onlyNumbers.test(e.target.value) || !cepValid.test(e.target.value)) {
+                //     console.log(onlyNumbers.test(e.target.value), cepValid.test(e.target.value))
+                //     throw {cep_error: 'CEP inválido'}
+                // }
+                const cep = e.target.value.replace(/\D/g, '');
 
-                const response = await fetch(`http://viacep.com.br/ws/${zipcode.value}/json/`)
+                const response = await fetch(`http://viacep.com.br/ws/${cep}/json/`)
 
                 const responseCep = await response.json()
 
@@ -174,6 +176,10 @@
             } catch(error) {
                 if(error?.cep_error) {
                     zipcode_error.innerHTML = error.cep_error
+                    street.value = ""
+                    neighborhood.value = ""
+                    state.value = ""
+                    city.value = ""
                 }
                 console.log(error)
             }
