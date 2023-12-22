@@ -45,7 +45,7 @@
                                             @can('show buffet')
                                             <a href="{{ route('buffet.show', $buffet->id) }}" title="Visualizar '{{$buffet->trading_name}}'">👁️</a>
                                             @endcan
-                                            @if($buffet->user->status !== \App\Enums\UserStatus::UNACTIVE->trading_name)
+                                            @if($buffet->status !== \App\Enums\BuffetStatus::UNACTIVE->name)
                                                 @can('update buffet')
                                                     <a href="{{ route('buffet.edit', $buffet->id) }}" title="Editar '{{$buffet->trading_name}}'">✏️</a>
                                                 @endcan

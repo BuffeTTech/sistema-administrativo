@@ -22,6 +22,6 @@ class Buffet extends Model
         return $this->belongsTo(Phone::class, 'phone2');
     }
     public function buffet_address() {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class, 'address');
     }
 }
