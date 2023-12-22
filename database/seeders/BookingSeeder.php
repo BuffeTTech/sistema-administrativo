@@ -2,17 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Buffet;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Booking;
 use Illuminate\Database\Seeder;
 
-class BuffetSeeder extends Seeder
+class BookingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Buffet::factory()->count(15)->create();
+        Booking::factory()->count(15)->create();
     }
 }

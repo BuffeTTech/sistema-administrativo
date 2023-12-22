@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Mails\CreateUserMailDTO;
 use App\Enums\UserStatus;
 use App\Http\Requests\Representative\{StoreRepresentativeRequest, UpdateRepresentativeRequest};
 use App\Mail\UserCreated;
@@ -10,6 +9,7 @@ use App\Models\Address;
 use App\Models\Phone;
 use App\Models\Representative;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -79,11 +79,11 @@ class RepresentativeController extends Controller
 
         $this->representative->create(['user_id'=>$user->id]);
 
-        $dto = new CreateUserMailDTO(password: $password, user_type: 'representante comercial');
+        event(new Registered($user));
 
         // // Envio de emails funcionando!
 
-        Mail::to($request->email)->queue(new UserCreated($dto));
+        Mail::to($request->email)->queue(new UserCreated(password: $password, user: $user));
 
         return back()->with('success', 'Usuário cadastrado com sucesso!');
     }
