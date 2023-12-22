@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-3xl font-bold mb-4">Cadastrar buffet</h1>
-                    <form method="POST" action="{{ route('commercial.store') }}">
+                    <form method="POST" action="{{ route('buffet.store') }}">
                         @csrf
 
                         @if (session('success'))
@@ -43,7 +43,7 @@
                             <x-input-error :messages="$errors->get('document')" class="mt-2"/>
                             <span class="text-sm text-red-600 dark:text-red-400 space-y-1" id="document-error"></span>
                         </div>
-
+                        
                         <div class="mt-2">
                             <x-input-label for="phone1" :value="__('Telefone 1*')" class="dark:text-slate-800"/>
                             <x-text-input placeholder="Insira o primeiro telefone do administrador" id="phone1" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone1" :value="old('phone1')" required autofocus autocomplete="phone1" />
@@ -57,6 +57,23 @@
                         </div>
                         <h2 class="text-xl font-semibold mb-3 mt-3">Dados do buffet</h2>
 
+                        <div class="mt-2">
+                            <x-input-label for="trading_name" :value="__('Nome comercial*')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Insira o nome comercial do buffet" id="trading_name" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="trading_name" :value="old('trading_name')" required autofocus autocomplete="trading_name" />
+                            <x-input-error :messages="$errors->get('trading_name')" class="mt-2" />
+                        </div>
+                        <div class="mt-2">
+                            <x-input-label for="email_buffet" :value="__('E-mail comercial*')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Insira o e-mail comercial do buffet" id="email_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="email_buffet" :value="old('email_buffet')" required autofocus autocomplete="email_buffet" />
+                            <x-input-error :messages="$errors->get('email_buffet')" class="mt-2" />
+                        </div>
+                        <div class="mt-2">
+                            <x-input-label for="document_buffet" :value="__('Documento do buffet*')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Insira o documento do buffet" id="document_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="document_buffet" :value="old('document_buffet')" required autofocus autocomplete="document_buffet" />
+                            <x-input-error :messages="$errors->get('document_buffet')" class="mt-2" />
+                            <span class="text-sm text-red-600 dark:text-red-400 space-y-1" id="document_buffet-error"></span>
+                            <x-input-helper>Insira o CNPJ</x-helper-input>
+                        </div>
                         <div class="mt-2">
                             <x-input-label for="zipcode" :value="__('CEP*')" class="dark:text-slate-800"/>
                             <x-text-input placeholder="Insira o CEP do buffet" id="zipcode" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="zipcode" :value="old('zipcode')" required autofocus autocomplete="zipcode" />
@@ -89,27 +106,22 @@
                             <x-input-error :messages="$errors->get('number')" class="mt-2" />
                         </div>
                         <div class="mt-2">
-                            <x-input-label for="complement" :value="__('Complemento*')" class="dark:text-slate-800"/>
-                            <x-text-input placeholder="Insira o complemento do endereço do buffet" id="complement" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="complement" :value="old('complement')" required autofocus autocomplete="complement" />
+                            <x-input-label for="complement" :value="__('Complemento')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Insira o complemento do endereço do buffet" id="complement" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="complement" :value="old('complement')" autofocus autocomplete="complement" />
                             <x-input-error :messages="$errors->get('complement')" class="mt-2" />
                         </div>
                         <input type="hidden" name="country" value="Brazil">
                         <div class="mt-2">
-                            <x-input-label for="phone1-buffet" :value="__('Telefone 1*')" class="dark:text-slate-800"/>
-                            <x-text-input placeholder="Primeiro telefone de contato do buffet" id="phone1-buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone1-buffet" :value="old('phone1-buffet')" required autofocus autocomplete="phone1-buffet" />
-                            <x-input-error :messages="$errors->get('phone1-buffet')" class="mt-2" />
+                            <x-input-label for="phone1_buffet" :value="__('Telefone 1*')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Primeiro telefone de contato do buffet" id="phone1_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone1_buffet" :value="old('phone1_buffet')" required autofocus autocomplete="phone1_buffet" />
+                            <x-input-error :messages="$errors->get('phone1_buffet')" class="mt-2" />
                         </div>
 
                         <div class="mt-2">
-                            <x-input-label for="phone2-buffet" :value="__('Telefone')" class="dark:text-slate-800"/>
-                            <x-text-input placeholder="Segundo telefone de contato do buffet" id="phone2-buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone2-buffet" :value="old('phone2-buffet')" autofocus autocomplete="phone2-buffet" />
-                            <x-input-error :messages="$errors->get('phone2-buffet')" class="mt-2" />
+                            <x-input-label for="phone2_buffet" :value="__('Telefone')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Segundo telefone de contato do buffet" id="phone2_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone2_buffet" :value="old('phone2_buffet')" autofocus autocomplete="phone2_buffet" />
+                            <x-input-error :messages="$errors->get('phone2_buffet')" class="mt-2" />
                         </div>
-                        {{-- <div>
-                            <x-input-label for="country" :value="__('country')" class="dark:text-slate-800"/>
-                            <x-text-input placeholder="" id="country" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="country" :value="old('country')" required autofocus autocomplete="country" readonly aria-readonly />
-                            <x-input-error :messages="$errors->get('country')" class="mt-2" />
-                        </div> --}}
 
 
                         <div class="flex items-center justify-end mt-4">
@@ -189,6 +201,7 @@
         const doc = document.querySelector("#document")
         const doc_type = document.querySelector("#document_type")
         const doc_error = document.querySelector("#document-error")
+        const doc_buffet_error = document.querySelector("#document_buffet-error")
 
         doc.addEventListener('input', (e)=>{
             if(doc_type.value === 'CPF') {
@@ -221,7 +234,20 @@
                 return;
             }
         })
-
+        document_buffet.addEventListener('input', (e)=>{
+            e.target.value = replaceCNPJ(e.target.value);
+            return;
+        })
+        document_buffet.addEventListener('focusout', (e)=>{
+            const cnpj_valid = validarCNPJ(e.target.value)
+            if(!cnpj_valid) {
+                doc_buffet_error.innerHTML = "Documento inválido"
+                return
+            }
+            doc_buffet_error.innerHTML = ""
+            return;
+        })
+        
         doc_type.addEventListener('change', (e)=>{
             doc.value = ""
         })
