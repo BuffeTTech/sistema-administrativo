@@ -40,7 +40,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => fake()->unique()->safeEmail(),
-            // 'email_verified_at' => now(),
+            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'document' => $this->faker->cpf(),
             'document_type' => DocumentType::CPF->name,

@@ -64,7 +64,7 @@
                         </div>
                         <div class="mt-2">
                             <x-input-label for="email_buffet" :value="__('E-mail comercial*')" class="dark:text-slate-800"/>
-                            <x-text-input placeholder="Insira o e-mail comercial do buffet" id="email_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="email_buffet" :value="old('email_buffet')" required autofocus autocomplete="email_buffet" />
+                            <x-text-input placeholder="Insira o e-mail comercial do buffet" id="email_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="email" name="email_buffet" :value="old('email_buffet')" required autofocus autocomplete="email_buffet" />
                             <x-input-error :messages="$errors->get('email_buffet')" class="mt-2" />
                         </div>
                         <div class="mt-2">
@@ -73,6 +73,12 @@
                             <x-input-error :messages="$errors->get('document_buffet')" class="mt-2" />
                             <span class="text-sm text-red-600 dark:text-red-400 space-y-1" id="document_buffet-error"></span>
                             <x-input-helper>Insira o CNPJ</x-helper-input>
+                        </div>
+                        <div class="mt-2">
+                            <x-input-label for="slug" :value="__('Slug*')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Insira o slug do buffet" id="slug" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="slug" :value="old('slug')" required autofocus autocomplete="slug" />
+                            <x-input-error :messages="$errors->get('slug')" class="mt-2" />
+                            <x-input-helper>Será o link de acesso do buffet, como por exemplo nossosistema.com/seu-buffet</x-helper-input>
                         </div>
                         <div class="mt-2">
                             <x-input-label for="zipcode" :value="__('CEP*')" class="dark:text-slate-800"/>
@@ -202,6 +208,24 @@
         const doc_type = document.querySelector("#document_type")
         const doc_error = document.querySelector("#document-error")
         const doc_buffet_error = document.querySelector("#document_buffet-error")
+        const document_buffet = document.querySelector("#document_buffet")
+        const form = document.querySelector("#form")
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault()
+
+            const owner_document_valid = validarCPF(doc.value)
+            const buffet_document_valid = validarCNPJ(document_buffet.value)
+            if(!document_valid) {
+                error("O documento do administrador é invalido")
+                return;
+            }
+            if(!buffet_document_valid) {
+                error("O documento do buffet é invalido")
+                return;
+            }
+
+            this.submit();
+        })
 
         doc.addEventListener('input', (e)=>{
             if(doc_type.value === 'CPF') {

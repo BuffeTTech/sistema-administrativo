@@ -7,9 +7,7 @@
     </div>
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
         <p>Obrigado por se cadastrar!</p>
-        <p>Para começar, acesse seu e-mail e clique no link para ativar sua conta.</p>
-        <p>Caso não tenha recebido clique no link abaixo para que possamos reenvia-lo.</p>
-        <p>Caso entre em outro navegador, acesse nosso site principal através <a href="{{route('login')}}" target="_blank" class="text-white">desse link</a> com a senha enviada no e-mail para poder confirmar a conta.</p>
+        <p>Para começar, acesse seu e-mail e clique no link para ativar sua conta. Caso não tenha recebido clique no botão abaixo para que possamos reenvia-lo.</p>
     </div>
 
     @if (session('status') == 'verification-link-sent')

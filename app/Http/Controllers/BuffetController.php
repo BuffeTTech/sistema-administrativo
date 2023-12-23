@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\BuffetStatus;
 use App\Enums\UserStatus;
+use App\Http\Requests\Buffet\StoreBuffetOnRegisterRequest;
 use App\Http\Requests\Buffet\StoreBuffetRequest;
 use App\Http\Requests\Buffet\UpdateBuffetRequest;
 use App\Mail\UserCreated;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Str;
 
 class BuffetController extends Controller
 {
@@ -27,17 +29,6 @@ class BuffetController extends Controller
         protected Address $address
     )
     {}
-
-    private function generatePassword($qtd) {
-        $password = "";
-        $caracteres_q_farao_parte = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        for ($x = 1; $x <= $qtd; $x++) 
-        {
-            $password .= substr( str_shuffle($caracteres_q_farao_parte), 0, 6 );     
-        } 
-
-        return $password;
-    }
 
     /**
      * Display a listing of the resource.
@@ -68,7 +59,7 @@ class BuffetController extends Controller
         
         //$phone = $this->phone->create(['number'=>$request->phone1]); 
 
-        $password = $this->generatePassword(3);
+        $password = Str::password(length: 12);
 
         $phone1 = $this->phone->create(['number'=>$request->phone1]);
         if($request->phone2) {
@@ -83,7 +74,8 @@ class BuffetController extends Controller
             'phone1'=>$phone1->id,
             'phone2' => $phone2->id ?? null,
             'password' => Hash::make($password),
-            'status'=>UserStatus::ACTIVE->name
+            'status'=>UserStatus::ACTIVE->name,
+            'email_verified_at' => now(),
         ]);
         $user->assignRole('buffet');
 
@@ -106,6 +98,7 @@ class BuffetController extends Controller
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
             'document'=>$request->document_buffet,
+            'slug' => $request->slug,
             'phone1'=>$phone1_buffet->id,
             'phone2'=>$phone2_buffet->id ?? null, 
             'address' =>$address->id, 
@@ -209,5 +202,39 @@ class BuffetController extends Controller
         $this->buffet->find($buffet->id)->update(['status'=>BuffetStatus::UNACTIVE->name]);
 
         return back()->with('msg', "Delete successfully");
+    }
+
+    public function create_on_register() {
+        return view('auth.buffet.create-buffet');
+    }
+    public function store_on_register(StoreBuffetOnRegisterRequest $request) {
+        $phone1_buffet = $this->phone->create(['number'=>$request->phone1_buffet]);
+        if($request->phone2_buffet) {
+            $phone2_buffet = $this->phone->create(['number'=>$request->phone2_buffet]);
+        }
+        $address = $this->address->create([
+            'zipcode' => $request->zipcode, 
+            'street' => $request->street, 
+            'number' => $request->number, 
+            'complement' => $request->complement ?? null, 
+            'neighborhood' =>$request->neighborhood, 
+            'state' => $request->state, 
+            'city' => $request->city, 
+            'country' => $request->country
+        ]);
+
+        $buffet = $this->buffet->create([
+            'trading_name' => $request->trading_name,
+            'email' => $request->email_buffet,
+            'document'=>$request->document_buffet,
+            'slug' => $request->slug,
+            'phone1'=>$phone1_buffet->id,
+            'phone2'=>$phone2_buffet->id ?? null, 
+            'address' =>$address->id, 
+            'owner_id' => auth()->user()->id,
+            'status'=>BuffetStatus::ACTIVE->name
+        ]);
+
+        dd($buffet, $address);
     }
 }

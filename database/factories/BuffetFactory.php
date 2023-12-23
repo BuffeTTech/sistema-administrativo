@@ -33,6 +33,7 @@ class BuffetFactory extends Factory
         return [
             'trading_name' => $this->faker->name(),
             'email' => fake()->unique()->safeEmail(),
+            'slug' => fake()->unique()->slug(2),
             'document' => $this->faker->cnpj(),
             'owner_id'=>fake()->randomElement($users),
             'status' => fake()->randomElement(array_column(BuffetStatus::cases(), 'name')),
