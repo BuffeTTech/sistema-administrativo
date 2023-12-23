@@ -5,7 +5,7 @@
         <p>2º Dados do buffet</p>
         <p>3º Escolha do plano</p>
     </div>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" id="form">
         @csrf
 
         <!-- Name -->
@@ -37,6 +37,30 @@
             <x-input-error :messages="$errors->get('phone1')" class="mt-2" />
         </div>
 
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Senha')" />
+
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            placeholder="Senha do administrador"
+                            name="password"
+                            required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Confirmação de senha')" />
+
+            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                            type="password"
+                            placeholder="Confirmação de senha"
+                            name="password_confirmation" required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
@@ -49,8 +73,38 @@
     </form>
     <script>
         const doc = document.querySelector("#document")
-        const doc_type = document.querySelector("#document_type")
         const doc_error = document.querySelector("#document-error")
+        const form = document.querySelector("#form")
+
+        // form.addEventListener('submit', async function (e) {
+        //     e.preventDefault()
+        //     const userConfirmed = await confirm(`Deseja agendar um aniversario no dia ${party_day.value} as ${party_time.options[party_time.selectedIndex].text}?`)
+
+        //     if (userConfirmed) {
+        //         this.submit();
+        //     } else {
+        //         error("Ocorreu um erro!")
+        //     }
+        // })
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault()
+
+            const document_valid = validarCPF(doc.value)
+            if(!document_valid) {
+                error("O documento é invalido")
+                return;
+            }
+
+            if(document.querySelector("#password").value !== document.querySelector("#password_confirmation").value) {
+                error("As senhas não são iguais")
+                return;
+            }
+
+            this.submit();
+        })
+
+
 
         doc.addEventListener('input', (e)=>{
             e.target.value = replaceCPF(e.target.value);
@@ -66,53 +120,5 @@
             doc_error.innerHTML = ""
             return;
         })
-
-        doc_type.addEventListener('change', (e)=>{
-            doc.value = ""
-        })
-
-        function replaceCPF(value) {
-            return value
-                .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
-                .replace(/(\d{3})(\d)/, '$1.$2') // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
-                .replace(/(\d{3})(\d)/, '$1.$2')
-                .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-                .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
-        }
-        function validarCPF(cpf) {
-            cpf = cpf.replace(/[^\d]/g, '');
-
-            if (cpf.length !== 11) {
-                return false;
-            }
-
-            if (/^(\d)\1+$/.test(cpf)) {
-                return false;
-            }
-
-            let soma = 0;
-            for (let i = 0; i < 9; i++) {
-                soma += parseInt(cpf.charAt(i)) * (10 - i);
-            }
-            let digito1 = 11 - (soma % 11);
-            digito1 = (digito1 >= 10) ? 0 : digito1;
-
-            if (parseInt(cpf.charAt(9)) !== digito1) {
-                return false;
-            }
-
-            soma = 0;
-            for (let i = 0; i < 10; i++) {
-                soma += parseInt(cpf.charAt(i)) * (11 - i);
-            }
-            let digito2 = 11 - (soma % 11);
-            digito2 = (digito2 >= 10) ? 0 : digito2;
-
-            if (parseInt(cpf.charAt(10)) !== digito2) {
-                return false;
-            }
-
-            return true;
-        }
     </script>
 </x-guest-layout>

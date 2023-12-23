@@ -34,13 +34,6 @@ class VerifyEmailController extends Controller
         }
         
         if ($request->user()->markEmailAsVerified()) {
-            $password = $this->generatePassword(3);
-    
-            $request->user()->password = Hash::make($password);
-            $request->user()->save(); // Salva as alterações
-    
-            Mail::to($request->user()->email)->queue(new UserCreated(password: $password, user: $request->user()));
-
             event(new Verified($request->user()));
         }
 

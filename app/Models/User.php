@@ -68,4 +68,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function user_address() {
         return $this->belongsTo(Address::class);
     }
+    public function buffets() {
+        return $this->hasMany(Buffet::class, 'owner_id');
+    }
+
+    public function isBuffet(){
+        return $this->hasRole('buffet');
+    }
 }
