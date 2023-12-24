@@ -54,7 +54,7 @@ class RepresentativeController extends Controller
     {
         $phone = $this->phone->create(['number'=>$request->phone1]);
 
-        $password = Str::password(length: 12);
+        $password = Str::password(length: 12, symbols: false);
 
         $user = $this->user->create([
             'name' => $request->name,
@@ -108,10 +108,10 @@ class RepresentativeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRepresentativeRequest $request, Representative $representative)
+    public function update(UpdateRepresentativeRequest $request)
     {
         $id = $request->representative;
-        $representative = $this->representative->with('user')->find($id)->first();
+        $representative = $this->representative->with('user')->find($id);
         if(!$representative) {
             return back()->with('errors', 'User not found');
         }
@@ -135,7 +135,7 @@ class RepresentativeController extends Controller
 
         $user->update($request->except(['phone1', 'phone2']));
 
-        return back()->with('msg', "Update successfully");
+        return back()->with('success', "Usuário atualizado com sucesso!");
     }
 
     /**
@@ -145,11 +145,12 @@ class RepresentativeController extends Controller
     {
         $this->authorize('delete', Representative::class);
 
-        if (!$representative = $this->representative->with('user')->find($request->representative)->first()) {
+        
+        if (!$representative = $this->representative->with('user')->find($request->representative)) {
             return back()->with('errors', 'User not found');
         }
 
         $this->user->find($representative->user->id)->update(['status'=>UserStatus::UNACTIVE->name]);
-        return redirect()->route('representative.index');
+        return redirect()->route('representative.index')->with('success', 'Usuário deletado com sucesso');
     }
 }

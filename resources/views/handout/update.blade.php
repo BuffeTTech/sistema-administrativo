@@ -1,6 +1,11 @@
 <x-app-layout>
     <div>
         <form method="POST" action="{{ route('handout.update', ['handout'=>$handout->id]) }}">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             @csrf
             @method('put')
 

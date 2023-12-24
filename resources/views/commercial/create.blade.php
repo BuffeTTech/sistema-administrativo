@@ -1,7 +1,7 @@
 <x-app-layout>
     <h1>Criar Nosso Comercial</h1>
     <div>
-        <form method="POST" action="{{ route('commercial.store') }}">
+        <form method="POST" action="{{ route('commercial.store') }}" id="form">
             @csrf
 
             @if (session('success'))
@@ -58,6 +58,34 @@
         const doc = document.querySelector("#document")
         const doc_type = document.querySelector("#document_type")
         const doc_error = document.querySelector("#document-error")
+        const form = document.querySelector("#form")
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault()
+            if(doc_type.value === 'CPF') {
+                const cpf_valid = validarCPF(doc.value)
+                if(!cpf_valid) {
+                    error('Documento inválido')
+                    return
+                }
+            }
+            if(doc_type.value === "CNPJ") {
+                const cnpj_valid = validarCNPJ(doc.value)
+                if(!cnpj_valid) {
+                    error('Documento inválido')
+                    return
+                }
+            }
+
+            const userConfirmed = await confirm(`Deseja cadastrar este representante?`)
+
+            if (userConfirmed) {
+                this.submit();
+            } else {
+                error("Ocorreu um erro!")
+                return;
+            }
+        })
 
         doc.addEventListener('input', (e)=>{
             if(doc_type.value === 'CPF') {
@@ -94,6 +122,5 @@
         doc_type.addEventListener('change', (e)=>{
             doc.value = ""
         })
-
     </script>
 </x-app-layout>

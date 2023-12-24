@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-3xl font-bold mb-4">Cadastrar buffet</h1>
-                    <form method="POST" action="{{ route('buffet.store') }}">
+                    <form method="POST" action="{{ route('buffet.store') }}" id="form">
                         @csrf
 
                         @if (session('success'))
@@ -215,7 +215,7 @@
 
             const owner_document_valid = validarCPF(doc.value)
             const buffet_document_valid = validarCNPJ(document_buffet.value)
-            if(!document_valid) {
+            if(!owner_document_valid) {
                 error("O documento do administrador é invalido")
                 return;
             }

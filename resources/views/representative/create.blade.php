@@ -1,7 +1,7 @@
 <x-app-layout>
     <h1>Criar Representante</h1>
     <div>
-        <form method="POST" action="{{ route('representative.store') }}">
+        <form method="POST" action="{{ route('representative.store') }}" id="form">
             @csrf
 
             @if (session('success'))
@@ -48,7 +48,7 @@
 
 
             <div class="flex items-center justify-end mt-4">
-                <x-primary-button class="ms-4">
+                <x-primary-button class="ms-4" id="button">
                     {{ __('Register') }}
                 </x-primary-button>
             </div>
@@ -59,6 +59,35 @@
         const doc = document.querySelector("#document")
         const doc_type = document.querySelector("#document_type")
         const doc_error = document.querySelector("#document-error")
+        const form = document.querySelector("#form")
+        //const button = document.querySelector("#button");
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault()
+            if(doc_type.value === 'CPF') {
+                const cpf_valid = validarCPF(doc.value)
+                if(!cpf_valid) {
+                    error('Documento inválido')
+                    return
+                }
+            }
+            if(doc_type.value === "CNPJ") {
+                const cnpj_valid = validarCNPJ(doc.value)
+                if(!cnpj_valid) {
+                    error('Documento inválido')
+                    return
+                }
+            }
+
+            const userConfirmed = await confirm(`Deseja cadastrar este representante?`)
+
+            if (userConfirmed) {
+                this.submit();
+            } else {
+                error("Ocorreu um erro!")
+                return;
+            }
+        })
 
         doc.addEventListener('input', (e)=>{
             if(doc_type.value === 'CPF') {
@@ -75,19 +104,23 @@
             if(doc_type.value === 'CPF') {
                 const cpf_valid = validarCPF(doc.value)
                 if(!cpf_valid) {
+                    //button.disabled = true;
                     doc_error.innerHTML = "Documento inválido"
                     return
                 }
                 doc_error.innerHTML = ""
+                //button.disabled = false;
                 return;
             }
             if(doc_type.value === "CNPJ") {
                 const cnpj_valid = validarCNPJ(doc.value)
                 if(!cnpj_valid) {
+                    //button.disabled = true;
                     doc_error.innerHTML = "Documento inválido"
                     return
                 }
                 doc_error.innerHTML = ""
+                //button.disabled = false;
                 return;
             }
         })

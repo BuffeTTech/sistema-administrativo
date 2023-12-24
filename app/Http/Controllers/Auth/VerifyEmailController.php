@@ -13,17 +13,6 @@ use Illuminate\Support\Facades\Mail;
 
 class VerifyEmailController extends Controller
 {
-    private function generatePassword($qtd) {
-        $password = "";
-        $caracteres_q_farao_parte = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        for ($x = 1; $x <= $qtd; $x++) 
-        {
-            $password .= substr( str_shuffle($caracteres_q_farao_parte), 0, 6 );     
-        } 
-
-        return $password;
-    }
-
     /**
      * Mark the authenticated user's email address as verified.
      */

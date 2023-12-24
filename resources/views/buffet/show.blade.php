@@ -10,6 +10,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="overflow-auto">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <h1>Visualizar comercial</h1>
                         <div><p><strong>Nome Fantasia: </strong>{{$buffet->trading_name}}</p>
                             <p><strong>Email: </strong>{{$buffet->email}}</p>
