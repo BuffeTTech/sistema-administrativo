@@ -55,7 +55,7 @@ class CommercialController extends Controller
     {
         $phone = $this->phone->create(['number'=>$request->phone1]);
 
-        $password = Str::password(length: 12);
+        $password = Str::password(length: 12, symbols: false);
 
         $user = $this->user->create([
             'name' => $request->name,
@@ -102,16 +102,16 @@ class CommercialController extends Controller
             return back()->with('errors', 'User not found');
         }
         
-        return view('commercial.update', compact(['commercial']));
+        return view('commercial.update', compact(['commercial']))->with('success', 'Usuário deletado com sucesso');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCommercialRequest $request, Commercial $commercial)
+    public function update(UpdateCommercialRequest $request)
     {
         $id = $request->commercial;
-        $commercial = $this->commercial->with('user')->find($id)->first();
+        $commercial = $this->commercial->with('user')->find($id);
         if(!$commercial) {
             return back()->with('errors', 'User not found');
         }
@@ -135,7 +135,7 @@ class CommercialController extends Controller
 
         $user->update($request->except(['phone1', 'phone2']));
 
-        return back()->with('msg', "Update successfully");
+        return back()->with('success', "Update successfully");
     }
 
     /**
@@ -145,11 +145,11 @@ class CommercialController extends Controller
     {
         $this->authorize('delete', Commercial::class);
 
-        if (!$commercial = $this->commercial->with('user')->find($request->commercial)->first()) {
+        if (!$commercial = $this->commercial->with('user')->find($request->commercial)) {
             return back()->with('errors', 'User not found');
         }
 
         $this->user->find($commercial->user->id)->update(['status'=>UserStatus::UNACTIVE->name]);
-        return redirect()->route('commercial.index');
+        return redirect()->route('commercial.index')->with('success', 'Usuário deletado com sucesso');
     }
 }

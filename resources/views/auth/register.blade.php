@@ -2,8 +2,8 @@
     <h1 class="text-3xl font-bold mb-4 dark:text-slate-100">Cadastrar buffet</h1>
     <div class="text-white">
         <p class="text-red-400">1º Dados do administrador</p>
-        <p>2º Dados do buffet</p>
-        <p>3º Escolha do plano</p>
+        <p class="text-slate-800 dark:text-slate-100">2º Dados do buffet</p>
+        <p class="text-slate-800 dark:text-slate-100">3º Escolha do plano</p>
     </div>
     <form method="POST" action="{{ route('register') }}" id="form">
         @csrf

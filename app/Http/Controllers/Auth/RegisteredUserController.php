@@ -41,7 +41,8 @@ class RegisteredUserController extends Controller
             'document' => [
                 'required',
                 'string',
-                'cpf_ou_cnpj'
+                'cpf_ou_cnpj',
+                'unique:users,document'
             ],
             // 'document_type' => [
             //     'required',

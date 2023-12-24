@@ -5,14 +5,14 @@
                 <div class="p-6 text-gray-900">
                     <h1 class="text-3xl font-bold mb-4">Atualizar buffet</h1>
                     <form method="POST" action="{{ route('buffet.update', ['buffet'=>$buffet->id]) }}">
-                        @csrf
-                        @method('put')
-
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
                         @endif
+                        @csrf
+                        @method('put')
+
                         <h2 class="text-xl font-semibold mb-3 mt-3">Dados do buffet</h2>
 
                         <div class="mt-2">

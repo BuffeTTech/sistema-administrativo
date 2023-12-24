@@ -13,6 +13,7 @@ use App\Models\Buffet;
 use App\Models\Commercial;
 use App\Models\Phone;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -186,7 +187,7 @@ class BuffetController extends Controller
 
         // $buffet->update($request->except(['phone1', 'phone2', 'address', 'id']));
 
-        return back()->with('msg', "Update successfully");
+        return back()->with('success', "Update successfully");
     }
 
     /**
@@ -198,10 +199,13 @@ class BuffetController extends Controller
         if (!$buffet = $this->buffet->with('owner')->find($request->buffet)) {
             return back()->with('errors', 'Bufffet not found');
         }
-        $this->user->find($buffet->owner_id)->update(['status'=>UserStatus::UNACTIVE->name]);
         $this->buffet->find($buffet->id)->update(['status'=>BuffetStatus::UNACTIVE->name]);
+        $owner_buffets = $this->buffet->where('owner_id', $buffet->owner_id)->get();
+        if(count($owner_buffets) == 1) {
+            $this->user->find($buffet->owner_id)->update(['status'=>UserStatus::UNACTIVE->name]);
+        }
 
-        return back()->with('msg', "Delete successfully");
+        return back()->with('success', 'Buffet deletado com sucesso');
     }
 
     public function create_on_register() {
@@ -223,7 +227,7 @@ class BuffetController extends Controller
             'country' => $request->country
         ]);
 
-        $buffet = $this->buffet->create([
+        $this->buffet->create([
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
             'document'=>$request->document_buffet,
@@ -235,6 +239,8 @@ class BuffetController extends Controller
             'status'=>BuffetStatus::ACTIVE->name
         ]);
 
-        dd($buffet, $address);
+        // por enquanto vai pra home, mas depois precisa implementar o redirect pra proxima etapa do formulario
+        return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Buffet cadastrado com sucesso');
+
     }
 }

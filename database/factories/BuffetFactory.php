@@ -28,8 +28,13 @@ class BuffetFactory extends Factory
         $this->faker->addProvider(new Person($this->faker));
         $this->faker->addProvider(new Company($this->faker));
         $this->faker->addProvider(new PhoneNumber($this->faker));
-        $users = User::pluck('id')->toArray();
+        // $users = User::where('status', UserStatus::ACTIVE->name)->where('')->pluck('id')->toArray();
 
+        $roleName = "representative";
+        $users = User::whereHas('roles', function ($query) use ($roleName) {
+            $query->where('name', $roleName);
+        })->where('status', UserStatus::ACTIVE->name)->pluck('id')->toArray();
+        
         return [
             'trading_name' => $this->faker->name(),
             'email' => fake()->unique()->safeEmail(),

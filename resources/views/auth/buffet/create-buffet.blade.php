@@ -1,9 +1,9 @@
 <x-guest-layout>
     <h1 class="text-3xl font-bold mb-4 dark:text-slate-100">Cadastrar buffet</h1>
     <div class="text-white">
-        <p>1º Dados do administrador</p>
+        <p class="text-slate-800 dark:text-slate-100">1º Dados do administrador</p>
         <p class="text-red-400">2º Dados do buffet</p>
-        <p>3º Escolha do plano</p>
+        <p class="text-slate-800 dark:text-slate-100">3º Escolha do plano</p>
     </div>
     <form method="POST" action="{{ route('auth.buffet.store') }}" id="form">
         @csrf
