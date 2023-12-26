@@ -16,13 +16,23 @@ class Buffet extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function buffet_phone1() {
+    public function buffet_phone1()
+    {
         return $this->belongsTo(Phone::class, 'phone1');
     }
-    public function buffet_phone2() {
+
+    public function buffet_phone2()
+    {
         return $this->belongsTo(Phone::class, 'phone2');
     }
-    public function buffet_address() {
+
+    public function buffet_address()
+    {
         return $this->belongsTo(Address::class, 'address');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'buffet_id');
     }
 }
