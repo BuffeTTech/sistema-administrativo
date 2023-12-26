@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\DocumentType;
 use App\Enums\UserStatus;
+use App\Models\Commercial;
 use App\Models\Phone;
 use App\Models\Representative;
 use App\Models\User;
@@ -17,7 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $administrative= User::factory()->create([
+        $administrative= User::create([
             'name' => 'Administrativo',
             'email' => 'administracao@buffets.com',
             'email_verified_at' => now(),
@@ -30,7 +31,7 @@ class UserSeeder extends Seeder
         $administrative->assignRole('administrative');
       
         $phone = Phone::create(['number'=>'(19) 99999-9999']);
-        $representative = User::factory()->create([
+        $representative = User::create([
             'name' => 'Guilherme',
             'email' => 'teste@teste.com',
             'email_verified_at' => now(),
@@ -43,7 +44,22 @@ class UserSeeder extends Seeder
         ]);
         $representative->assignRole('representative');
         $representative_table = Representative::create(['user_id'=>$representative->id]);
+        
+        $phone_commercial = Phone::create(['number'=>'(19) 99999-9999']);
+        $representative = User::create([
+            'name' => 'Guilherme',
+            'email' => 'comercial@teste.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$d1GtfTTungciG2JXfgIHyuUv61Z7aJU736cdXxvfvgxVpPXVjY99C', // password = 'teste123'
+            'remember_token' => Str::random(10),
+            'document_type'=>DocumentType::CNPJ->name,
+            'document'=>'16.900.860/0001-11',
+            'status'=>UserStatus::ACTIVE->name,
+            'phone1'=>$phone_commercial->id
+        ]);
+        $representative->assignRole('commercial');
+        $representative_table = Commercial::create(['user_id'=>$representative->id]);
 
-        User::factory()->count(30)->create();
+        User::factory()->count(70)->create();
     }
 }

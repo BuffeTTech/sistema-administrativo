@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 
 use Faker\Generator as Faker;
 use Faker\Provider\pt_BR\Person;
+use Faker\Provider\pt_BR\PhoneNumber;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -34,6 +35,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $this->faker->addProvider(new Person($this->faker));
+        $this->faker->addProvider(new PhoneNumber($this->faker));
 
         return [
             'name' => $this->faker->name(),
@@ -54,25 +56,26 @@ class UserFactory extends Factory
             $role_chosed = fake()->randomElement($roles);
 
             $phone1 = Phone::create([
-                'number'=>fake()->phoneNumber()
+                'number'=>$this->faker->phoneNumber()
             ]);
             $phone2 = Phone::create([
-                'number'=>fake()->phoneNumber()
+                'number'=>$this->faker->phoneNumber()
             ]);
             $address = Address::create([
                 "zipcode"=>fake()->postcode(),
-                "adress"=>fake()->streetName(),
+                "street"=>fake()->streetName(),
                 "number"=>fake()->buildingNumber(),
                 "neighborhood"=>fake()->secondaryAddress(),
                 "state"=>fake()->state(),
                 "city"=>fake()->city(),
                 "country"=>fake()->country(),
+                "complement"=>""
             ]);
 
             $user->update([
                 'phone1'=>$phone1->id,
                 'phone2'=>$phone2->id,
-                // 'address'=>$address->id,
+                'address'=>$address->id,
             ]);
 
             if($role_chosed == "representative") {

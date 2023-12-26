@@ -14,6 +14,11 @@
                             <h1 class="inline-flex items-center border border-transparent text-lg leading-4 font-semi-bold">Listagem dos nosso comercial</h1>
                             <h2><a href="{{ route('commercial.create') }}">Criar funcionário do nosso comercial</a></h2>
                         </div>
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <table class="w-full">
                             <thead class="bg-gray-50 border-b-2 border-gray-200">
                                 <tr>

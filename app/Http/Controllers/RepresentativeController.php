@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Mails\CreateUserMailDTO;
 use App\Enums\UserStatus;
 use App\Http\Requests\Representative\{StoreRepresentativeRequest, UpdateRepresentativeRequest};
 use App\Mail\UserCreated;
@@ -10,9 +9,11 @@ use App\Models\Address;
 use App\Models\Phone;
 use App\Models\Representative;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class RepresentativeController extends Controller
 {
@@ -23,17 +24,6 @@ class RepresentativeController extends Controller
         protected Address $address
     )
     {}
-
-    private function generatePassword($qtd) {
-        $password = "";
-        $caracteres_q_farao_parte = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        for ($x = 1; $x <= $qtd; $x++) 
-        {
-            $password .= substr( str_shuffle($caracteres_q_farao_parte), 0, 6 );     
-        } 
-
-        return $password;
-    }
 
     /**
      * Display a listing of the resource.
@@ -64,7 +54,7 @@ class RepresentativeController extends Controller
     {
         $phone = $this->phone->create(['number'=>$request->phone1]);
 
-        $password = $this->generatePassword(3);
+        $password = Str::password(length: 12, symbols: false);
 
         $user = $this->user->create([
             'name' => $request->name,
@@ -73,17 +63,18 @@ class RepresentativeController extends Controller
             'document_type'=>$request->document_type,
             'phone1'=>$phone->id,
             'password' => Hash::make($password),
-            'status'=>UserStatus::ACTIVE->name
+            'status'=>UserStatus::ACTIVE->name,
+            'email_verified_at' => now(),
         ]);
         $user->assignRole('representative');
 
         $this->representative->create(['user_id'=>$user->id]);
 
-        $dto = new CreateUserMailDTO(password: $password, user_type: 'representante comercial');
+        event(new Registered($user));
 
         // // Envio de emails funcionando!
 
-        Mail::to($request->email)->queue(new UserCreated($dto));
+        Mail::to($request->email)->queue(new UserCreated(password: $password, user: $user));
 
         return back()->with('success', 'Usuário cadastrado com sucesso!');
     }
@@ -117,10 +108,10 @@ class RepresentativeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRepresentativeRequest $request, Representative $representative)
+    public function update(UpdateRepresentativeRequest $request)
     {
         $id = $request->representative;
-        $representative = $this->representative->with('user')->find($id)->first();
+        $representative = $this->representative->with('user')->find($id);
         if(!$representative) {
             return back()->with('errors', 'User not found');
         }
@@ -144,7 +135,7 @@ class RepresentativeController extends Controller
 
         $user->update($request->except(['phone1', 'phone2']));
 
-        return back()->with('msg', "Update successfully");
+        return back()->with('success', "Usuário atualizado com sucesso!");
     }
 
     /**
@@ -154,11 +145,12 @@ class RepresentativeController extends Controller
     {
         $this->authorize('delete', Representative::class);
 
-        if (!$representative = $this->representative->with('user')->find($request->representative)->first()) {
+        
+        if (!$representative = $this->representative->with('user')->find($request->representative)) {
             return back()->with('errors', 'User not found');
         }
 
         $this->user->find($representative->user->id)->update(['status'=>UserStatus::UNACTIVE->name]);
-        return redirect()->route('representative.index');
+        return redirect()->route('representative.index')->with('success', 'Usuário deletado com sucesso');
     }
 }
