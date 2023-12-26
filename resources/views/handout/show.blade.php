@@ -10,6 +10,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="overflow-auto">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <h1>Visualizar comunicado</h1>
                         <div><p><strong>Título do comunicado: </strong>{{$handout->title}}</p>
                             <p><strong>Corpo: </strong>{{$handout->body}}</p>

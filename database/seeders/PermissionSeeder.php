@@ -28,6 +28,16 @@ class PermissionSeeder extends Seeder
             'create handout' => ['commercial'],
             'update handout' => ['commercial'],
             'delete handout' => ['commercial'],
+            'list commercial' => [],
+            'show commercial' => [],
+            'create commercial' => [],
+            'update commercial' => [],
+            'delete commercial' => [],
+            'list buffet' => ['representative'],
+            'show buffet' => ['representative'],
+            'create buffet' => ['representative'],
+            'update buffet' => ['representative'],
+            'delete buffet' => ['representative'],
         ];
 
         foreach ($permissionsWithRole as $permission => $roles_permission) {

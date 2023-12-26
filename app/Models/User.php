@@ -3,13 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -65,5 +67,12 @@ class User extends Authenticatable
     }
     public function user_address() {
         return $this->belongsTo(Address::class);
+    }
+    public function buffets() {
+        return $this->hasMany(Buffet::class, 'owner_id');
+    }
+
+    public function isBuffet(){
+        return $this->hasRole('buffet');
     }
 }

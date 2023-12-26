@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Enums\UserStatus;
 use App\Http\Requests\Commercial\StoreCommercialRequest;
 use App\Http\Requests\Commercial\UpdateCommercialRequest;
-use App\DTO\Mails\CreateUserMailDTO;
 use App\Mail\UserCreated;
 use App\Models\Address;
 use App\Models\Commercial;
 use App\Models\Phone;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
 class CommercialController extends Controller
@@ -24,17 +25,6 @@ class CommercialController extends Controller
         protected Address $address
     )
     {}
-
-    private function generatePassword($qtd) {
-        $password = "";
-        $caracteres_q_farao_parte = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        for ($x = 1; $x <= $qtd; $x++) 
-        {
-            $password .= substr( str_shuffle($caracteres_q_farao_parte), 0, 6 );     
-        } 
-
-        return $password;
-    }
 
     /**
      * Display a listing of the resource.
@@ -65,7 +55,7 @@ class CommercialController extends Controller
     {
         $phone = $this->phone->create(['number'=>$request->phone1]);
 
-        $password = $this->generatePassword(3);
+        $password = Str::password(length: 12, symbols: false);
 
         $user = $this->user->create([
             'name' => $request->name,
@@ -74,17 +64,17 @@ class CommercialController extends Controller
             'document_type'=>$request->document_type,
             'phone1'=>$phone->id,
             'password' => Hash::make($password),
-            'status'=>UserStatus::ACTIVE->name
+            'status'=>UserStatus::ACTIVE->name,
+            'email_verified_at' => now(),
         ]);
         $user->assignRole('commercial');
 
         $this->commercial->create(['user_id'=>$user->id]);
 
-        $dto = new CreateUserMailDTO(password: $password, user_type: 'commercial');
+        // Envio de emails funcionando!
+        event(new Registered($user));
 
-        // // Envio de emails funcionando!
-
-        Mail::to($request->email)->queue(new UserCreated($dto));
+        Mail::to($request->email)->queue(new UserCreated(password: $password, user: $user));
 
         return back()->with('success', 'Usuário cadastrado com sucesso!');
     }
@@ -112,16 +102,16 @@ class CommercialController extends Controller
             return back()->with('errors', 'User not found');
         }
         
-        return view('commercial.update', compact(['commercial']));
+        return view('commercial.update', compact(['commercial']))->with('success', 'Usuário deletado com sucesso');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCommercialRequest $request, Commercial $commercial)
+    public function update(UpdateCommercialRequest $request)
     {
         $id = $request->commercial;
-        $commercial = $this->commercial->with('user')->find($id)->first();
+        $commercial = $this->commercial->with('user')->find($id);
         if(!$commercial) {
             return back()->with('errors', 'User not found');
         }
@@ -145,7 +135,7 @@ class CommercialController extends Controller
 
         $user->update($request->except(['phone1', 'phone2']));
 
-        return back()->with('msg', "Update successfully");
+        return back()->with('success', "Update successfully");
     }
 
     /**
@@ -155,11 +145,11 @@ class CommercialController extends Controller
     {
         $this->authorize('delete', Commercial::class);
 
-        if (!$commercial = $this->commercial->with('user')->find($request->commercial)->first()) {
+        if (!$commercial = $this->commercial->with('user')->find($request->commercial)) {
             return back()->with('errors', 'User not found');
         }
 
         $this->user->find($commercial->user->id)->update(['status'=>UserStatus::UNACTIVE->name]);
-        return redirect()->route('commercial.index');
+        return redirect()->route('commercial.index')->with('success', 'Usuário deletado com sucesso');
     }
 }

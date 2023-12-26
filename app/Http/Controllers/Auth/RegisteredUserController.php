@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Enums\DocumentType;
 use App\Http\Controllers\Controller;
+use App\Mail\UserCreated;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -11,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -39,12 +41,14 @@ class RegisteredUserController extends Controller
             'document' => [
                 'required',
                 'string',
-                'cpf_ou_cnpj'
+                'cpf_ou_cnpj',
+                'unique:users,document'
             ],
-            'document_type' => [
-                'required',
-                Rule::in(array_column(DocumentType::cases(), 'name'))
-            ],
+            // 'document_type' => [
+            //     'required',
+            //     Rule::in(array_column(DocumentType::cases(), 'name'))
+            // ],
+            'phone1'=> ['required', 'string', 'celular_com_ddd']
         ]);
 
         $user = User::create([
@@ -52,8 +56,11 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'document'=>$request->document,
-            'document_type'=>$request->document_type,
+            'document_type'=>DocumentType::CPF->name,
         ]);
+        $user->assignRole('buffet');
+        
+        // Mail::to($request->email)->queue(new UserCreated(password: $password, user: $user));
 
         event(new Registered($user));
 

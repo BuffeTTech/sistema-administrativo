@@ -12,8 +12,7 @@ class HandoutController extends Controller
     public function __construct(
         protected Handout $handout,
     )
-    {
-    }
+    {}
     public function index(Request $request)
     {
         $this->authorize('viewAny', Handout::class);
@@ -51,7 +50,7 @@ class HandoutController extends Controller
 
         //return back()->with('success', 'Comunicado cadastrado com sucesso!');
 
-        return redirect()->route('handout.index');
+        return redirect()->route('handout.index')->with('success', 'Comunicado cadastrado com sucesso');
     }
 
     /**
@@ -103,7 +102,7 @@ class HandoutController extends Controller
         ];
         $this->handout->create($data);
 
-        return back()->with('msg', 'Updated successfully'); 
+        return back()->with('success', 'Updated successfully'); 
     }
 
     /**
@@ -117,7 +116,7 @@ class HandoutController extends Controller
             return back()->with('errors', 'Handout not found');
         }
 
-        $this->find($handout->id)->update(['status'=>HandoutStatus::UNACTIVE->name]);
-        return redirect()->route('handout.index'); 
+        $this->handout->find($handout->id)->update(['status'=>HandoutStatus::UNACTIVE->name]);
+        return redirect()->route('handout.index')->with('success', 'Comunicado deletado com sucesso'); 
     }
 }
