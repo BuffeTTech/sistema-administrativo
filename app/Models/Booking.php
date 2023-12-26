@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     use HasFactory;
+
+    public function buffet() {
+        return $this->belongsTo(Buffet::class);
+    }
+    public function schedule() {
+        return $this->belongsTo(BuffetSchedule::class, 'schedule_id');
+    }
 }
