@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('years_birthdayperson', 255);
             $table->integer('num_guests'); 
             $table->date('party_day', 0);
-            // $table->foreignId('open_schedule_id')->constrained(
-            //     table: 'open_schedules', indexName: 'bookings_open_schedule_id'
-            // );
+            $table->foreignId('schedule_id')->constrained(
+                table: 'buffet_schedules', indexName: 'bookings_schedule_id'
+            );
             $table->enum('status', array_column(BookingStatus::cases(), 'name'));
             $table->foreignId('buffet_id')->constrained(
                 table: 'buffets', indexName: 'booking_buffet_id'
