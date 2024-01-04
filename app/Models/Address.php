@@ -10,4 +10,8 @@ class Address extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function buffets(){
+        return $this->hasMany(Booking::class, 'address');
+    }
 }
