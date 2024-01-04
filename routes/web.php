@@ -24,11 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('landing_page');
 
-Route::get('/dashboard', [SiteController::class, 'dashboard'])->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
+// Route::get('/dashboard', [SiteController::class, 'dashboard'])->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'buffet.not_created'])->group(function(){
     Route::get('/auth/create-buffet', [BuffetController::class, 'create_on_register'])->name('auth.buffet.create');
