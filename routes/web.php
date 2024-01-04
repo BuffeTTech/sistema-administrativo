@@ -5,20 +5,9 @@ use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\HandoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepresentativeController;
-use App\Http\Controllers\SiteController;
-use App\Http\Middleware\EnsureCreateBuffet;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,6 +37,22 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
     Route::resource('buffet', BuffetController::class);
     Route::resource('commercial', CommercialController::class);
     Route::resource('handout', HandoutController::class);
+
+    // Subscription
+    Route::get('/subscription/roles', [SubscriptionController::class, 'roles'])->name('buffet.roles');
+    Route::get('/subscription/roles/create', [SubscriptionController::class, 'create_role'])->name('buffet.roles.create');
+    Route::post('/subscription/roles', [SubscriptionController::class, 'store_role'])->name('buffet.roles.store');
+    Route::get('/subscription/roles/{role}', [SubscriptionController::class, 'show_role'])->name('buffet.roles.show');
+    
+    Route::get('/subscription/permissions', [SubscriptionController::class, 'permissions'])->name('buffet.permissions');
+    Route::get('/subscription/permissions/{permission}', [SubscriptionController::class, 'show_permission'])->name('buffet.permissions.show');
+    // Route::put('/subscription/permissions/{permission}', [SubscriptionController::class, 'add_role'])->name('buffet.permissions.add_role');
+    
+    Route::get('/subscription', [SubscriptionController::class, 'subscriptions'])->name('buffet.subscription');
+    Route::get('/subscription/create', [SubscriptionController::class, 'create_subscription'])->name('buffet.subscription.create');
+    Route::post('/subscription', [SubscriptionController::class, 'store_subscription'])->name('buffet.subscription.store');
+    Route::get('/subscription/{role}', [SubscriptionController::class, 'show_subscription'])->name('buffet.subscription.show');
+    
 });
 
 
