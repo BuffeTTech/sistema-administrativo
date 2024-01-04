@@ -29,7 +29,7 @@ class BookingFactory extends Factory
         $this->faker->addProvider(new Person($this->faker));
         $buffet_schedules = BuffetSchedule::where('status', ScheduleStatus::ACTIVE->name)->pluck('id')->toArray();
         $buffet = Buffet::where('status', BuffetStatus::ACTIVE->name)->pluck('id')->toArray();
-           
+
         return [
             'name_birthdayperson' => $this->faker->name(),
             'years_birthdayperson' => fake()->numberBetween(1,100),
