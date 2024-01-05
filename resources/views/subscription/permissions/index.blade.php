@@ -25,7 +25,9 @@
                                 @else   
                                     @foreach($permissions->items() as $permission)
                                     <tr>
-                                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center font-bold">{{ $permission->name}}</td>
+                                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center font-bold">
+                                            <a href="{{ route('buffet.permissions.show', ['permission'=>$permission->name]) }}" class="underline font-bold" title='Visualizar cargos da permissão "{{ $permission->name }}"'>{{ $permission->name}}</a>
+                                        </td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                                             @foreach($permission->roles as $role)
                                                 <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-50">{{ $role->name }}</span>

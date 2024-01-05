@@ -22,10 +22,10 @@ class CreateRolesAfterSubscriptionListener
         $commercial = $this->role->create(['name' => $slug.'.commercial', 'system'=>SystemEnum::COMMERCIAL->name]);
         event(new CreateRoleEvent($commercial));
 
-        $operational = $this->role->create(['name' => $slug.'.commercial', 'system'=>SystemEnum::COMMERCIAL->name]);
+        $operational = $this->role->create(['name' => $slug.'.operational', 'system'=>SystemEnum::COMMERCIAL->name]);
         event(new CreateRoleEvent($operational));
 
-        $administrative = $this->role->create(['name' => $slug.'.commercial', 'system'=>SystemEnum::COMMERCIAL->name]);
+        $administrative = $this->role->create(['name' => $slug.'.administrative', 'system'=>SystemEnum::COMMERCIAL->name]);
         event(new CreateRoleEvent($administrative));
     }
 }

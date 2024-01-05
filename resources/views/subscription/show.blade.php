@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <div >
+                    <div>
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
@@ -21,6 +21,27 @@
                         <p><strong>Preço: </strong>{{$subscription->price}}</p>
                         <p><strong>Desconto atual: </strong>{{$subscription->discount}}%</p>
                         <p><strong>Status: </strong><x-status.subscription_status :status="$subscription->status" /></p>
+                        <br>
+                        <h1>Permissões</h1>
+                        <p>Até o momento, este pacote possui <strong>{{ count($roles) }}</strong> cargos</p>
+                        <br>                     
+                        <ul>
+                            @foreach($roles as $role)
+                                <li>
+                                    <p>Nome: <a href="{{ route('buffet.roles.show', $role->id) }}" title="Visualização da role {{ $role->name }}">{{ $role->name }}</a></p>
+                                    <p>Permissões:</p>
+                                    <ul>
+                                        @foreach($role->permissions as $permission)
+                                            <li>* <a href="{{ route('buffet.permission.show', $permission->id) }}" title="Visualização da permission {{ $permission->name }}">{{ $permission->name }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>       
+                                <hr>                     
+                            @endforeach
+                        </ul>
+                        <p>Até o momento, este pacote possui <strong>0</strong> permissões</p>
+                        {{-- @foreach()
+                        @endforeach --}}
                     </div>
                 </div>
             </div>
