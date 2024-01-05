@@ -1,7 +1,7 @@
 <x-app-layout>
     <h1>Criar Plano</h1>
     <div>
-        <form method="POST" action="{{ route('commercial.store') }}" id="form">
+        <form method="POST" action="{{ route('buffet.subscription.store') }}" id="form">
             @csrf
 
             @if (session('success'))
@@ -24,7 +24,7 @@
 
             <div class="mt-4">
                 <x-input-label for="description" :value="__('description')" />
-                <textarea name="" id="description" cols="30" rows="10" class="block mt-1 w-full" required>{{old('description')}}</textarea>
+                <textarea name="description" id="description" cols="30" rows="10" class="block mt-1 w-full" required>{{old('description')}}</textarea>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
 

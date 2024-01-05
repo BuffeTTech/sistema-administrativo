@@ -51,7 +51,9 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
     Route::get('/subscription', [SubscriptionController::class, 'subscriptions'])->name('buffet.subscription');
     Route::get('/subscription/create', [SubscriptionController::class, 'create_subscription'])->name('buffet.subscription.create');
     Route::post('/subscription', [SubscriptionController::class, 'store_subscription'])->name('buffet.subscription.store');
-    Route::get('/subscription/{role}', [SubscriptionController::class, 'show_subscription'])->name('buffet.subscription.show');
+    Route::get('/subscription/{subscription}', [SubscriptionController::class, 'show_subscription'])->name('buffet.subscription.show');
+    Route::get('/subscription/{subscription}/edit', [SubscriptionController::class, 'edit_subscription'])->name('buffet.subscription.edit');
+    Route::put('/subscription/{subscription}', [SubscriptionController::class, 'update_subscription'])->name('buffet.subscription.update');
     
 });
 
