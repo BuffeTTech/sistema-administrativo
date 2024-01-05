@@ -67,14 +67,15 @@ class SubscriptionController extends Controller
     }
 
     public function store_subscription(Request $request) {
-        $subscription_exists = $this->subscription->where('slug', $request->slug)->get()->first();
+        $slug = sanitize_string($request->slug);
+        $subscription_exists = $this->subscription->where('slug', $slug)->get()->first();
         if($subscription_exists) {
             return back()->withErrors('slug', "Subscription already exists.")->withInput();
         }
 
         $subscription = $this->subscription->create([
             'name'=>$request->name,
-            'slug'=>$request->slug,
+            'slug'=>$slug,
             'description'=>$request->description,
             'price'=>$request->price,
             'status'=>SubscriptionStatus::ACTIVE->name
@@ -95,7 +96,8 @@ class SubscriptionController extends Controller
         if(!$subscription) {
             return redirect()->route('subscription.index')->withErrors('not_found', 'Subscription not found');
         }
-        return view('subscription.show', ['subscription'=>$subscription]);
+        $roles = $this->role->where('name', 'LIKE', $subscription->slug . '%')->with('permissions')->get();
+        return view('subscription.show', ['subscription'=>$subscription, 'roles'=>$roles]);
     }
     public function edit_subscription() {
         dd('edit');
