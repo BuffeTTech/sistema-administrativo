@@ -31,7 +31,7 @@
                                                 <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-50">{{ $role->name }}</span>
                                             @endforeach
                                             <button class="p-1.5 text-xs font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg bg-opacity-50">+</button>
-                                            <form action="{{ route('buffet.add_role',$permission->id) }}" method="POST">
+                                            <form action="{{ route('buffet.permissions.add_role',$permission->id) }}" method="POST">
                                                 @csrf
                                                 @method('put')
                                                 

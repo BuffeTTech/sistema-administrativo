@@ -42,7 +42,7 @@ class SubscriptionController extends Controller
     }
 
     public function create_subscription() {
-        return view('subscription.roles.create');
+        return view('subscription.create');
     }
 
     public function store_subscription() {
