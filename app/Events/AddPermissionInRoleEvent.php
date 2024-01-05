@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Subscription;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,12 +9,16 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-class SubscriptionCreatedEvent
+class AddPermissionInRoleEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     public function __construct(
-        public Subscription $subscription
+        public Role $role,
+        public Permission $permission
     ) {}
 
     /**

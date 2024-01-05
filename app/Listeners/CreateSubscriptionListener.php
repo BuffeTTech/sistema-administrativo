@@ -6,15 +6,9 @@ use App\Events\SubscriptionCreatedEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class CreateSubscriptionListener
+class CreateCommercialSubscriptionListener
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct() {}
 
     /**
      * Handle the event.
@@ -22,6 +16,6 @@ class CreateSubscriptionListener
     public function handle(SubscriptionCreatedEvent $event): void
     {
         // Enviar os dados para o outro sistema
-        //$event->subscription contém os dados do plano criado
+        //$event->subscription contém os dados do plano criado  
     }
 }
