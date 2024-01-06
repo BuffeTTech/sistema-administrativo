@@ -19,6 +19,9 @@ class CreateRolesAfterSubscriptionListener
     {
         $slug = $event->subscription->slug;
 
+        $user = $this->role->create(['name' => $slug.'.user', 'system'=>SystemEnum::COMMERCIAL->name]);
+        event(new CreateRoleEvent($user));
+
         $commercial = $this->role->create(['name' => $slug.'.commercial', 'system'=>SystemEnum::COMMERCIAL->name]);
         event(new CreateRoleEvent($commercial));
 

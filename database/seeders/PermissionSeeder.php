@@ -65,14 +65,14 @@ class PermissionSeeder extends Seeder
 
         $this->execute(roles: $roles, permissions: $permissionsWithRole, system: SystemEnum::ADMINISTRATIVE);
 
-        $roles = [];
+        $roles = ['teste1', 'teste2', 'teste3'];
 
         // Permissions
         $permissionsWithRole = [
-            'create food' => [],
-            'create schedule' => [],
-            'cancel booking' => [],
-            'add guest' => [],
+            'create food' => ['teste1', 'teste3'],
+            'create schedule' => ['teste2'],
+            'cancel booking' => ['teste1', 'teste2'],
+            'add guest' => ['teste3', 'teste2'],
         ];
 
         $this->execute(roles: $roles, permissions: $permissionsWithRole, system: SystemEnum::COMMERCIAL);

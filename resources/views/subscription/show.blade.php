@@ -18,6 +18,7 @@
                         <h1>Visualizar plano</h1>
                         <p><strong>Nome do pacote: </strong>{{$subscription->name}}</p>
                         <p><strong>Slug: </strong>{{$subscription->slug}}</p>
+                        <p><strong>Descrição: </strong>{!! $subscription->description !!}</p>
                         <p><strong>Preço: </strong>{{$subscription->price}}</p>
                         <p><strong>Desconto atual: </strong>{{$subscription->discount}}%</p>
                         <p><strong>Status: </strong><x-status.subscription_status :status="$subscription->status" /></p>
@@ -28,13 +29,14 @@
                         <ul>
                             @foreach($roles as $role)
                                 <li>
-                                    <p>Nome: <a href="{{ route('buffet.roles.show', $role->id) }}" title="Visualização da role {{ $role->name }}">{{ $role->name }}</a></p>
+                                    <p>Nome: <a href="{{ route('buffet.roles.show', $role->name) }}" title="Visualização da role {{ $role->name }}" class="underline font-bold">{{ $role->name }}</a></p>
                                     <p>Permissões:</p>
                                     <ul>
                                         @foreach($role->permissions as $permission)
                                             <li>* <a href="{{ route('buffet.permission.show', $permission->id) }}" title="Visualização da permission {{ $permission->name }}">{{ $permission->name }}</a></li>
                                         @endforeach
                                     </ul>
+                                    <p>Caso queira adicionar alguma permissão para esta role, <a href="{{ route('buffet.roles.show', $role->name) }}" title="Adicionar permissões a role {{ $role->name }}" class="underline font-bold">clique aqui</a></p>
                                 </li>       
                                 <hr>                     
                             @endforeach
