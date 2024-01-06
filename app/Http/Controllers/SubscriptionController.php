@@ -22,8 +22,30 @@ class SubscriptionController extends Controller
     }
     // Permissions
     public function permissions(Request $request) {
-        $permissions = $this->permission->where('system', SystemEnum::COMMERCIAL->name)->with('roles')->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
-        // dd($permissions[0]->roles[0]);
+        // $permissions = $this->permission->where('system', SystemEnum::COMMERCIAL->name)->with('roles')->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
+        // // dd($permissions[0]->roles[0]);
+        // return view('subscription.permissions.index', ['permissions'=>$permissions]);
+        
+        $permissions = Permission::where('system', 'COMMERCIAL')->with('roles:id,name')
+        ->paginate($request->get('per_page', 5), ['*'], 'page', $request->get('page', 1));
+    
+        $allRoles = Role::where('system', 'COMMERCIAL')->get(['id', 'name']);
+        
+        $permissions->each(function ($permission) use ($allRoles) {
+            $linkedRoleIds = $permission->roles->pluck('id')->all();
+        
+            // Crie um array associativo com todas as roles, marcando a vinculação conforme necessário
+            $rolesWithLinkStatus = $allRoles->map(function ($role) use ($linkedRoleIds) {
+                return [
+                    'id' => $role->id,
+                    'name' => $role->name,
+                    'linked' => in_array($role->id, $linkedRoleIds),
+                ];
+            });
+        
+            $permission->setAttribute('all_roles', $rolesWithLinkStatus->toArray());
+        });
+    
         return view('subscription.permissions.index', ['permissions'=>$permissions]);
     }
     public function add_role() {
@@ -32,7 +54,7 @@ class SubscriptionController extends Controller
     public function show_permission(Request $request) {
         $permission = $this->permission->where('system', SystemEnum::COMMERCIAL->name)->where('name', $request->permission)->with('roles')->get()->first();
         if(!$permission) {
-            return redirect()->route('buffet.subscription')->withErrors('slug', "Permission not found.");
+            return redirect()->route('buffet.subscription')->withErrors(['slug'=> "Permission not found."]);
         }
 
         // dd($permission->permissions);
@@ -47,7 +69,7 @@ class SubscriptionController extends Controller
     public function show_role(Request $request) {
         $role = $this->role->where('system', SystemEnum::COMMERCIAL->name)->where('name', $request->role)->with('permissions')->get()->first();
         if(!$role) {
-            return redirect()->route('buffet.subscription')->withErrors('slug', "Role not found.");
+            return redirect()->route('buffet.subscription')->withErrors(['slug'=> "Role not found."]);
         }
 
         // dd($role->permissions);
@@ -70,7 +92,7 @@ class SubscriptionController extends Controller
         $slug = sanitize_string($request->slug);
         $subscription_exists = $this->subscription->where('slug', $slug)->get()->first();
         if($subscription_exists) {
-            return back()->withErrors('slug', "Subscription already exists.")->withInput();
+            return back()->withErrors(['slug'=>"Subscription already exists."])->withInput();
         }
 
         $subscription = $this->subscription->create([
@@ -94,7 +116,7 @@ class SubscriptionController extends Controller
     public function show_subscription(Request $request) {
         $subscription = $this->subscription->where('slug', $request->subscription)->get()->first();
         if(!$subscription) {
-            return redirect()->route('subscription.index')->withErrors('not_found', 'Subscription not found');
+            return redirect()->route('subscription.index')->withErrors(['not_found'=> 'Subscription not found']);
         }
         $roles = $this->role->where('name', 'LIKE', $subscription->slug . '%')->with('permissions')->get();
         return view('subscription.show', ['subscription'=>$subscription, 'roles'=>$roles]);

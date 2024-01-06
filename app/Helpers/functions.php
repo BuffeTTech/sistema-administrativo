@@ -19,23 +19,62 @@ if (!function_exists('sanitize_string')) {
 
         // Mapeia caracteres especiais para suas versões tradicionais
         $caracteresEspeciais = [
+            // A
             'á' => 'a',
             'ã' => 'a',
             'â' => 'a',
             'à' => 'a',
+            'Á' => 'a',
+            'Ã' => 'a',
+            'Â' => 'a',
+            'À' => 'a',
+            // E
+            'É' => 'e',
+            'Ê' => 'e',
+            'È' => 'e',
+            'è' => 'e',
             'é' => 'e',
             'ê' => 'e',
+            // I
             'í' => 'i',
+            'ì' => 'i',
+            'î' => 'i',
+            'Í' => 'i',
+            'Î' => 'i',
+            'Ì' => 'i',
+            // O
             'ó' => 'o',
             'ô' => 'o',
             'õ' => 'o',
+            'ò' => 'o',
+            'Ó' => 'o',
+            'Ô' => 'o',
+            'Õ' => 'o',
+            'Ò' => 'o',
+            // U
             'ú' => 'u',
             'ü' => 'u',
+            'ù' => 'u',
+            'û' => 'u',
+            'Ú' => 'u',
+            'Ù' => 'u',
+            'Û' => 'u',
+            'Ü' => 'u',
+
+            // Caracteres especiais
             'ç' => 'c',
-            // Adicione mais caracteres conforme necessário
+            "'" => '-',
+            '"' => '-',
+            '!' => '-',
+            '@' => '-',
+            '#' => '-',
+            '$' => '-',
+            '%' => '-',
+            '¨' => '-',
+            '*' => '-',
+            ';' => '-',
         ];
 
-        // Substitui caracteres especiais
         $string = strtr($string, $caracteresEspeciais);
 
         return $string;

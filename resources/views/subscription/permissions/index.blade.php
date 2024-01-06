@@ -1,4 +1,7 @@
 <x-app-layout>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Permissões') }}
@@ -23,16 +26,19 @@
                                     <td colspan="2" class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">Nenhuma reserva encontrada</td>
                                 </tr>
                                 @else   
-                                    @foreach($permissions->items() as $permission)
+                                    @foreach($permissions->items() as $key=>$permission)
                                     <tr>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center font-bold">
                                             <a href="{{ route('buffet.permissions.show', ['permission'=>$permission->name]) }}" class="underline font-bold" title='Visualizar cargos da permissão "{{ $permission->name }}"'>{{ $permission->name}}</a>
                                         </td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                                            @foreach($permission->roles as $role)
-                                                <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-50">{{ $role->name }}</span>
+                                            <select id="roles-{{$key}}" multiple class="roles">
+                                            @foreach($permission->all_roles as $role)
+                                                <option value="{{ $role['id'] }}" @if($role['linked']) selected @endif>{{ $role['name'] }}</option>
                                             @endforeach
-                                            <button class="p-1.5 text-xs font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg bg-opacity-50">+</button>
+                                            </select>
+                                            {{-- <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-50"></span> --}}
+                                            {{-- <button class="p-1.5 text-xs font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg bg-opacity-50">+</button> --}}
                                             <form action="{{ route('buffet.permissions.add_role',$permission->id) }}" method="POST">
                                                 @csrf
                                                 @method('put')
@@ -50,4 +56,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const selects = document.querySelectorAll('.roles')
+        selects.forEach(element => {
+            new MultiSelectTag(element.id, {
+                rounded: true,    // default true
+                shadow: true,      // default false
+                placeholder: 'Search',  // default Search...
+                tagColor: {
+                    textColor: '#327b2c',
+                    borderColor: '#92e681',
+                    bgColor: '#eaffe6',
+                },
+                onChange: function(values) {
+                    console.log(values)
+                }
+            })
+        });
+    </script>
 </x-app-layout>
