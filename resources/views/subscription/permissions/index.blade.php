@@ -32,18 +32,18 @@
                                             <a href="{{ route('buffet.permissions.show', ['permission'=>$permission->name]) }}" class="underline font-bold" title='Visualizar cargos da permissão "{{ $permission->name }}"'>{{ $permission->name}}</a>
                                         </td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                                            <select id="roles-{{$key}}" multiple class="roles">
-                                            @foreach($permission->all_roles as $role)
-                                                <option value="{{ $role['id'] }}" @if($role['linked']) selected @endif>{{ $role['name'] }}</option>
-                                            @endforeach
-                                            </select>
-                                            {{-- <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-50"></span> --}}
-                                            {{-- <button class="p-1.5 text-xs font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg bg-opacity-50">+</button> --}}
                                             <form action="{{ route('buffet.permissions.add_role',$permission->id) }}" method="POST">
                                                 @csrf
                                                 @method('put')
                                                 
+                                                <select id="roles-{{$permission->name}}" multiple class="roles" onchange="this.form.submit()">
+                                                    @foreach($permission->all_roles as $role)
+                                                    <option value="{{ $role['name'] }}" @if($role['linked']) selected @endif>{{ $role['name'] }}</option>
+                                                    @endforeach
+                                                </select>
                                             </form>
+                                            {{-- <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg bg-opacity-50"></span> --}}
+                                            {{-- <button class="p-1.5 text-xs font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg bg-opacity-50">+</button> --}}
                                         </td>
                                     </tr>
                                     @endforeach
@@ -58,6 +58,11 @@
     </div>
 
     <script>
+        const SITEURL = "{{ url('/') }}";
+        const csrf = document.querySelector('meta[name="csrf-token"]').content
+
+
+
         const selects = document.querySelectorAll('.roles')
         selects.forEach(element => {
             new MultiSelectTag(element.id, {
@@ -69,8 +74,18 @@
                     borderColor: '#92e681',
                     bgColor: '#eaffe6',
                 },
-                onChange: function(values) {
+                onChange: async function(values) {
                     console.log(values)
+                    const route = element.id.split('roles-')[1]
+                    const data = await axios.patch(SITEURL + '/subscription/permissions/'+route, {
+                        headers: {
+                            'X-CSRF-TOKEN': csrf
+                        },
+                        data: {
+                            roles: values
+                        }
+                    })
+                    console.log(data)
                 }
             })
         });
