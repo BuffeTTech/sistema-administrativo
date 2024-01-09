@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\SubscriptionStatus;
 use App\Enums\SystemEnum;
+use App\Events\AddPermissionInRoleEvent;
+use App\Events\RemovePermissionInRoleEvent;
 use App\Events\SubscriptionCreatedEvent;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
@@ -48,8 +50,39 @@ class SubscriptionController extends Controller
     
         return view('subscription.permissions.index', ['permissions'=>$permissions]);
     }
-    public function add_role() {
+    public function add_role(Request $request) {
+        $roles = $request->data['roles'];
+        if(!$roles) {
+            return abort(422);
+        }
+        $permission = $request->permission;
+        if(!$permission) {
+            return abort(422);
+        }
+        $permission_roles = $this->permission->where('name', $permission)->where('system', SystemEnum::COMMERCIAL->name)->with('roles')->get()->first();
+        $eloquent_roles = $permission_roles->roles->pluck('name')->toArray();
+        $roles_names = array_map(function ($item) {
+            return $item['label'];
+        }, $roles);
+        
+        $rolesEntered = array_values(array_diff($roles_names, $eloquent_roles));
 
+        if($rolesEntered) {
+            // só vem uma role, então trato como vetor unitario
+            $role = $this->role->where('name', $rolesEntered[0])->where('system', SystemEnum::COMMERCIAL->name)->first();
+            $role->givePermissionTo($permission);
+            event(new AddPermissionInRoleEvent(permission: $permission_roles, role: $role));
+        }
+
+        $rolesExited = array_values(array_diff($eloquent_roles, $roles_names));
+        if($rolesExited) {
+            $role = $this->role->where('name', $rolesExited[0])->where('system', SystemEnum::COMMERCIAL->name)->first();
+            $role->revokePermissionTo($permission);
+            event(new RemovePermissionInRoleEvent(permission: $permission_roles, role: $role));
+        }
+
+        return response()->json();
+        // return response()->json($request);
     }
     public function show_permission(Request $request) {
         $permission = $this->permission->where('system', SystemEnum::COMMERCIAL->name)->where('name', $request->permission)->with('roles')->get()->first();
@@ -92,7 +125,7 @@ class SubscriptionController extends Controller
         $slug = sanitize_string($request->slug);
         $subscription_exists = $this->subscription->where('slug', $slug)->get()->first();
         if($subscription_exists) {
-            return back()->withErrors(['slug'=>"Subscription already exists."])->withInput();
+            return redirect()->back()->withErrors(['slug'=>"Subscription already exists."])->withInput();
         }
 
         $subscription = $this->subscription->create([

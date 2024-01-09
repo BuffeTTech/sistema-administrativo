@@ -65,14 +65,51 @@ class PermissionSeeder extends Seeder
 
         $this->execute(roles: $roles, permissions: $permissionsWithRole, system: SystemEnum::ADMINISTRATIVE);
 
-        $roles = ['teste1', 'teste2', 'teste3'];
+        $roles = [];
 
         // Permissions
         $permissionsWithRole = [
-            'create food' => ['teste1', 'teste3'],
-            'create schedule' => ['teste2'],
-            'cancel booking' => ['teste1', 'teste2'],
-            'add guest' => ['teste3', 'teste2'],
+            'list food' => [],
+            'show food' => [],
+            'create food' => [],
+            'update food' => [],
+            'delete food' => [],
+
+            'list schedule' => [],
+            'show schedule' => [],
+            'create schedule' => [],
+            'update schedule' => [],
+            'delete schedule' => [],
+
+            'list guest' => [],
+            'show guest' => [],
+            'create guest' => [],
+            'update guest' => [],
+            'delete guest' => [],
+
+            'list decorations' => [],
+            'show decorations' => [],
+            'create decorations' => [],
+            'update decorations' => [],
+            'delete decorations' => [],
+
+            'list booking' => [],
+            'show booking' => [],
+            'create booking' => [],
+            'update booking' => [],
+            'delete booking' => [],
+
+            'list recommendation' => [],
+            'show recommendation' => [],
+            'create recommendation' => [],
+            'update recommendation' => [],
+            'delete recommendation' => [],
+
+            'list satisfaction survey' => [],
+            'show satisfaction survey' => [],
+            'create satisfaction survey' => [],
+            'update satisfaction survey' => [],
+            'delete satisfaction survey' => [],
         ];
 
         $this->execute(roles: $roles, permissions: $permissionsWithRole, system: SystemEnum::COMMERCIAL);
