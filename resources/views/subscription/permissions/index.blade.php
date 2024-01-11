@@ -77,7 +77,7 @@
                 onChange: async function(values) {
                     console.log(values)
                     const route = element.id.split('roles-')[1]
-                    const data = await axios.patch(SITEURL + '/subscription/permissions/'+route, {
+                    const data = await axios.patch(SITEURL + '/api/subscription/permissions/'+route, {
                         headers: {
                             'X-CSRF-TOKEN': csrf
                         },

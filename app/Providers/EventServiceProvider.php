@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Events\AddPermissionInRoleEvent;
 use App\Events\CreateRoleEvent;
+use App\Events\RemovePermissionInRoleEvent;
 use App\Events\SubscriptionCreatedEvent;
 use App\Listeners\AddPermissionInCommercialRoleListener;
 use App\Listeners\CreateCommercialRoleListener;
 use App\Listeners\CreateCommercialSubscriptionListener;
 use App\Listeners\CreateRolesAfterSubscriptionListener;
+use App\Listeners\RemovePermissionInCommercialRoleListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -37,6 +39,10 @@ class EventServiceProvider extends ServiceProvider
 
         AddPermissionInRoleEvent::class => [
             AddPermissionInCommercialRoleListener::class
+        ],
+
+        RemovePermissionInRoleEvent::class => [
+            RemovePermissionInCommercialRoleListener::class
         ]
     ];
 

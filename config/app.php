@@ -5,6 +5,8 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    'commercial_url' => env('COMMERCIAL_URL', 'http://comercial-laravel.test-1'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
