@@ -6,6 +6,7 @@ use App\Http\Controllers\HandoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepresentativeController;
 use App\Http\Controllers\SubscriptionController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 
@@ -46,7 +47,6 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
     
     Route::get('/subscription/permissions', [SubscriptionController::class, 'permissions'])->name('buffet.permissions');
     Route::get('/subscription/permissions/{permission}', [SubscriptionController::class, 'show_permission'])->name('buffet.permissions.show');
-    Route::patch('/subscription/permissions/{permission}', [SubscriptionController::class, 'add_role'])->name('buffet.permissions.add_role');
     
     Route::get('/subscription', [SubscriptionController::class, 'subscriptions'])->name('buffet.subscription');
     Route::get('/subscription/create', [SubscriptionController::class, 'create_subscription'])->name('buffet.subscription.create');
@@ -56,8 +56,6 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
     Route::put('/subscription/{subscription}', [SubscriptionController::class, 'update_subscription'])->name('buffet.subscription.update');
     
 });
-
-
 
 
 require __DIR__.'/auth.php';

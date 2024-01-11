@@ -51,15 +51,18 @@ class SubscriptionController extends Controller
         return view('subscription.permissions.index', ['permissions'=>$permissions]);
     }
     public function add_role(Request $request) {
-        $roles = $request->data['roles'];
-        if(!$roles) {
+        if(!isset($request->data['roles'])) {
             return abort(422);
         }
+        $roles = $request->data['roles'];
         $permission = $request->permission;
         if(!$permission) {
             return abort(422);
         }
         $permission_roles = $this->permission->where('name', $permission)->where('system', SystemEnum::COMMERCIAL->name)->with('roles')->get()->first();
+        if(!$permission_roles) {
+            return abort(404);
+        }
         $eloquent_roles = $permission_roles->roles->pluck('name')->toArray();
         $roles_names = array_map(function ($item) {
             return $item['label'];
