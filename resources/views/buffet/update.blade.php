@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-3xl font-bold mb-4">Atualizar buffet</h1>
-                    <form method="POST" action="{{ route('buffet.update', ['buffet'=>$buffet->id]) }}">
+                    <form method="POST" action="{{ route('buffet.update', ['buffet'=>$buffet->slug]) }}">
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
