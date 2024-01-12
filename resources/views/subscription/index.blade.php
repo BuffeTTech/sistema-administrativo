@@ -45,12 +45,12 @@
                                     <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center"><x-status.subscription_status :status="$subscription->status" /></td>
                                     <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                                         <a href="{{ route('buffet.subscription.show', $subscription->slug) }}" title="Visualizar '{{$subscription->name}}'">👁️</a>
-                                        <a href="{{ route('buffet.subscription.edit', $subscription->slug) }}" title="Editar '{{$subscription->name}}'">✏️</a>
+                                        {{-- <a href="{{ route('buffet.subscription.edit', $subscription->slug) }}" title="Editar '{{$subscription->name}}'">✏️</a>
                                         <form method="post" class="inline">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" title="Deletar '{{ $subscription->name }}'">❌</button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                     
                                 </tr>

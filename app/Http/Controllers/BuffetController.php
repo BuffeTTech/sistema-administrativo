@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BuffetStatus;
+use App\Enums\SubscriptionStatus;
 use App\Enums\UserStatus;
 use App\Http\Requests\Buffet\StoreBuffetOnRegisterRequest;
 use App\Http\Requests\Buffet\StoreBuffetRequest;
@@ -10,8 +11,10 @@ use App\Http\Requests\Buffet\UpdateBuffetRequest;
 use App\Mail\UserCreated;
 use App\Models\Address;
 use App\Models\Buffet;
+use App\Models\BuffetSubscription;
 use App\Models\Commercial;
 use App\Models\Phone;
+use App\Models\Subscription;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -27,7 +30,9 @@ class BuffetController extends Controller
         protected User $user,
         protected Commercial $commercial,
         protected Phone $phone,
-        protected Address $address
+        protected Address $address,
+        protected Subscription $subscription,
+        protected BuffetSubscription $buffet_subscription
     )
     {}
 
@@ -239,7 +244,38 @@ class BuffetController extends Controller
             'status'=>BuffetStatus::ACTIVE->name
         ]);
 
-        // por enquanto vai pra home, mas depois precisa implementar o redirect pra proxima etapa do formulario
+        return redirect()->route('auth.buffet.select_subscription');
+
+        // // por enquanto vai pra home, mas depois precisa implementar o redirect pra proxima etapa do formulario
+        // return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Buffet cadastrado com sucesso');
+
+    }
+
+    public function create_select_subscription_on_register() {
+        $subscriptions = $this->subscription->where('status', SubscriptionStatus::ACTIVE->name)->get();
+        $buffets = Buffet::where('owner_id', auth()->user()->id)->with('buffet_subscriptions')->get();
+        $buffets_without_subscription = $buffets->filter(function($buffet) {
+            return $buffet->buffet_subscriptions->count() === 0;
+        });
+        return view('auth.buffet.payment-details', ['subscriptions'=>$subscriptions, 'buffet'=>$buffets_without_subscription[0]]);
+    }
+    public function store_select_subscription_on_register(Request $request) {
+        $subscription = $this->subscription->where('slug', $request->subscription)->get()->first();
+        if(!$subscription) {
+            return redirect()->back()->withErrors(['subscription' => 'Subscription not found.'])->withInput();
+        }
+        $buffet = $this->buffet->where('slug', $request->buffet)->get()->first();
+        if(!$buffet) {
+            return redirect()->back()->withErrors(['buffet' => 'Buffet not found.'])->withInput();
+        }
+        if($buffet->owner_id !== auth()->user()->id) {
+            return redirect()->back()->withErrors(['buffet' => 'User is not the owner.'])->withInput();
+        }
+        $this->buffet_subscription->create([
+            'buffet_id'=>$buffet->id,
+            'subscription_id'=>$subscription->id
+        ]);
+        
         return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Buffet cadastrado com sucesso');
 
     }

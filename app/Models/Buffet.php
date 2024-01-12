@@ -36,4 +36,9 @@ class Buffet extends Model
     {
         return $this->hasMany(Booking::class, 'buffet_id');
     }
+
+    public function buffet_subscriptions()
+    {
+        return $this->hasMany(BuffetSubscription::class, 'buffet_id');
+    }
 }
