@@ -11,6 +11,7 @@ use App\Listeners\AddPermissionInCommercialRoleListener;
 use App\Listeners\CreateBuffetInCommercialListener;
 use App\Listeners\CreateCommercialRoleListener;
 use App\Listeners\CreateCommercialSubscriptionListener;
+use App\Listeners\CreateCommercialUserWhenBuffetIsCreatedListener;
 use App\Listeners\CreateRolesAfterSubscriptionListener;
 use App\Listeners\RemovePermissionInCommercialRoleListener;
 use Illuminate\Auth\Events\Registered;
@@ -47,7 +48,8 @@ class EventServiceProvider extends ServiceProvider
             RemovePermissionInCommercialRoleListener::class
         ],
         BuffetCreatedEvent::class => [
-            CreateBuffetInCommercialListener::class
+            CreateBuffetInCommercialListener::class,
+            CreateCommercialUserWhenBuffetIsCreatedListener::class
         ]
     ];
 

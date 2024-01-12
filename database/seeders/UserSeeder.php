@@ -18,6 +18,21 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $phone = Phone::create(['number'=>'(19) 99999-9999']);
+        $user = User::create([
+            'name' => 'Guilherme',
+            'email' => 'teste@teste.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$d1GtfTTungciG2JXfgIHyuUv61Z7aJU736cdXxvfvgxVpPXVjY99C', // password = 'teste123'
+            'remember_token' => Str::random(10),
+            'document_type'=>DocumentType::CPF->name,
+            'document'=>'619.775.410-03',
+            'status'=>UserStatus::ACTIVE->name,
+            'phone1'=>$phone->id
+        ]);
+        $user->assignRole('administrative');
+
+        $phone = Phone::create(['number'=>'(19) 99999-9999']);
         $administrative= User::create([
             'name' => 'Administrativo',
             'email' => 'administracao@buffets.com',
@@ -33,7 +48,7 @@ class UserSeeder extends Seeder
         $phone = Phone::create(['number'=>'(19) 99999-9999']);
         $representative = User::create([
             'name' => 'Guilherme',
-            'email' => 'teste@teste.com',
+            'email' => 'representante@buffets.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$d1GtfTTungciG2JXfgIHyuUv61Z7aJU736cdXxvfvgxVpPXVjY99C', // password = 'teste123'
             'remember_token' => Str::random(10),
@@ -48,7 +63,7 @@ class UserSeeder extends Seeder
         $phone_commercial = Phone::create(['number'=>'(19) 99999-9999']);
         $representative = User::create([
             'name' => 'Guilherme',
-            'email' => 'comercial@teste.com',
+            'email' => 'comercial@buffets.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$d1GtfTTungciG2JXfgIHyuUv61Z7aJU736cdXxvfvgxVpPXVjY99C', // password = 'teste123'
             'remember_token' => Str::random(10),
@@ -60,6 +75,6 @@ class UserSeeder extends Seeder
         $representative->assignRole('commercial');
         $representative_table = Commercial::create(['user_id'=>$representative->id]);
 
-        User::factory()->count(70)->create();
+        // User::factory()->count(70)->create();
     }
 }

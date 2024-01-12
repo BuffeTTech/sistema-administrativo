@@ -53,9 +53,11 @@ class BuffetController extends Controller
      */
     public function create()
     {
-         $this->authorize('create', Buffet::class);
+        $this->authorize('create', Buffet::class);
+
+        $subscriptions = $this->subscription->where('status', SubscriptionStatus::ACTIVE->name)->get();
         
-        return view('buffet.create');
+        return view('buffet.create', ['subscriptions'=>$subscriptions]);
     }
 
     /**
@@ -65,6 +67,10 @@ class BuffetController extends Controller
     {
         
         //$phone = $this->phone->create(['number'=>$request->phone1]); 
+        $subscription = $this->subscription->where('slug', $request->subscription)->get()->first();
+        if(!$subscription) {
+            return redirect()->back()->withErrors(['subscription' => 'Subscription not found.'])->withInput();
+        }
 
         $password = Str::password(length: 12);
 
@@ -101,11 +107,11 @@ class BuffetController extends Controller
             'country' => $request->country
         ]);
 
-        $this->buffet->create([
+        $buffet = $this->buffet->create([
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
             'document'=>$request->document_buffet,
-            'slug' => $request->slug,
+            'slug' => sanitize_string($request->slug),
             'phone1'=>$phone1_buffet->id,
             'phone2'=>$phone2_buffet->id ?? null, 
             'address' =>$address->id, 
@@ -113,7 +119,13 @@ class BuffetController extends Controller
             'status'=>BuffetStatus::ACTIVE->name
         ]);
 
+        $buffet_subscription = $this->buffet_subscription->create([
+            'buffet_id'=>$buffet->id,
+            'subscription_id'=>$subscription->id
+        ]);
+
         event(new Registered($user));
+        event(new BuffetCreatedEvent(buffet: $buffet, subscription: $subscription, buffet_subscription: $buffet_subscription));
 
         // // Envio de emails funcionando!
 
