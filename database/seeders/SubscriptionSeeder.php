@@ -48,6 +48,8 @@ class SubscriptionSeeder extends Seeder
         ]);
         event(new SubscriptionCreatedEvent($pacote_amor));
 
+        sleep(10);
+
         // Configurações das permissões
         $roles = [];
 
@@ -129,15 +131,19 @@ class SubscriptionSeeder extends Seeder
         foreach ($permissions as $group) {
             foreach($group['permissions'] as $permission => $roles_permission) {
                 $createdPermission = Permission::create(['name' => $permission, 'system'=>$system->name, 'group'=>$group['group']]);
-    
+                
+                $valid_roles = [];
                 foreach ($roles_permission as $roleName) {
                     $role = Role::findByName($roleName);
                     event(new AddPermissionInRoleEvent(role: $role, permission: $createdPermission));
             
                     if ($role) {
+                        array_push($valid_roles, $role);
                         $role->givePermissionTo($createdPermission);
                     }
                 }
+
+                // event(new AddPermissionInRoleEvent(role: $role, permission: $createdPermission));
             }
         }
     }

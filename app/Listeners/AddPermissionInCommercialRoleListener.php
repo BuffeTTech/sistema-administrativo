@@ -15,7 +15,7 @@ class AddPermissionInCommercialRoleListener
     public function handle(AddPermissionInRoleEvent $event): void
     {
         if($event->permission->system === SystemEnum::COMMERCIAL->name) {
-            $response = Http::acceptJson()->post(config('app.commercial_url').'/api/subscription/permission/'.$event->permission->name, ['role'=>$event->role, 'permission'=>$event->permission]);
+            $response = Http::acceptJson()->post(config('app.commercial_url').'/api/subscription/permission/'.$event->permission->name, ['roles'=>[$event->role], 'permission'=>$event->permission]);
             // if($response->ok()) {
             // }
             // // Enviar para o outro sistema

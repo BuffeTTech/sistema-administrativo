@@ -13,6 +13,6 @@ class BuffetScheduleSeeder extends Seeder
      */
     public function run(): void
     {
-        BuffetSchedule::factory()->count(15)->create();
+        // BuffetSchedule::factory()->count(15)->create();
     }
 }

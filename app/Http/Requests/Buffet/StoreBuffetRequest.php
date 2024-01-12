@@ -42,8 +42,8 @@ class StoreBuffetRequest extends FormRequest
             'number' =>['required', 'integer'],
             'complement'=>['max:255','string','nullable'],
             'phone1_buffet' =>['required','celular_com_ddd'],
-            'phone2_buffet' =>['string','nullable','celular_com_ddd']
-            
+            'phone2_buffet' =>['string','nullable','celular_com_ddd'],
+            'subscription' => ['string']
         ];
     }
 }
