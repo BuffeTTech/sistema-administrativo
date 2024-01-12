@@ -31,19 +31,16 @@
                                 <li>
                                     <p>Nome: <a href="{{ route('buffet.roles.show', $role->name) }}" title="Visualização da role {{ $role->name }}" class="underline font-bold">{{ $role->name }}</a></p>
                                     <p>Permissões:</p>
-                                    <ul>
+                                    <ul style="list-style: circle; list-style-position: inside">
                                         @foreach($role->permissions as $permission)
-                                            <li>* <a href="{{ route('buffet.permission.show', $permission->id) }}" title="Visualização da permission {{ $permission->name }}">{{ $permission->name }}</a></li>
+                                            <li><a href="{{ route('buffet.permissions.show', $permission->name) }}" title="Visualização da permission {{ $permission->name }}" class="underline">{{ $permission->name }}</a></li>
                                         @endforeach
                                     </ul>
-                                    <p>Caso queira adicionar alguma permissão para esta role, <a href="{{ route('buffet.roles.show', $role->name) }}" title="Adicionar permissões a role {{ $role->name }}" class="underline font-bold">clique aqui</a></p>
+                                    {{-- <p>Caso queira adicionar alguma permissão para esta role, <a href="{{ route('buffet.roles.show', $role->name) }}" title="Adicionar permissões a role {{ $role->name }}" class="underline font-bold">clique aqui</a></p> --}}
                                 </li>       
                                 <hr>                     
                             @endforeach
                         </ul>
-                        <p>Até o momento, este pacote possui <strong>0</strong> permissões</p>
-                        {{-- @foreach()
-                        @endforeach --}}
                     </div>
                 </div>
             </div>

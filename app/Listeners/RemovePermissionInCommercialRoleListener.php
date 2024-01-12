@@ -16,7 +16,6 @@ class RemovePermissionInCommercialRoleListener
     {
         if($event->permission->system === SystemEnum::COMMERCIAL->name) {
             $response = Http::acceptJson()->delete(config('app.commercial_url').'/api/subscription/permission/'.$event->permission->name, ['role'=>$event->role, 'permission'=>$event->permission]);
-            dd($response->body());
             // if($response->ok()) {
             // }
             // // Enviar para o outro sistema

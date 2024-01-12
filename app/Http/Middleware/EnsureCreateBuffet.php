@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Buffet;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,15 +21,23 @@ class EnsureCreateBuffet
             $user = Auth::user();
 
             if ($user->hasRole('buffet')) {
-                if ($user->buffets->count() > 0) {
-                    // adicionar o redirect para a página de planos
+                $count = $user->buffets->count();
+                if ($count > 0) {
+                    $buffets = Buffet::where('owner_id', $user->id)->with('buffet_subscriptions')->get();
+                    $buffets_without_subscription = $buffets->filter(function($buffet) {
+                        return $buffet->buffet_subscriptions->count() === 0;
+                    });
+
+                    if(count($buffets_without_subscription) !== 0) {
+                        return redirect()->route('auth.buffet.select_subscription');
+                    }
+
+                    // redirecionar para o outro sistema aqui
                     return $next($request);
-                } else {
-                    return redirect()->route('auth.buffet.store');
                 }
-            } else {
-                return $next($request);
+                return redirect()->route('auth.buffet.store');
             }
+            return $next($request);
         }
 
         return redirect()->route('login');

@@ -64,60 +64,9 @@ class PermissionSeeder extends Seeder
         ];
 
         $this->execute(roles: $roles, permissions: $permissionsWithRole, system: SystemEnum::ADMINISTRATIVE);
-
-        $roles = [];
-
-        // Permissions
-        $permissionsWithRole = [
-            'list food' => [],
-            'show food' => [],
-            'create food' => [],
-            'update food' => [],
-            'delete food' => [],
-
-            'list schedule' => [],
-            'show schedule' => [],
-            'create schedule' => [],
-            'update schedule' => [],
-            'delete schedule' => [],
-
-            'list guest' => [],
-            'show guest' => [],
-            'create guest' => [],
-            'update guest' => [],
-            'delete guest' => [],
-
-            'list decorations' => [],
-            'show decorations' => [],
-            'create decorations' => [],
-            'update decorations' => [],
-            'delete decorations' => [],
-
-            'list booking' => [],
-            'show booking' => [],
-            'create booking' => [],
-            'update booking' => [],
-            'delete booking' => [],
-
-            'list recommendation' => [],
-            'show recommendation' => [],
-            'create recommendation' => [],
-            'update recommendation' => [],
-            'delete recommendation' => [],
-
-            'list satisfaction survey' => [],
-            'show satisfaction survey' => [],
-            'create satisfaction survey' => [],
-            'update satisfaction survey' => [],
-            'delete satisfaction survey' => [],
-        ];
-
-        $this->execute(roles: $roles, permissions: $permissionsWithRole, system: SystemEnum::COMMERCIAL);
-
-        
     }
 
-    private function execute(array $roles, array $permissions, SystemEnum $system) {
+    public function execute(array $roles, array $permissions, SystemEnum $system) {
         foreach ($roles as $role) {
             Role::create(['name' => $role, 'system'=>$system->name]);
         }

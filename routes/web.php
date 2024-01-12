@@ -26,6 +26,9 @@ Route::middleware(['auth', 'verified', 'buffet.not_created'])->group(function(){
     
     Route::get('/auth/create-buffet/payment', [BuffetController::class, 'create_payment_on_register'])->name('auth.buffet.create_payment');
     Route::post('/auth/create-buffet/payment', [BuffetController::class, 'store_payment_on_register'])->name('auth.buffet.store_payment');
+
+    Route::get('/auth/create-buffet/subscription', [BuffetController::class, 'create_select_subscription_on_register'])->name('auth.buffet.select_subscription');
+    Route::post('/auth/create-buffet/subscription', [BuffetController::class, 'store_select_subscription_on_register'])->name('auth.buffet.select_subscription');
 });
 
 
