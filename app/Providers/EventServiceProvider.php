@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Events\AddPermissionInRoleEvent;
+use App\Events\BuffetCreatedEvent;
 use App\Events\CreateRoleEvent;
 use App\Events\RemovePermissionInRoleEvent;
 use App\Events\SubscriptionCreatedEvent;
 use App\Listeners\AddPermissionInCommercialRoleListener;
+use App\Listeners\CreateBuffetInCommercialListener;
 use App\Listeners\CreateCommercialRoleListener;
 use App\Listeners\CreateCommercialSubscriptionListener;
 use App\Listeners\CreateRolesAfterSubscriptionListener;
@@ -43,6 +45,9 @@ class EventServiceProvider extends ServiceProvider
 
         RemovePermissionInRoleEvent::class => [
             RemovePermissionInCommercialRoleListener::class
+        ],
+        BuffetCreatedEvent::class => [
+            CreateBuffetInCommercialListener::class
         ]
     ];
 

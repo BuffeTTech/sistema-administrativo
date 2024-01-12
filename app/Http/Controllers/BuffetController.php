@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\BuffetStatus;
 use App\Enums\SubscriptionStatus;
 use App\Enums\UserStatus;
+use App\Events\BuffetCreatedEvent;
 use App\Http\Requests\Buffet\StoreBuffetOnRegisterRequest;
 use App\Http\Requests\Buffet\StoreBuffetRequest;
 use App\Http\Requests\Buffet\UpdateBuffetRequest;
@@ -271,11 +272,13 @@ class BuffetController extends Controller
         if($buffet->owner_id !== auth()->user()->id) {
             return redirect()->back()->withErrors(['buffet' => 'User is not the owner.'])->withInput();
         }
-        $this->buffet_subscription->create([
+        $buffet_subscription = $this->buffet_subscription->create([
             'buffet_id'=>$buffet->id,
             'subscription_id'=>$subscription->id
         ]);
-        
+
+        event(new BuffetCreatedEvent(buffet: $buffet, subscription: $subscription, buffet_subscription: $buffet_subscription));
+
         return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Buffet cadastrado com sucesso');
 
     }
