@@ -142,7 +142,8 @@ class BuffetController extends Controller
     {
         $this->authorize('view', Buffet::class);
 
-        $buffet = $this->buffet->with(['owner', 'owner.user_phone1','owner.user_phone2', 'owner.user_address', 'buffet_phone1', 'buffet_phone2', 'buffet_address'])->find($request->buffet);
+        $buffet = $this->buffet->with(['owner', 'owner.user_phone1','owner.user_phone2', 'owner.user_address', 'buffet_phone1', 'buffet_phone2', 'buffet_address'])->where('slug', $request->buffet)->get()->first();
+        
         return view('buffet.show',compact('buffet'));
     }
 
@@ -152,7 +153,7 @@ class BuffetController extends Controller
     public function edit(Request $request)
     {
         $this->authorize('update', Buffet::class);
-        $buffet = $this->buffet->with(['buffet_phone1','buffet_phone2', 'buffet_address'])->find($request->buffet)->first();
+        $buffet = $this->buffet->with(['buffet_phone1','buffet_phone2', 'buffet_address'])->where('slug', $request->buffet)->get()->first();
         if(!$buffet) {
             return back()->with('errors', 'User not found');
         }
@@ -165,8 +166,7 @@ class BuffetController extends Controller
      */
     public function update(UpdateBuffetRequest $request)
     {
-        $id = $request->buffet;
-        $buffet = $this->buffet->with('owner')->find($id)->first();
+        $buffet = $this->buffet->with('owner')->where('slug', $request->buffet)->first();
         if(!$buffet) {
             return back()->with('errors', 'Buffet not found');
         }
