@@ -33,6 +33,12 @@
                             <x-input-helper>Insira o CNPJ</x-helper-input>
                         </div>
                         <div class="mt-2">
+                            <x-input-label for="slug" :value="__('Slug*')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Insira o slug do buffet" id="slug" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="slug" :value="$buffet->slug" required autofocus autocomplete="slug" />
+                            <x-input-error :messages="$errors->get('slug')" class="mt-2" />
+                            <x-input-helper>Será o link de acesso do buffet, como por exemplo nossosistema.com/seu-buffet</x-helper-input>
+                        </div>
+                        <div class="mt-2">
                             <x-input-label for="zipcode" :value="__('CEP*')" class="dark:text-slate-800"/>
                             <x-text-input placeholder="Insira o CEP do buffet" id="zipcode" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="zipcode" :value="$buffet->buffet_address->zipcode" required autofocus autocomplete="zipcode" />
                             <x-input-error :messages="$errors->get('zipcode')" class="mt-2" />

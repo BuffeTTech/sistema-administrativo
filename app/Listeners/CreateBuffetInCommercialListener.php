@@ -29,6 +29,7 @@ class CreateBuffetInCommercialListener
         try {
 
             $response = Http::acceptJson()->post(config('app.commercial_url').'/api/buffet', ['subscription'=>$event->subscription, 'buffet'=>$event->buffet, 'buffet_subscription'=>$event->buffet_subscription, 'user'=>$user]);
+            dd($response->body());
         } catch (\Illuminate\Http\Client\RequestException $e) {
             $response = $e->response;
 
