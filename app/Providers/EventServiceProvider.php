@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Events\AddPermissionInRoleEvent;
 use App\Events\BuffetCreatedEvent;
 use App\Events\CreateRoleEvent;
+use App\Events\DeleteBuffetEvent;
+use App\Events\EditBuffetEvent;
 use App\Events\RemovePermissionInRoleEvent;
 use App\Events\SubscriptionCreatedEvent;
 use App\Listeners\AddPermissionInCommercialRoleListener;
@@ -13,6 +15,8 @@ use App\Listeners\CreateCommercialRoleListener;
 use App\Listeners\CreateCommercialSubscriptionListener;
 use App\Listeners\CreateCommercialUserWhenBuffetIsCreatedListener;
 use App\Listeners\CreateRolesAfterSubscriptionListener;
+use App\Listeners\DeleteBuffetInComercialRoleListener;
+use App\Listeners\EditBuffetInCommercialListener;
 use App\Listeners\RemovePermissionInCommercialRoleListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -50,6 +54,12 @@ class EventServiceProvider extends ServiceProvider
         BuffetCreatedEvent::class => [
             CreateBuffetInCommercialListener::class,
             CreateCommercialUserWhenBuffetIsCreatedListener::class
+        ],
+        EditBuffetEvent::class => [
+            EditBuffetInCommercialListener::class
+        ],
+        DeleteBuffetEvent::class => [
+            DeleteBuffetInComercialRoleListener::class
         ]
     ];
 
