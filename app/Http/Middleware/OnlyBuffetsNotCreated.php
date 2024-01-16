@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Buffet;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -17,17 +18,22 @@ class OnlyBuffetsNotCreated
      */
     public function handle(Request $request, Closure $next): Response
     {
+        
         if (Auth::check()) {
             $user = Auth::user();
-
+            
             if ($user->hasRole('buffet')) {
-                if ($user->buffets->count() == 0) {
+                $buffets = Buffet::where('owner_id', $user->id)->with('buffet_subscriptions')->get();
+                $buffets_without_subscription = $buffets->filter(function($buffet) {
+                    return $buffet->buffet_subscriptions->count() === 0;
+                });
+                if ($user->buffets->count() === 0 || count($buffets_without_subscription) !== 0) {
                     return $next($request);
                 } else {
-                    return redirect()->intended(RouteServiceProvider::HOME);;
+                    return redirect()->intended(RouteServiceProvider::HOME);
                 }
             } else {
-                return redirect()->intended(RouteServiceProvider::HOME);;
+                return redirect()->intended(RouteServiceProvider::HOME);
             }
         }
 

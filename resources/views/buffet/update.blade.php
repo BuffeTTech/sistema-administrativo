@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-3xl font-bold mb-4">Atualizar buffet</h1>
-                    <form method="POST" action="{{ route('buffet.update', ['buffet'=>$buffet->id]) }}">
+                    <form method="POST" action="{{ route('buffet.update', ['buffet'=>$buffet->slug]) }}">
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
@@ -31,6 +31,12 @@
                             <x-input-error :messages="$errors->get('document_buffet')" class="mt-2" />
                             <span class="text-sm text-red-600 dark:text-red-400 space-y-1" id="document_buffet-error"></span>
                             <x-input-helper>Insira o CNPJ</x-helper-input>
+                        </div>
+                        <div class="mt-2">
+                            <x-input-label for="slug" :value="__('Slug*')" class="dark:text-slate-800"/>
+                            <x-text-input placeholder="Insira o slug do buffet" id="slug" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="slug" :value="$buffet->slug" required autofocus autocomplete="slug" />
+                            <x-input-error :messages="$errors->get('slug')" class="mt-2" />
+                            <x-input-helper>Será o link de acesso do buffet, como por exemplo nossosistema.com/seu-buffet</x-helper-input>
                         </div>
                         <div class="mt-2">
                             <x-input-label for="zipcode" :value="__('CEP*')" class="dark:text-slate-800"/>

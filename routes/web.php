@@ -1,24 +1,23 @@
 <?php
 
+use App\Events\BuffetCreatedEvent;
 use App\Http\Controllers\BuffetController;
 use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\HandoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepresentativeController;
-use App\Http\Controllers\SiteController;
-use App\Http\Middleware\EnsureCreateBuffet;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use App\Models\Address;
+use App\Models\Buffet;
+use App\Models\BuffetSubscription;
+use App\Models\Phone;
+use App\Models\Subscription;
+use App\Models\User;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,6 +35,9 @@ Route::middleware(['auth', 'verified', 'buffet.not_created'])->group(function(){
     
     Route::get('/auth/create-buffet/payment', [BuffetController::class, 'create_payment_on_register'])->name('auth.buffet.create_payment');
     Route::post('/auth/create-buffet/payment', [BuffetController::class, 'store_payment_on_register'])->name('auth.buffet.store_payment');
+
+    Route::get('/auth/create-buffet/subscription', [BuffetController::class, 'create_select_subscription_on_register'])->name('auth.buffet.select_subscription');
+    Route::post('/auth/create-buffet/subscription', [BuffetController::class, 'store_select_subscription_on_register'])->name('auth.buffet.select_subscription');
 });
 
 
@@ -48,9 +50,23 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
     Route::resource('buffet', BuffetController::class);
     Route::resource('commercial', CommercialController::class);
     Route::resource('handout', HandoutController::class);
+
+    // Subscription
+    Route::get('/subscription/roles', [SubscriptionController::class, 'roles'])->name('buffet.roles');
+    Route::get('/subscription/roles/create', [SubscriptionController::class, 'create_role'])->name('buffet.roles.create');
+    Route::post('/subscription/roles', [SubscriptionController::class, 'store_role'])->name('buffet.roles.store');
+    Route::get('/subscription/roles/{role}', [SubscriptionController::class, 'show_role'])->name('buffet.roles.show');
+    
+    Route::get('/subscription/permissions', [SubscriptionController::class, 'permissions'])->name('buffet.permissions');
+    Route::get('/subscription/permissions/{permission}', [SubscriptionController::class, 'show_permission'])->name('buffet.permissions.show');
+    
+    Route::get('/subscription', [SubscriptionController::class, 'subscriptions'])->name('buffet.subscription');
+    Route::get('/subscription/create', [SubscriptionController::class, 'create_subscription'])->name('buffet.subscription.create');
+    Route::post('/subscription', [SubscriptionController::class, 'store_subscription'])->name('buffet.subscription.store');
+    Route::get('/subscription/{subscription}', [SubscriptionController::class, 'show_subscription'])->name('buffet.subscription.show');
+    Route::get('/subscription/{subscription}/edit', [SubscriptionController::class, 'edit_subscription'])->name('buffet.subscription.edit');
+    Route::put('/subscription/{subscription}', [SubscriptionController::class, 'update_subscription'])->name('buffet.subscription.update');
+    
 });
-
-
-
 
 require __DIR__.'/auth.php';

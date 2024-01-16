@@ -41,7 +41,7 @@
                                     <tr>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">{{ $buffet->id }}</td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
-                                            <a href="{{ route('buffet.show', [$buffet->id]) }}" class="font-bold text-blue-500 hover:underline">
+                                            <a href="{{ route('buffet.show', [$buffet->slug]) }}" class="font-bold text-blue-500 hover:underline">
                                                 {{ $buffet->trading_name }}
                                             </a>
                                         </td>
@@ -51,11 +51,11 @@
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center"><x-status.buffet_status :status="$buffet->status" /></td>
                                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap text-center">
                                             @can('show buffet')
-                                            <a href="{{ route('buffet.show', $buffet->id) }}" title="Visualizar '{{$buffet->trading_name}}'">👁️</a>
+                                            <a href="{{ route('buffet.show', $buffet->slug) }}" title="Visualizar '{{$buffet->trading_name}}'">👁️</a>
                                             @endcan
                                             @if($buffet->status !== \App\Enums\BuffetStatus::UNACTIVE->name)
                                                 @can('update buffet')
-                                                    <a href="{{ route('buffet.edit', $buffet->id) }}" title="Editar '{{$buffet->trading_name}}'">✏️</a>
+                                                    <a href="{{ route('buffet.edit', $buffet->slug) }}" title="Editar '{{$buffet->trading_name}}'">✏️</a>
                                                 @endcan
                                                 @can('delete buffet')
                                                     <form action="{{ route('buffet.destroy', $buffet->id) }}" method="post" class="inline">

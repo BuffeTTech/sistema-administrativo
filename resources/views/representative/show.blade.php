@@ -16,14 +16,13 @@
                             </div>
                         @endif
                         <h1>Visualizar representante</h1>
-                        <div><p><strong>Nome do Representante: </strong>{{$representative->user->name}}</p>
-                            <p><strong>Email: </strong>{{$representative->user->email}}</p>
-                            <p><strong>{{\App\Enums\DocumentType::getEnumByName($representative->user->document_type)}}: </strong>{{$representative->user->document}}</p>
-                            <p><strong>Telefone 1: </strong>{{$representative->user->user_phone1->number ?? "Número não cadastrado"}}</p>
-                            <p><strong>Telefone 2: </strong>{{$representative->user->user_phone2->number ?? "Número não cadastrado"}}</p>
-                            <p><strong>Status: </strong>{{\App\Enums\UserStatus::getEnumByName($representative->user->status)}}</p>
+                        <p><strong>Nome do Representante: </strong>{{$representative->user->name}}</p>
+                        <p><strong>Email: </strong>{{$representative->user->email}}</p>
+                        <p><strong>{{\App\Enums\DocumentType::getEnumByName($representative->user->document_type)}}: </strong>{{$representative->user->document}}</p>
+                        <p><strong>Telefone 1: </strong>{{$representative->user->user_phone1->number ?? "Número não cadastrado"}}</p>
+                        <p><strong>Telefone 2: </strong>{{$representative->user->user_phone2->number ?? "Número não cadastrado"}}</p>
+                        <p><strong>Status: </strong>{{\App\Enums\UserStatus::getEnumByName($representative->user->status)}}</p>
                         
-                        </div>
                     </div>
                 </div>
             </div>

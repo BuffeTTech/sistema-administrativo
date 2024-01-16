@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\SystemEnum;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -12,9 +13,6 @@ class PermissionSeeder extends Seeder
     {
         // Define roles
         $roles = ['buffet', 'commercial', 'representative', 'administrative'];
-        foreach ($roles as $role) {
-            Role::create(['name' => $role]);
-        }
 
         // Permissions
         $permissionsWithRole = [
@@ -65,8 +63,15 @@ class PermissionSeeder extends Seeder
             'delete subscription' => ['commercial'],
         ];
 
-        foreach ($permissionsWithRole as $permission => $roles_permission) {
-            $createdPermission = Permission::create(['name' => $permission]);
+        $this->execute(roles: $roles, permissions: $permissionsWithRole, system: SystemEnum::ADMINISTRATIVE);
+    }
+
+    public function execute(array $roles, array $permissions, SystemEnum $system) {
+        foreach ($roles as $role) {
+            Role::create(['name' => $role, 'system'=>$system->name]);
+        }
+        foreach ($permissions as $permission => $roles_permission) {
+            $createdPermission = Permission::create(['name' => $permission, 'system'=>$system->name]);
 
             foreach ($roles_permission as $roleName) {
                 $role = Role::findByName($roleName);
