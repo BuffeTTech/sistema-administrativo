@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BuffetStatus;
+use App\Enums\SubscriptionStatus;
 use App\Enums\UserStatus;
+use App\Events\BuffetCreatedEvent;
+use App\Events\DeleteBuffetEvent;
+use App\Events\EditBuffetEvent;
 use App\Http\Requests\Buffet\StoreBuffetOnRegisterRequest;
 use App\Http\Requests\Buffet\StoreBuffetRequest;
 use App\Http\Requests\Buffet\UpdateBuffetRequest;
 use App\Mail\UserCreated;
 use App\Models\Address;
 use App\Models\Buffet;
+use App\Models\BuffetSubscription;
 use App\Models\Commercial;
 use App\Models\Phone;
+use App\Models\Subscription;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -22,14 +30,20 @@ use Illuminate\Support\Str;
 
 class BuffetController extends Controller
 {
+    public static DateTime $expires_in;
+
     public function __construct(
         protected Buffet $buffet,
         protected User $user,
         protected Commercial $commercial,
         protected Phone $phone,
-        protected Address $address
+        protected Address $address,
+        protected Subscription $subscription,
+        protected BuffetSubscription $buffet_subscription
     )
-    {}
+    {
+        self::$expires_in = Carbon::now()->addYears(2);
+    }
 
     /**
      * Display a listing of the resource.
@@ -47,9 +61,11 @@ class BuffetController extends Controller
      */
     public function create()
     {
-         $this->authorize('create', Buffet::class);
+        $this->authorize('create', Buffet::class);
+
+        $subscriptions = $this->subscription->where('status', SubscriptionStatus::ACTIVE->name)->get();
         
-        return view('buffet.create');
+        return view('buffet.create', ['subscriptions'=>$subscriptions]);
     }
 
     /**
@@ -59,6 +75,10 @@ class BuffetController extends Controller
     {
         
         //$phone = $this->phone->create(['number'=>$request->phone1]); 
+        $subscription = $this->subscription->where('slug', $request->subscription)->get()->first();
+        if(!$subscription) {
+            return redirect()->back()->withErrors(['subscription' => 'Subscription not found.'])->withInput();
+        }
 
         $password = Str::password(length: 12);
 
@@ -95,11 +115,11 @@ class BuffetController extends Controller
             'country' => $request->country
         ]);
 
-        $this->buffet->create([
+        $buffet = $this->buffet->create([
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
             'document'=>$request->document_buffet,
-            'slug' => $request->slug,
+            'slug' => sanitize_string($request->slug),
             'phone1'=>$phone1_buffet->id,
             'phone2'=>$phone2_buffet->id ?? null, 
             'address' =>$address->id, 
@@ -107,7 +127,14 @@ class BuffetController extends Controller
             'status'=>BuffetStatus::ACTIVE->name
         ]);
 
+        $buffet_subscription = $this->buffet_subscription->create([
+            'buffet_id'=>$buffet->id,
+            'subscription_id'=>$subscription->id,
+            'expires_in'=>self::$expires_in
+        ]);
+
         event(new Registered($user));
+        event(new BuffetCreatedEvent(buffet: $buffet, subscription: $subscription, buffet_subscription: $buffet_subscription));
 
         // // Envio de emails funcionando!
 
@@ -124,7 +151,8 @@ class BuffetController extends Controller
     {
         $this->authorize('view', Buffet::class);
 
-        $buffet = $this->buffet->with(['owner', 'owner.user_phone1','owner.user_phone2', 'owner.user_address', 'buffet_phone1', 'buffet_phone2', 'buffet_address'])->find($request->buffet);
+        $buffet = $this->buffet->with(['owner', 'owner.user_phone1','owner.user_phone2', 'owner.user_address', 'buffet_phone1', 'buffet_phone2', 'buffet_address'])->where('slug', $request->buffet)->get()->first();
+        
         return view('buffet.show',compact('buffet'));
     }
 
@@ -134,7 +162,7 @@ class BuffetController extends Controller
     public function edit(Request $request)
     {
         $this->authorize('update', Buffet::class);
-        $buffet = $this->buffet->with(['buffet_phone1','buffet_phone2', 'buffet_address'])->find($request->buffet)->first();
+        $buffet = $this->buffet->with(['buffet_phone1','buffet_phone2', 'buffet_address'])->where('slug', $request->buffet)->get()->first();
         if(!$buffet) {
             return back()->with('errors', 'User not found');
         }
@@ -147,11 +175,11 @@ class BuffetController extends Controller
      */
     public function update(UpdateBuffetRequest $request)
     {
-        $id = $request->buffet;
-        $buffet = $this->buffet->with('owner')->find($id)->first();
+        $buffet = $this->buffet->with('owner')->where('slug', $request->buffet)->first();
         if(!$buffet) {
             return back()->with('errors', 'Buffet not found');
         }
+        $old_slug = $buffet->slug;
 
         if($request->phone1) {
             if($buffet->phone1) {
@@ -181,9 +209,12 @@ class BuffetController extends Controller
         $buffet->update([
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
+            'slug' => $request->slug,
             'document'=>$request->document_buffet,
             'status'=>$request->status ?? BuffetStatus::ACTIVE->name
-        ]);
+        ]); 
+
+        event(new EditBuffetEvent(buffet: $buffet, old_slug: $old_slug));
 
         // $buffet->update($request->except(['phone1', 'phone2', 'address', 'id']));
 
@@ -204,6 +235,7 @@ class BuffetController extends Controller
         if(count($owner_buffets) == 1) {
             $this->user->find($buffet->owner_id)->update(['status'=>UserStatus::UNACTIVE->name]);
         }
+        event(new DeleteBuffetEvent(buffet: $buffet));
 
         return back()->with('success', 'Buffet deletado com sucesso');
     }
@@ -239,7 +271,41 @@ class BuffetController extends Controller
             'status'=>BuffetStatus::ACTIVE->name
         ]);
 
-        // por enquanto vai pra home, mas depois precisa implementar o redirect pra proxima etapa do formulario
+        return redirect()->route('auth.buffet.select_subscription');
+
+        // // por enquanto vai pra home, mas depois precisa implementar o redirect pra proxima etapa do formulario
+        // return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Buffet cadastrado com sucesso');
+
+    }
+
+    public function create_select_subscription_on_register() {
+        $subscriptions = $this->subscription->where('status', SubscriptionStatus::ACTIVE->name)->get();
+        $buffets = Buffet::where('owner_id', auth()->user()->id)->with('buffet_subscriptions')->get();
+        $buffets_without_subscription = $buffets->filter(function($buffet) {
+            return $buffet->buffet_subscriptions->count() === 0;
+        });
+        return view('auth.buffet.payment-details', ['subscriptions'=>$subscriptions, 'buffet'=>$buffets_without_subscription[0]]);
+    }
+    public function store_select_subscription_on_register(Request $request) {
+        $subscription = $this->subscription->where('slug', $request->subscription)->get()->first();
+        if(!$subscription) {
+            return redirect()->back()->withErrors(['subscription' => 'Subscription not found.'])->withInput();
+        }
+        $buffet = $this->buffet->where('slug', $request->buffet)->get()->first();
+        if(!$buffet) {
+            return redirect()->back()->withErrors(['buffet' => 'Buffet not found.'])->withInput();
+        }
+        if($buffet->owner_id !== auth()->user()->id) {
+            return redirect()->back()->withErrors(['buffet' => 'User is not the owner.'])->withInput();
+        }
+        $buffet_subscription = $this->buffet_subscription->create([
+            'buffet_id'=>$buffet->id,
+            'subscription_id'=>$subscription->id,
+            'expires_in'=>self::$expires_in
+        ]);
+
+        event(new BuffetCreatedEvent(buffet: $buffet, subscription: $subscription, buffet_subscription: $buffet_subscription));
+
         return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Buffet cadastrado com sucesso');
 
     }

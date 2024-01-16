@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Buffet extends Model
 {
@@ -34,5 +35,10 @@ class Buffet extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'buffet_id');
+    }
+
+    public function buffet_subscriptions()
+    {
+        return $this->hasMany(BuffetSubscription::class, 'buffet_id');
     }
 }

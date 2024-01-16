@@ -66,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Phone::class, 'phone2');
     }
     public function user_address() {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class, 'address');
     }
     public function buffets() {
         return $this->hasMany(Buffet::class, 'owner_id');
@@ -75,4 +75,18 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isBuffet(){
         return $this->hasRole('buffet');
     }
+
+
+    // public function getPassword()
+    // {
+    //     // Usado para compartilhamento de senha entre sistemas
+    //     $this->setHidden([]);
+
+    //     $password = $this->password;
+
+    //     $this->setHidden(['password', 'remember_token']);
+
+    //     return $password;
+    // }
+
 }

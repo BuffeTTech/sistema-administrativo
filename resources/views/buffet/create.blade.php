@@ -129,6 +129,28 @@
                             <x-input-error :messages="$errors->get('phone2_buffet')" class="mt-2" />
                         </div>
 
+                        <h2 class="text-xl font-semibold mb-3 mt-3">Dados do pacote</h2>
+                        <div class="mt-2">
+                            <x-input-label for="subscription" :value="__('Inscrição')" class="dark:text-slate-800"/>
+                            <select name="subscription" id="subscription" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500">
+                                @foreach($subscriptions as $subscription)
+                                    @php
+                                        $price = $subscription->price * ($subscription->price * ($subscription->discount/100));
+                                    @endphp
+                                    <option value="{{ $subscription->slug }}">{{ $subscription->name }}: R$ {{ $price == 0 ? $subscription->price : $price }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('subscription')" class="mt-2" />
+                        </div>
+                        {{-- <div class="mt-2">
+                            <x-input-label for="subscription_format" :value="__('Formato de inscrição')" class="dark:text-slate-800"/>
+                            <select name="subscription_format" id="subscription_format" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500">
+                                <option value="month">Mensal</option>
+                                <option value="quarterly">Trimestral</option>
+                                <option value="year">Anual</option>
+                            </select>
+                            <x-input-error :messages="$errors->get('subscription_format')" class="mt-2" />
+                        </div> --}}
 
                         <div class="flex items-center justify-end mt-4">
                             <x-primary-button class="ms-4">

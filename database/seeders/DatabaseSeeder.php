@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             BuffetSeeder::class,
             BuffetScheduleSeeder::class,
             BookingSeeder::class,
+            SubscriptionSeeder::class
         ]);
     }
 }
