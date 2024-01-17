@@ -75,17 +75,7 @@
         const doc = document.querySelector("#document")
         const doc_error = document.querySelector("#document-error")
         const form = document.querySelector("#form")
-
-        // form.addEventListener('submit', async function (e) {
-        //     e.preventDefault()
-        //     const userConfirmed = await confirm(`Deseja agendar um aniversario no dia ${party_day.value} as ${party_time.options[party_time.selectedIndex].text}?`)
-
-        //     if (userConfirmed) {
-        //         this.submit();
-        //     } else {
-        //         error("Ocorreu um erro!")
-        //     }
-        // })
+        const phone1 = document.querySelector("#phone1")
 
         form.addEventListener('submit', async function (e) {
             e.preventDefault()
@@ -104,10 +94,12 @@
             this.submit();
         })
 
-
-
         doc.addEventListener('input', (e)=>{
             e.target.value = replaceCPF(e.target.value);
+            return;
+        })
+        phone1.addEventListener('input', (e)=>{
+            e.target.value = replacePhone(e.target.value);
             return;
         })
 

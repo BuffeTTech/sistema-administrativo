@@ -6,6 +6,8 @@ use App\Enums\BuffetStatus;
 use App\Enums\SubscriptionStatus;
 use App\Enums\UserStatus;
 use App\Events\BuffetCreatedEvent;
+use App\Events\DeleteBuffetEvent;
+use App\Events\EditBuffetEvent;
 use App\Http\Requests\Buffet\StoreBuffetOnRegisterRequest;
 use App\Http\Requests\Buffet\StoreBuffetRequest;
 use App\Http\Requests\Buffet\UpdateBuffetRequest;
@@ -18,6 +20,8 @@ use App\Models\Phone;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -26,6 +30,8 @@ use Illuminate\Support\Str;
 
 class BuffetController extends Controller
 {
+    public static DateTime $expires_in;
+
     public function __construct(
         protected Buffet $buffet,
         protected User $user,
@@ -35,7 +41,9 @@ class BuffetController extends Controller
         protected Subscription $subscription,
         protected BuffetSubscription $buffet_subscription
     )
-    {}
+    {
+        self::$expires_in = Carbon::now()->addYears(2);
+    }
 
     /**
      * Display a listing of the resource.
@@ -121,7 +129,8 @@ class BuffetController extends Controller
 
         $buffet_subscription = $this->buffet_subscription->create([
             'buffet_id'=>$buffet->id,
-            'subscription_id'=>$subscription->id
+            'subscription_id'=>$subscription->id,
+            'expires_in'=>self::$expires_in
         ]);
 
         event(new Registered($user));
@@ -170,6 +179,7 @@ class BuffetController extends Controller
         if(!$buffet) {
             return back()->with('errors', 'Buffet not found');
         }
+        $old_slug = $buffet->slug;
 
         if($request->phone1) {
             if($buffet->phone1) {
@@ -199,9 +209,12 @@ class BuffetController extends Controller
         $buffet->update([
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
+            'slug' => $request->slug,
             'document'=>$request->document_buffet,
             'status'=>$request->status ?? BuffetStatus::ACTIVE->name
-        ]);
+        ]); 
+
+        event(new EditBuffetEvent(buffet: $buffet, old_slug: $old_slug));
 
         // $buffet->update($request->except(['phone1', 'phone2', 'address', 'id']));
 
@@ -222,6 +235,7 @@ class BuffetController extends Controller
         if(count($owner_buffets) == 1) {
             $this->user->find($buffet->owner_id)->update(['status'=>UserStatus::UNACTIVE->name]);
         }
+        event(new DeleteBuffetEvent(buffet: $buffet));
 
         return back()->with('success', 'Buffet deletado com sucesso');
     }
@@ -286,7 +300,8 @@ class BuffetController extends Controller
         }
         $buffet_subscription = $this->buffet_subscription->create([
             'buffet_id'=>$buffet->id,
-            'subscription_id'=>$subscription->id
+            'subscription_id'=>$subscription->id,
+            'expires_in'=>self::$expires_in
         ]);
 
         event(new BuffetCreatedEvent(buffet: $buffet, subscription: $subscription, buffet_subscription: $buffet_subscription));

@@ -17,6 +17,7 @@ use App\Models\BuffetSubscription;
 use App\Models\Phone;
 use App\Models\Subscription;
 use App\Models\User;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,91 +66,6 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
     Route::get('/subscription/{subscription}', [SubscriptionController::class, 'show_subscription'])->name('buffet.subscription.show');
     Route::get('/subscription/{subscription}/edit', [SubscriptionController::class, 'edit_subscription'])->name('buffet.subscription.edit');
     Route::put('/subscription/{subscription}', [SubscriptionController::class, 'update_subscription'])->name('buffet.subscription.update');
-    
-});
-
-Route::get('/teste', function() {
-    $user_data = [
-        'name' => "fodinha",
-        'email' => "dasd@dasd",
-        'email_verified_at' => now(),
-        'password' => Hash::make('password'),
-        'document' => "fodinha",
-        'document_type' => 'CPF',
-        'status' => "ACTIVE",
-        'remember_token' => "aaaaaaaaaa",
-    ];
-    $user = User::where('email', $user_data['email'])->get()->first();
-    if(!$user) {
-        $user = User::create($user_data);
-
-        $user_phone1 = Phone::create([
-            'number'=>"(19) 99999-9999"
-        ]);
-        $user_phone2 = Phone::create([
-            'number'=>"(19) 99999-9999"
-        ]);
-        $user_address = Address::create([
-            "zipcode"=>'13063-000',
-            "street"=>'rua dos fodinhas',
-            "number"=>220,
-            "neighborhood"=>'jardim dos fodas',
-            "state"=>'SP',
-            "city"=>'Campinas',
-            "country"=>'Brasil',
-            "complement"=>""
-        ]);
-        $user->update([
-            'phone1'=>$user_phone1->id,
-            'phone2'=>$user_phone2->id,
-            'address'=>$user_address->id,
-        ]);
-        $user->assignRole('buffet');
-
-    }
-
-    $data = [
-        'trading_name' => 'sdadas',
-        'email' => fake()->unique()->safeEmail(),
-        'slug' => 'buffet-fodalegria',
-        'document' => '39.303.604/0001-44',
-        'owner_id'=>$user->id,
-        'status' => "ACTIVE",
-    ];
-    $buffet = Buffet::where('slug', $data['slug'])->get()->first();
-    if(!$buffet) {
-        $buffet = Buffet::create($data);
-        $phone1 = Phone::create([
-            'number'=>"(19) 99999-9999"
-        ]);
-        $phone2 = Phone::create([
-            'number'=>"(19) 99999-9999"
-        ]);
-        $address = Address::create([
-            "zipcode"=>'13063-000',
-            "street"=>'rua dos fodinhas',
-            "number"=>220,
-            "neighborhood"=>'jardim dos fodas',
-            "state"=>'SP',
-            "city"=>'Campinas',
-            "country"=>'Brasil',
-            "complement"=>""
-        ]);
-        $buffet->update([
-            'phone1'=>$phone1->id,
-            'phone2'=>$phone2->id,
-            'address'=>$address->id,
-        ]);
-        $subscription = Subscription::latest()->first();
-        $buffet_subscription = BuffetSubscription::create([
-            'buffet_id'=>$buffet->id,
-            'subscription_id'=>$subscription->id
-        ]);
-    }
-
-    $buffet_subscription = BuffetSubscription::where('buffet_id', $buffet->id)->get()->first();
-    $subscription = Subscription::where('id', $buffet_subscription->subscription_id)->get()->first();
-    event(new BuffetCreatedEvent(buffet: $buffet, buffet_subscription: $buffet_subscription, subscription: $subscription));
     
 });
 
