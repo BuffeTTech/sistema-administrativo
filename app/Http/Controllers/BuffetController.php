@@ -309,4 +309,68 @@ class BuffetController extends Controller
         return redirect()->intended(RouteServiceProvider::HOME)->with('success', 'Buffet cadastrado com sucesso');
 
     }
+
+    public function update_buffet_api(Request $request) {
+        $buffet = $this->buffet->where('slug', $request->slug)->first();
+        if (!$buffet) {
+            return response()->json(['message' => 'Buffet not found'], 422);
+        }
+        
+        $buffet_slug = $this->buffet->where('slug', $request->buffet['slug'])->get()->first();
+        if ($buffet_slug && $buffet_slug->id !== $buffet->id) {
+            return response()->json(['message' => 'Buffet already exists'], 422);
+        }
+        
+        if($request->buffet['phone1']) {
+            if($buffet->phone1) {
+                $this->phone->find($buffet->phone1)->update(['number'=>$request->buffet['phone1']['number']]);
+            } else {
+                $buffet->update(['phone1'=>$this->phone->create(['number'=>$request->buffet['phone1']['number']])->id]);
+            }
+        }
+        if($request->buffet['phone2']) {
+            if($buffet->phone2) {
+                $this->phone->find($buffet->phone2)->update(['number'=>$request->buffet['phone2']['number']]);
+            } else {
+                $buffet->update(['phone2'=>$this->phone->create(['number'=>$request->buffet['phone2']['number']])->id]);
+            }
+        }
+        
+        if($request->buffet['address']) {
+            if($buffet->address) {
+                $this->address->find($buffet->address)->update([
+                    'zipcode' => $request->buffet['address']['zipcode'], 
+                    'street' => $request->buffet['address']['street'], 
+                    'number' => $request->buffet['address']['number'], 
+                    'complement' => $request->buffet['address']['complement'] ?? null, 
+                    'neighborhood' => $request->buffet['address']['neighborhood'], 
+                    'state' => $request->buffet['address']['state'], 
+                    'city' => $request->buffet['address']['city'], 
+                    'country' => $request->buffet['address']['country']
+                ]);
+            } else {
+                $address = $this->buffet->create([
+                    'zipcode' => $request->buffet['address']['zipcode'], 
+                    'street' => $request->buffet['address']['street'], 
+                    'number' => $request->buffet['address']['number'], 
+                    'complement' => $request->buffet['address']['complement'] ?? null, 
+                    'neighborhood' => $request->buffet['address']['neighborhood'], 
+                    'state' => $request->buffet['address']['state'], 
+                    'city' => $request->buffet['address']['city'], 
+                    'country' => $request->buffet['address']['country']
+                ]);
+                $buffet->update(['address'=> $address->id]);
+            }
+        }
+
+        $buffet->update([
+            'trading_name' => $request->buffet['trading_name'],
+            'email' => $request->buffet['email'],
+            'slug' => $request->buffet['slug'],
+            'document'=>$request->buffet['document'],
+            'status'=>$request->buffet['status'] ?? BuffetStatus::ACTIVE->name
+        ]); 
+
+        return response()->json(['data'=>[$buffet]], 201); // passar update de inscrição em funcao diferente 
+    }
 }
