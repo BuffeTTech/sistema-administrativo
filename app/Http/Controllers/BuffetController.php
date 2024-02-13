@@ -209,7 +209,7 @@ class BuffetController extends Controller
         $buffet->update([
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
-            'slug' => $request->slug,
+            'slug' => sanitize_string($request->slug),
             'document'=>$request->document_buffet,
             'status'=>$request->status ?? BuffetStatus::ACTIVE->name
         ]); 
@@ -263,7 +263,7 @@ class BuffetController extends Controller
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
             'document'=>$request->document_buffet,
-            'slug' => $request->slug,
+            'slug' => sanitize_string($request->slug),
             'phone1'=>$phone1_buffet->id,
             'phone2'=>$phone2_buffet->id ?? null, 
             'address' =>$address->id, 
@@ -366,7 +366,7 @@ class BuffetController extends Controller
         $buffet->update([
             'trading_name' => $request->buffet['trading_name'],
             'email' => $request->buffet['email'],
-            'slug' => $request->buffet['slug'],
+            'slug' => sanitize_string($request->buffet['slug']),
             'document'=>$request->buffet['document'],
             'status'=>$request->buffet['status'] ?? BuffetStatus::ACTIVE->name
         ]); 

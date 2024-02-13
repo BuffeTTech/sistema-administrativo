@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\AddPermissionInRoleEvent;
 use App\Events\BuffetCreatedEvent;
+use App\Events\CreateManyPermissionsAndRolesEvent;
 use App\Events\CreateRoleEvent;
 use App\Events\DeleteBuffetEvent;
 use App\Events\EditBuffetEvent;
@@ -14,10 +15,12 @@ use App\Listeners\CreateBuffetInCommercialListener;
 use App\Listeners\CreateCommercialRoleListener;
 use App\Listeners\CreateCommercialSubscriptionListener;
 use App\Listeners\CreateCommercialUserWhenBuffetIsCreatedListener;
+use App\Listeners\CreateManyPermissionsAndRolesInCommercialListener;
 use App\Listeners\CreateRolesAfterSubscriptionListener;
 use App\Listeners\DeleteBuffetInComercialRoleListener;
 use App\Listeners\EditBuffetInCommercialListener;
 use App\Listeners\RemovePermissionInCommercialRoleListener;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -60,6 +63,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         DeleteBuffetEvent::class => [
             DeleteBuffetInComercialRoleListener::class
+        ],
+        CreateManyPermissionsAndRolesEvent::class => [
+            CreateManyPermissionsAndRolesInCommercialListener::class
         ]
     ];
 
