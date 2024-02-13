@@ -61,6 +61,12 @@ class PermissionSeeder extends Seeder
             'create subscription' => ['commercial'],
             'update subscription' => ['commercial'],
             'delete subscription' => ['commercial'],
+            
+            'list subscription configurations' => ['commercial', 'representative'],
+            'show subscription configurations' => ['commercial', 'representative'],
+            'create subscription configurations' => ['commercial'],
+            'update subscription configurations' => ['commercial'],
+            'delete subscription configurations' => ['commercial'],
         ];
 
         $this->execute(roles: $roles, permissions: $permissionsWithRole, system: SystemEnum::ADMINISTRATIVE);

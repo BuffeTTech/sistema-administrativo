@@ -18,7 +18,7 @@ class CreateCommercialSubscriptionListener
     public function handle(SubscriptionCreatedEvent $event): void
     {
         // Enviar os dados para o outro sistema
-        $response = Http::acceptJson()->post(config('app.commercial_url').'/api/subscription', ['subscription'=>$event->subscription]);
+        $response = Http::acceptJson()->post(config('app.commercial_url').'/api/subscription', ['subscription'=>$event->subscription, 'configuration'=>$event->configuration]);
         // if($response->ok()) {
         // }
         // Enviar para o outro sistema

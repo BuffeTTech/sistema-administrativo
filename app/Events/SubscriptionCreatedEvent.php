@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Subscription;
+use App\Models\SubscriptionConfiguration;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,7 +16,8 @@ class SubscriptionCreatedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public function __construct(
-        public Subscription $subscription
+        public Subscription $subscription,
+        public SubscriptionConfiguration $configuration
     ) {}
 
     /**
