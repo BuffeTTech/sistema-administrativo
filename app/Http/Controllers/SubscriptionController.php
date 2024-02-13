@@ -8,6 +8,7 @@ use App\Events\AddPermissionInRoleEvent;
 use App\Events\RemovePermissionInRoleEvent;
 use App\Events\SubscriptionCreatedEvent;
 use App\Models\Subscription;
+use App\Models\SubscriptionConfiguration;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -17,7 +18,8 @@ class SubscriptionController extends Controller
     function __construct(
         protected Permission $permission,
         protected Role $role,
-        protected Subscription $subscription
+        protected Subscription $subscription,
+        protected SubscriptionConfiguration $configuration
     )
     {
         
@@ -139,7 +141,15 @@ class SubscriptionController extends Controller
             'status'=>SubscriptionStatus::ACTIVE->name
         ]);
 
-        event(new SubscriptionCreatedEvent($subscription));
+        $configuration = $this->configuration->create([
+            "max_employees"=>$request->configurations['max_employees'],
+            "max_food_photos"=>$request->configurations['max_food_photos'],
+            "max_decoration_photos"=>$request->configurations['max_decoration_photos'],
+            "max_recommendations"=>$request->configurations['max_recommendations'],
+            "subscription_id"=>$subscription->id,
+        ]);
+
+        event(new SubscriptionCreatedEvent($subscription, $configuration));
 
         return redirect()->route('buffet.subscription.show', ['subscription'=>$subscription->slug]);
     }

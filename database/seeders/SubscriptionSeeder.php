@@ -5,8 +5,10 @@ namespace Database\Seeders;
 use App\Enums\SubscriptionStatus;
 use App\Enums\SystemEnum;
 use App\Events\AddPermissionInRoleEvent;
+use App\Events\SubscriptionConfigurationCreatedEvent;
 use App\Events\SubscriptionCreatedEvent;
 use App\Models\Subscription;
+use App\Models\SubscriptionConfiguration;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -28,7 +30,14 @@ class SubscriptionSeeder extends Seeder
             "discount"=>0,
             "status"=>SubscriptionStatus::ACTIVE->name,
         ]);
-        event(new SubscriptionCreatedEvent($pacote_alegria));
+        $pacote_alegria_configs = SubscriptionConfiguration::create([
+            "max_employees"=>6,
+            "max_food_photos"=>3,
+            "max_decoration_photos"=>3,
+            "max_recommendations"=>3,
+            "subscription_id"=>$pacote_alegria->id,
+        ]);
+        event(new SubscriptionCreatedEvent($pacote_alegria, $pacote_alegria_configs));
         $pacote_amizade = Subscription::create([
             "name"=>"Pacote Amizade",
             "slug"=>sanitize_string("Pacote Amizade"),
@@ -37,7 +46,14 @@ class SubscriptionSeeder extends Seeder
             "discount"=>0,
             "status"=>SubscriptionStatus::ACTIVE->name,
         ]);
-        event(new SubscriptionCreatedEvent($pacote_amizade));
+        $pacote_amizade_configs = SubscriptionConfiguration::create([
+            "max_employees"=>6,
+            "max_food_photos"=>3,
+            "max_decoration_photos"=>3,
+            "max_recommendations"=>3,
+            "subscription_id"=>$pacote_amizade->id,
+        ]);
+        event(new SubscriptionCreatedEvent($pacote_amizade, $pacote_amizade_configs));
         $pacote_amor = Subscription::create([
             "name"=>"Pacote Amor",
             "slug"=>sanitize_string("Pacote amor"),
@@ -46,7 +62,14 @@ class SubscriptionSeeder extends Seeder
             "discount"=>0,
             "status"=>SubscriptionStatus::ACTIVE->name,
         ]);
-        event(new SubscriptionCreatedEvent($pacote_amor));
+        $pacote_amor_configs = SubscriptionConfiguration::create([
+            "max_employees"=>6,
+            "max_food_photos"=>3,
+            "max_decoration_photos"=>3,
+            "max_recommendations"=>3,
+            "subscription_id"=>$pacote_amor->id,
+        ]);
+        event(new SubscriptionCreatedEvent($pacote_amor, $pacote_amor_configs));
 
         sleep(10);
 
