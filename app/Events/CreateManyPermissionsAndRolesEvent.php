@@ -2,8 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Subscription;
-use App\Models\SubscriptionConfiguration;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,13 +10,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SubscriptionCreatedEvent
+class CreateManyPermissionsAndRolesEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    /**
+     * Create a new event instance.
+     */
     public function __construct(
-        public Subscription $subscription,
-        public SubscriptionConfiguration $configuration
-    ) {}
+        public array $data
+    )
+    {
+        //
+    }
 
     /**
      * Get the channels the event should broadcast on.
