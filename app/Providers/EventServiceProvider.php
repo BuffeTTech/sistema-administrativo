@@ -20,6 +20,7 @@ use App\Listeners\CreateRolesAfterSubscriptionListener;
 use App\Listeners\DeleteBuffetInComercialRoleListener;
 use App\Listeners\EditBuffetInCommercialListener;
 use App\Listeners\RemovePermissionInCommercialRoleListener;
+use App\Listeners\SendMailWhenBuffetIsCreatedListener;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -44,7 +45,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         CreateRoleEvent::class => [
-            CreateCommercialRoleListener::class
+            CreateCommercialRoleListener::class,
         ],
 
         AddPermissionInRoleEvent::class => [
@@ -55,8 +56,10 @@ class EventServiceProvider extends ServiceProvider
             RemovePermissionInCommercialRoleListener::class
         ],
         BuffetCreatedEvent::class => [
+            SendMailWhenBuffetIsCreatedListener::class,
             CreateBuffetInCommercialListener::class,
-            CreateCommercialUserWhenBuffetIsCreatedListener::class
+            CreateCommercialUserWhenBuffetIsCreatedListener::class,
+
         ],
         EditBuffetEvent::class => [
             EditBuffetInCommercialListener::class

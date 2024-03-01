@@ -6,6 +6,7 @@ use App\Http\Controllers\CommercialController;
 use App\Http\Controllers\HandoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepresentativeController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,11 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('landing_page');
 
-// Route::get('/dashboard', [SiteController::class, 'dashboard'])->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
+Route::get('/dashboard', [SiteController::class, 'dashboard'])->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'buffet.not_created'])->group(function(){
     Route::get('/auth/create-buffet', [BuffetController::class, 'create_on_register'])->name('auth.buffet.create');
@@ -52,15 +53,15 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
     Route::resource('handout', HandoutController::class);
 
     // Subscription
-    Route::get('/subscription/roles', [SubscriptionController::class, 'roles'])->name('buffet.roles');
+    Route::get('/subscription/roles', [SubscriptionController::class, 'roles'])->name('buffet.roles.index');
     Route::get('/subscription/roles/create', [SubscriptionController::class, 'create_role'])->name('buffet.roles.create');
     Route::post('/subscription/roles', [SubscriptionController::class, 'store_role'])->name('buffet.roles.store');
     Route::get('/subscription/roles/{role}', [SubscriptionController::class, 'show_role'])->name('buffet.roles.show');
     
-    Route::get('/subscription/permissions', [SubscriptionController::class, 'permissions'])->name('buffet.permissions');
+    Route::get('/subscription/permissions', [SubscriptionController::class, 'permissions'])->name('buffet.permissions.index');
     Route::get('/subscription/permissions/{permission}', [SubscriptionController::class, 'show_permission'])->name('buffet.permissions.show');
     
-    Route::get('/subscription', [SubscriptionController::class, 'subscriptions'])->name('buffet.subscription');
+    Route::get('/subscription', [SubscriptionController::class, 'subscriptions'])->name('buffet.subscription.index');
     Route::get('/subscription/create', [SubscriptionController::class, 'create_subscription'])->name('buffet.subscription.create');
     Route::post('/subscription', [SubscriptionController::class, 'store_subscription'])->name('buffet.subscription.store');
     Route::get('/subscription/{subscription}', [SubscriptionController::class, 'show_subscription'])->name('buffet.subscription.show');

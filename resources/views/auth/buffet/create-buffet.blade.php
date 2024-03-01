@@ -69,13 +69,13 @@
         <input type="hidden" name="country" value="Brazil">
         <div class="mt-2">
             <x-input-label for="phone1_buffet" :value="__('Telefone 1*')" class="dark:text-slate-100"/>
-            <x-text-input placeholder="Primeiro telefone de contato do buffet" id="phone1_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone1_buffet" :value="old('phone1_buffet')" required autofocus autocomplete="phone1_buffet" />
+            <x-text-input placeholder="Primeiro telefone de contato do buffet" id="phone1_buffet" class="phones block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone1_buffet" :value="old('phone1_buffet')" required autofocus autocomplete="phone1_buffet" />
             <x-input-error :messages="$errors->get('phone1_buffet')" class="mt-2" />
         </div>
 
         <div class="mt-2">
             <x-input-label for="phone2_buffet" :value="__('Telefone')" class="dark:text-slate-100"/>
-            <x-text-input placeholder="Segundo telefone de contato do buffet" id="phone2_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone2_buffet" :value="old('phone2_buffet')" autofocus autocomplete="phone2_buffet" />
+            <x-text-input placeholder="Segundo telefone de contato do buffet" id="phone2_buffet" class="phones block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone2_buffet" :value="old('phone2_buffet')" autofocus autocomplete="phone2_buffet" />
             <x-input-error :messages="$errors->get('phone2_buffet')" class="mt-2" />
         </div>
 
@@ -93,6 +93,14 @@
         const state = document.querySelector('#state');
         const city = document.querySelector('#city');
         const zipcode_error = document.querySelector("#zipcode-error")
+        const phones = document.querySelectorAll('.phones')
+
+        phones.forEach(phone => {
+            phone.addEventListener('input', (e)=>{
+                e.target.value = replacePhone(e.target.value);
+                return;
+            })
+        });
 
         // const number = document.querySelector('#number');
         // const complement = document.querySelector('#complement');

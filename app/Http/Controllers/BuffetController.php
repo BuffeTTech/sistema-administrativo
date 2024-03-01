@@ -61,10 +61,10 @@ class BuffetController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Buffet::class);
+        // $this->authorize('create', Buffet::class);
 
         $subscriptions = $this->subscription->where('status', SubscriptionStatus::ACTIVE->name)->get();
-        
+
         return view('buffet.create', ['subscriptions'=>$subscriptions]);
     }
 
@@ -78,6 +78,20 @@ class BuffetController extends Controller
         $subscription = $this->subscription->where('slug', $request->subscription)->get()->first();
         if(!$subscription) {
             return redirect()->back()->withErrors(['subscription' => 'Subscription not found.'])->withInput();
+        }
+
+        $validateIfBuffetDocumentExists = $this->buffet->where('document', $request->document_buffet)->get()->first();
+        if($validateIfBuffetDocumentExists) {
+            return redirect()->back()->withErrors(['document_buffet'=>'Este buffet já está cadastrado.'])->withInput();
+        }
+        $validateIfBuffetEmailExists = $this->buffet->where('email', $request->email_buffet)->get()->first();
+        if($validateIfBuffetEmailExists) {
+            return redirect()->back()->withErrors(['email_buffet'=>'Este buffet já está cadastrado.'])->withInput();
+        }
+        $slug = sanitize_string($request->slug);
+        $validateIfBuffetSlugExists = $this->buffet->where('slug', $slug)->get()->first();
+        if($validateIfBuffetSlugExists) {
+            return redirect()->back()->withErrors(['slug'=>'Este buffet já está cadastrado.'])->withInput();
         }
 
         $password = Str::password(length: 12);
@@ -119,7 +133,7 @@ class BuffetController extends Controller
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
             'document'=>$request->document_buffet,
-            'slug' => sanitize_string($request->slug),
+            'slug' => $slug,
             'phone1'=>$phone1_buffet->id,
             'phone2'=>$phone2_buffet->id ?? null, 
             'address' =>$address->id, 
@@ -138,7 +152,7 @@ class BuffetController extends Controller
 
         // // Envio de emails funcionando!
 
-        Mail::to($request->email)->queue(new UserCreated(password: $password, user: $user));
+        Mail::to($request->email)->send(new UserCreated(password: $password, user: $user));
 
         return back()->with('success', 'Buffet cadastrado com sucesso!');
 
@@ -244,6 +258,20 @@ class BuffetController extends Controller
         return view('auth.buffet.create-buffet');
     }
     public function store_on_register(StoreBuffetOnRegisterRequest $request) {
+        $validateIfBuffetDocumentExists = $this->buffet->where('document', $request->document_buffet)->get()->first();
+        if($validateIfBuffetDocumentExists) {
+            return redirect()->back()->withErrors(['document_buffet'=>'Este buffet já está cadastrado.'])->withInput();
+        }
+        $validateIfBuffetEmailExists = $this->buffet->where('email', $request->email_buffet)->get()->first();
+        if($validateIfBuffetEmailExists) {
+            return redirect()->back()->withErrors(['email_buffet'=>'Este buffet já está cadastrado.'])->withInput();
+        }
+        $slug = sanitize_string($request->slug);
+        $validateIfBuffetSlugExists = $this->buffet->where('slug', $slug)->get()->first();
+        if($validateIfBuffetSlugExists) {
+            return redirect()->back()->withErrors(['slug'=>'Este buffet já está cadastrado.'])->withInput();
+        }
+
         $phone1_buffet = $this->phone->create(['number'=>$request->phone1_buffet]);
         if($request->phone2_buffet) {
             $phone2_buffet = $this->phone->create(['number'=>$request->phone2_buffet]);

@@ -39,6 +39,7 @@ class SiteController extends Controller
         // return ['current'=>$cont_current_parties,'ended'=>$parties_off];
     }
     public function dashboard(Request $request){
+        return view('dashboard');
         // $response = [];
         // if(auth()->user()->can('show buffet clients')) {
         //     $buffets = Buffet::count();
