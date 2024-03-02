@@ -164,3 +164,9 @@ window.replacePhone = function(value) {
         .replace(/(\d{5})(\d)/, '$1-$2') // captura 2 grupos de numero o primeiro de 5 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um traço antes do segundo grupo de numero
         .replace(/(-\d{4})\d+?$/, '$1'); // captura 4 numeros seguidos de um traço e não deixa ser digitado mais nada
 }
+
+window.replaceCEP = function(value) {
+    return value
+        .replace(/\D/g, '') // Remove todos os caracteres que não são dígitos
+        .replace(/(\d{5})(\d{0,3}).*/, '$1-$2'); // Adiciona um hífen após os primeiros cinco dígitos e limita a 3 caracteres após o hífen
+}

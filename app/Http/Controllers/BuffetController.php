@@ -42,7 +42,7 @@ class BuffetController extends Controller
         protected BuffetSubscription $buffet_subscription
     )
     {
-        self::$expires_in = Carbon::now()->addYears(2);
+        self::$expires_in = Carbon::now()->addMonth(3);
     }
 
     /**
@@ -191,7 +191,7 @@ class BuffetController extends Controller
     {
         $buffet = $this->buffet->with('owner')->where('slug', $request->buffet)->first();
         if(!$buffet) {
-            return back()->with('errors', 'Buffet not found');
+            return back()->with(['errors'=>'Buffet not found']);
         }
         $old_slug = $buffet->slug;
 
@@ -220,10 +220,12 @@ class BuffetController extends Controller
             'country' => $request->country
         ]);
 
+        $slug = sanitize_string($request->slug);
+
         $buffet->update([
             'trading_name' => $request->trading_name,
             'email' => $request->email_buffet,
-            'slug' => sanitize_string($request->slug),
+            'slug' => $slug,
             'document'=>$request->document_buffet,
             'status'=>$request->status ?? BuffetStatus::ACTIVE->name
         ]); 
@@ -232,7 +234,7 @@ class BuffetController extends Controller
 
         // $buffet->update($request->except(['phone1', 'phone2', 'address', 'id']));
 
-        return back()->with('success', "Update successfully");
+        return redirect()->route('buffet.edit', ['buffet'=>$slug])->with(['success'=>'Buffet atualizado com sucesso']);
     }
 
     /**
@@ -242,7 +244,7 @@ class BuffetController extends Controller
     {
         $this->authorize('delete', Buffet::class);
         if (!$buffet = $this->buffet->with('owner')->find($request->buffet)) {
-            return back()->with('errors', 'Bufffet not found');
+            return back()->with(['errors'=>'Buffet not found']);
         }
         $this->buffet->find($buffet->id)->update(['status'=>BuffetStatus::UNACTIVE->name]);
         $owner_buffets = $this->buffet->where('owner_id', $buffet->owner_id)->get();
@@ -251,7 +253,7 @@ class BuffetController extends Controller
         }
         event(new DeleteBuffetEvent(buffet: $buffet));
 
-        return back()->with('success', 'Buffet deletado com sucesso');
+        return redirect()->route('buffet.index')->with(['success'=>'Buffet atualizado com sucesso']);
     }
 
     public function create_on_register() {
