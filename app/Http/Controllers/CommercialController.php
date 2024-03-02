@@ -53,6 +53,10 @@ class CommercialController extends Controller
      */
     public function store(StoreCommercialRequest $request)
     {
+        $validate_if_user_already_exists = $this->user->where('document', $request->document)->get()->first();
+        if($validate_if_user_already_exists) {
+            return redirect()->back()->withErrors(['document'=>"Este usuário já existe"])->withInput();
+        }
         $phone = $this->phone->create(['number'=>$request->phone1]);
 
         $password = Str::password(length: 12, symbols: false);
@@ -117,6 +121,11 @@ class CommercialController extends Controller
         }
 
         $user = $this->user->find($commercial->user->id);
+
+        $validate_if_user_already_exists = $this->user->where('document', $request->document)->where('id', '!=', $user->id  )->get()->first();
+        if($validate_if_user_already_exists) {
+            return redirect()->back()->withErrors(['document'=>"Este usuário já existe"])->withInput();
+        }
             
         if($request->phone1) {
             if($commercial->user->phone1) {

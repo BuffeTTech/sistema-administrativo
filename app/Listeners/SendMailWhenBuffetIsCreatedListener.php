@@ -23,7 +23,9 @@ class SendMailWhenBuffetIsCreatedListener
      */
     public function handle(BuffetCreatedEvent $event): void
     {
-        $user = auth()->user();
-        Notification::send($user, new BuffetCreatedNotification($event->buffet, $event->subscription, $event->buffet_subscription));
+        $user = $event->buffet->owner;
+        if($user) {
+            Notification::send($user, new BuffetCreatedNotification($event->buffet, $event->subscription, $event->buffet_subscription));
+        }
     }
 }

@@ -110,17 +110,9 @@ class SubscriptionController extends Controller
             return redirect()->route('buffet.subscription')->withErrors(['slug'=> "Role not found."]);
         }
 
-        // dd($role->permissions);
         return view('subscription.roles.show', ['role'=>$role]);
     }
 
-    public function create_role() {
-        return view('subscription.roles.create');
-    }
-
-    public function store_role() {
-
-    }
     // Subscriptions
     public function create_subscription() {
         return view('subscription.create');

@@ -54,8 +54,6 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
 
     // Subscription
     Route::get('/subscription/roles', [SubscriptionController::class, 'roles'])->name('buffet.roles.index');
-    Route::get('/subscription/roles/create', [SubscriptionController::class, 'create_role'])->name('buffet.roles.create');
-    Route::post('/subscription/roles', [SubscriptionController::class, 'store_role'])->name('buffet.roles.store');
     Route::get('/subscription/roles/{role}', [SubscriptionController::class, 'show_role'])->name('buffet.roles.show');
     
     Route::get('/subscription/permissions', [SubscriptionController::class, 'permissions'])->name('buffet.permissions.index');

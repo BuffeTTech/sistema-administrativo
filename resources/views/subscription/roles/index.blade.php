@@ -12,7 +12,6 @@
                     <div class="overflow-auto">
                         <div>
                             <h1 class="inline-flex items-center border border-transparent text-lg leading-4 font-semi-bold">Listagem das roles</h1>
-                            <h2><a href="{{ route('buffet.roles.create') }}">Criar role</a></h2>
                         </div>
                         @if (session('success'))
                             <div class="alert alert-success">
