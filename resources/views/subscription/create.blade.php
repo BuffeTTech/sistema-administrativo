@@ -44,23 +44,28 @@
                             <p class="block font-medium text-sm text-gray-700 dark:text-slate-800">Configurações</p>
                             <div class="mt-2">
                                 <x-input-label for="max_employees" :value="__('Máximo de funcionários')" />
-                                <x-text-input id="max_employees" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_employees]" :value="old('configurations[max_employees]')" required step="1" />
+                                <x-text-input id="max_employees" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_employees]" :value="old('configurations[max_employees]')" step="1" />
                                 <x-input-error :messages="$errors->get('configurations[max_employees]')" class="mt-2" />
                             </div>
                             <div class="mt-2">
                                 <x-input-label for="max_food_photos" :value="__('Máximo de imagens para pacotes de comida')" />
-                                <x-text-input id="max_food_photos" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_food_photos]" :value="old('configurations[max_food_photos]')" required step="1" />
+                                <x-text-input id="max_food_photos" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_food_photos]" :value="old('configurations[max_food_photos]')" step="1" />
                                 <x-input-error :messages="$errors->get('configurations[max_food_photos]')" class="mt-2" />
                             </div>
                             <div class="mt-2">
                                 <x-input-label for="max_decoration_photos" :value="__('Máximo de imagens para pacotes de decoração')" />
-                                <x-text-input id="max_decoration_photos" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_decoration_photos]" :value="old('configurations[max_decoration_photos]')" required step="1" />
+                                <x-text-input id="max_decoration_photos" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_decoration_photos]" :value="old('configurations[max_decoration_photos]')" step="1" />
                                 <x-input-error :messages="$errors->get('configurations[max_decoration_photos]')" class="mt-2" />
                             </div>
                             <div class="mt-2">
                                 <x-input-label for="max_recommendations" :value="__('Máximo de recomendações para festa')" />
-                                <x-text-input id="max_recommendations" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_recommendations]" :value="old('configurations[max_recommendations]')" required step="1" />
+                                <x-text-input id="max_recommendations" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_recommendations]" :value="old('configurations[max_recommendations]')" step="1" />
                                 <x-input-error :messages="$errors->get('configurations[max_recommendations]')" class="mt-2" />
+                            </div>
+                            <div class="mt-2">
+                                <x-input-label for="max_survey_questions" :value="__('Máximo de perguntas na pesquisa de satisfação')" />
+                                <x-text-input id="max_survey_questions" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="number" name="configurations[max_survey_questions]" :value="old('configurations[max_survey_questions]')" required step="1" />
+                                <x-input-error :messages="$errors->get('configurations[max_survey_questions]')" class="mt-2" />
                             </div>
                         </div>
 

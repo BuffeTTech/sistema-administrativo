@@ -37,6 +37,7 @@ class SubscriptionSeeder extends Seeder
             "max_food_photos"=>1,
             "max_decoration_photos"=>1,
             "max_recommendations"=>4,
+            "max_survey_questions"=>0,
             "subscription_id"=>$pacote_basico->id,
         ]);
         event(new SubscriptionCreatedEvent($pacote_basico, $pacote_basico_configs));
@@ -53,6 +54,7 @@ class SubscriptionSeeder extends Seeder
             "max_food_photos"=>3,
             "max_decoration_photos"=>3,
             "max_recommendations"=>10,
+            "max_survey_questions"=>5,
             "subscription_id"=>$pacote_intermediario->id,
         ]);
         event(new SubscriptionCreatedEvent($pacote_intermediario, $pacote_intermediario_configs));
@@ -69,6 +71,7 @@ class SubscriptionSeeder extends Seeder
             "max_food_photos"=>null,
             "max_decoration_photos"=>null,
             "max_recommendations"=>null,
+            "max_survey_questions"=>10,
             "subscription_id"=>$pacote_avancado->id,
         ]);
         event(new SubscriptionCreatedEvent($pacote_avancado, $pacote_avancado_configs));

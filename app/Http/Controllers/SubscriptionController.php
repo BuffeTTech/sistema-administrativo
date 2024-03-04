@@ -138,6 +138,7 @@ class SubscriptionController extends Controller
             "max_food_photos"=>$request->configurations['max_food_photos'],
             "max_decoration_photos"=>$request->configurations['max_decoration_photos'],
             "max_recommendations"=>$request->configurations['max_recommendations'],
+            "max_survey_questions"=>$request->configurations['max_survey_questions'],
             "subscription_id"=>$subscription->id,
         ]);
 
