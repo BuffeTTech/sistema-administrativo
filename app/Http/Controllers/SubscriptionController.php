@@ -110,17 +110,9 @@ class SubscriptionController extends Controller
             return redirect()->route('buffet.subscription')->withErrors(['slug'=> "Role not found."]);
         }
 
-        // dd($role->permissions);
         return view('subscription.roles.show', ['role'=>$role]);
     }
 
-    public function create_role() {
-        return view('subscription.roles.create');
-    }
-
-    public function store_role() {
-
-    }
     // Subscriptions
     public function create_subscription() {
         return view('subscription.create');
@@ -146,6 +138,7 @@ class SubscriptionController extends Controller
             "max_food_photos"=>$request->configurations['max_food_photos'],
             "max_decoration_photos"=>$request->configurations['max_decoration_photos'],
             "max_recommendations"=>$request->configurations['max_recommendations'],
+            "max_survey_questions"=>$request->configurations['max_survey_questions'],
             "subscription_id"=>$subscription->id,
         ]);
 

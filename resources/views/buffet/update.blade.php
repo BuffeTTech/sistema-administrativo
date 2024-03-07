@@ -3,8 +3,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h1 class="text-3xl font-bold mb-4">Atualizar buffet</h1>
-                    <form method="POST" action="{{ route('buffet.update', ['buffet'=>$buffet->slug]) }}">
+                    <h1 class="text-3xl font-bold mb-4">Cadastrar buffet</h1>
+                    <form method="POST" action="{{ route('buffet.update', ['buffet'=>$buffet->slug]) }}" id="form">
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
@@ -77,19 +77,18 @@
                         <input type="hidden" name="country" value="Brazil">
                         <div class="mt-2">
                             <x-input-label for="phone1_buffet" :value="__('Telefone 1*')" class="dark:text-slate-800"/>
-                            <x-text-input placeholder="Primeiro telefone de contato do buffet" id="phone1_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone1_buffet" :value="$buffet->buffet_phone1->number ?? ''" required autofocus autocomplete="phone1_buffet" />
+                            <x-text-input placeholder="Primeiro telefone de contato do buffet" id="phone1_buffet" class="phones block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone1_buffet" :value="$buffet->buffet_phone1->number ?? ''" required autofocus autocomplete="phone1_buffet" />
                             <x-input-error :messages="$errors->get('phone1_buffet')" class="mt-2" />
                         </div>
 
                         <div class="mt-2">
                             <x-input-label for="phone2_buffet" :value="__('Telefone')" class="dark:text-slate-800"/>
-                            <x-text-input placeholder="Segundo telefone de contato do buffet" id="phone2_buffet" class="block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone2_buffet" :value="$buffet->buffet_phone2->number ?? null" autofocus autocomplete="phone2_buffet" />
+                            <x-text-input placeholder="Segundo telefone de contato do buffet" id="phone2_buffet" class="phones block mt-1 w-full dark:bg-slate-100 dark:text-slate-500" type="text" name="phone2_buffet" :value="$buffet->buffet_phone2->number ?? null" autofocus autocomplete="phone2_buffet" />
                             <x-input-error :messages="$errors->get('phone2_buffet')" class="mt-2" />
                         </div>
 
-
                         <div class="flex items-center justify-end mt-4">
-                            <x-primary-button class="ms-4">
+                            <x-primary-button class="ms-4" id="button">
                                 {{ __('Atualizar Buffet') }}
                             </x-primary-button>
                         </div>
@@ -106,30 +105,21 @@
         const state = document.querySelector('#state');
         const city = document.querySelector('#city');
         const zipcode_error = document.querySelector("#zipcode-error")
+        const phones = document.querySelectorAll('.phones')
 
-        // const number = document.querySelector('#number');
-        // const complement = document.querySelector('#complement');
-        // const country = document.querySelector('#country');
-
-        function formatarCEP(cep) {
-            cep = cep.replace(/\D/g, '');
-            cep = cep.slice(0, 8);
-            return cep.replace(/(\d{5})(\d{3}).*$/, '$1-$2');
-        }
+        phones.forEach(phone => {
+            phone.addEventListener('input', (e)=>{
+                e.target.value = replacePhone(e.target.value);
+                return;
+            })
+        });
 
         zipcode.addEventListener('input', async (e) => {
-            e.target.value = formatarCEP(e.target.value)
+            e.target.value = replaceCEP(e.target.value)
         })
 
         zipcode.addEventListener('focusout', async (e) => {
             try {
-                // const onlyNumbers = /^[0-9]+$/;
-                // const cepValid = /^[0-9]{8}$/;
-
-                // if(!onlyNumbers.test(e.target.value) || !cepValid.test(e.target.value)) {
-                //     console.log(onlyNumbers.test(e.target.value), cepValid.test(e.target.value))
-                //     throw {cep_error: 'CEP inválido'}
-                // }
                 const cep = e.target.value.replace(/\D/g, '');
 
                 const response = await fetch(`http://viacep.com.br/ws/${cep}/json/`)
@@ -162,9 +152,25 @@
         });
     </script>
     <script>
-        const document_buffet = document.querySelector("#document_buffet")
         const doc_buffet_error = document.querySelector("#document_buffet-error")
-        
+        const document_buffet = document.querySelector("#document_buffet")
+        const form = document.querySelector("#form")
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault()
+
+            const buffet_document_valid = validarCNPJ(document_buffet.value)
+            if(!buffet_document_valid){
+                error("O documento do buffet é invalido")
+                return;
+            }
+
+            const userConfirmed = await confirm(`Deseja atualizar este representante?`)
+
+            if(userConfirmed) {
+                this.submit();
+            }
+        })
+
         document_buffet.addEventListener('input', (e)=>{
             e.target.value = replaceCNPJ(e.target.value);
             return;
@@ -173,71 +179,13 @@
             const cnpj_valid = validarCNPJ(e.target.value)
             if(!cnpj_valid) {
                 doc_buffet_error.innerHTML = "Documento inválido"
+                button.disabled = true;
                 return
             }
+            button.disabled = false;
             doc_buffet_error.innerHTML = ""
             return;
         })
-
-        function replaceCNPJ(value) {
-            return value
-                .replace(/\D+/g, '') // não deixa ser digitado nenhuma letra
-                .replace(/(\d{2})(\d)/, '$1.$2') // captura 2 grupos de número o primeiro com 2 digitos e o segundo de com 3 digitos, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de número
-                .replace(/(\d{3})(\d)/, '$1.$2')
-                .replace(/(\d{3})(\d)/, '$1/$2') // captura 2 grupos de número o primeiro e o segundo com 3 digitos, separados por /
-                .replace(/(\d{4})(\d)/, '$1-$2')
-                .replace(/(-\d{2})\d+?$/, '$1') // captura os dois últimos 2 números, com um - antes dos dois números
-        }
-
-        function validarCNPJ(cnpj) {
-            cnpj = cnpj.replace(/[^\d]/g, '');
-
-            if (cnpj.length !== 14) {
-                return false;
-            }
-
-            if (/^(\d)\1+$/.test(cnpj)) {
-                return false;
-            }
-
-            let tamanho = cnpj.length - 2;
-            let numeros = cnpj.substring(0, tamanho);
-            const digitos = cnpj.substring(tamanho);
-            let soma = 0;
-            let pos = tamanho - 7;
-
-            for (let i = tamanho; i >= 1; i--) {
-                soma += parseInt(numeros.charAt(tamanho - i)) * pos--;
-                if (pos < 2) {
-                    pos = 9;
-                }
-            }
-
-            let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-
-            if (resultado !== parseInt(digitos.charAt(0))) {
-                return false;
-            }
-
-            tamanho += 1;
-            numeros = cnpj.substring(0, tamanho);
-            soma = 0;
-            pos = tamanho - 7;
-
-            for (let i = tamanho; i >= 1; i--) {
-                soma += parseInt(numeros.charAt(tamanho - i)) * pos--;
-                if (pos < 2) {
-                    pos = 9;
-                }
-            }
-
-            resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-
-            if (resultado !== parseInt(digitos.charAt(1))) {
-                return false;
-            }
-
-            return true;
-        }
+        
     </script>
 </x-app-layout>

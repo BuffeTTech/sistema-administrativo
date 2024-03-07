@@ -24,56 +24,80 @@ class SubscriptionSeeder extends Seeder
     public function run(): void
     {
         // Criação dos pacotes
-        $pacote_alegria = Subscription::create([
-            "name"=>"Pacote Alegria",
-            "slug"=>sanitize_string("Pacote Alegria"),
+        $pacote_basico = Subscription::create([
+            "name"=>"Pacote Básico",
+            "slug"=>sanitize_string("Pacote Basico"),
             "description"=>"Este é um pacote de inscrição do buffet",
-            "price"=>159.99,
+            "price"=>150.99,
             "discount"=>0,
             "status"=>SubscriptionStatus::ACTIVE->name,
         ]);
-        $pacote_alegria_configs = SubscriptionConfiguration::create([
+        $pacote_basico_configs = SubscriptionConfiguration::create([
             "max_employees"=>6,
-            "max_food_photos"=>3,
-            "max_decoration_photos"=>3,
-            "max_recommendations"=>3,
-            "subscription_id"=>$pacote_alegria->id,
+            "max_food_photos"=>1,
+            "max_decoration_photos"=>1,
+            "max_recommendations"=>4,
+            "max_survey_questions"=>0,
+            "subscription_id"=>$pacote_basico->id,
         ]);
-        event(new SubscriptionCreatedEvent($pacote_alegria, $pacote_alegria_configs));
-        $pacote_amizade = Subscription::create([
-            "name"=>"Pacote Amizade",
-            "slug"=>sanitize_string("Pacote Amizade"),
+        event(new SubscriptionCreatedEvent($pacote_basico, $pacote_basico_configs));
+        $pacote_intermediario = Subscription::create([
+            "name"=>"Pacote Intermediario",
+            "slug"=>sanitize_string("Pacote Intermediario"),
             "description"=>"Este é um pacote de inscrição do buffet",
-            "price"=>159.99,
+            "price"=>199.99,
             "discount"=>0,
             "status"=>SubscriptionStatus::ACTIVE->name,
         ]);
-        $pacote_amizade_configs = SubscriptionConfiguration::create([
-            "max_employees"=>6,
+        $pacote_intermediario_configs = SubscriptionConfiguration::create([
+            "max_employees"=>10,
             "max_food_photos"=>3,
             "max_decoration_photos"=>3,
-            "max_recommendations"=>3,
-            "subscription_id"=>$pacote_amizade->id,
+            "max_recommendations"=>10,
+            "max_survey_questions"=>5,
+            "subscription_id"=>$pacote_intermediario->id,
         ]);
-        event(new SubscriptionCreatedEvent($pacote_amizade, $pacote_amizade_configs));
-        $pacote_amor = Subscription::create([
-            "name"=>"Pacote Amor",
-            "slug"=>sanitize_string("Pacote amor"),
+        event(new SubscriptionCreatedEvent($pacote_intermediario, $pacote_intermediario_configs));
+        $pacote_avancado = Subscription::create([
+            "name"=>"Pacote Avançado",
+            "slug"=>sanitize_string("Pacote Avançado"),
             "description"=>"Este é um pacote de inscrição do buffet",
-            "price"=>159.99,
+            "price"=>299.99,
             "discount"=>0,
             "status"=>SubscriptionStatus::ACTIVE->name,
         ]);
-        $pacote_amor_configs = SubscriptionConfiguration::create([
-            "max_employees"=>6,
-            "max_food_photos"=>3,
-            "max_decoration_photos"=>3,
-            "max_recommendations"=>3,
-            "subscription_id"=>$pacote_amor->id,
+        $pacote_avancado_configs = SubscriptionConfiguration::create([
+            "max_employees"=>null,
+            "max_food_photos"=>null,
+            "max_decoration_photos"=>null,
+            "max_recommendations"=>null,
+            "max_survey_questions"=>10,
+            "subscription_id"=>$pacote_avancado->id,
         ]);
-        event(new SubscriptionCreatedEvent($pacote_amor, $pacote_amor_configs));
+        event(new SubscriptionCreatedEvent($pacote_avancado, $pacote_avancado_configs));
 
         sleep(10);
+
+        $name_roles = [
+            'basico'=>[
+                'user'=>$pacote_basico->slug.'.user',
+                'operational'=>$pacote_basico->slug.'.operational',
+                'commercial'=>$pacote_basico->slug.'.commercial',
+                'administrative'=>$pacote_basico->slug.'.administrative',
+            ],
+            'intermediario'=>[
+                'user'=>$pacote_intermediario->slug.'.user',
+                'operational'=>$pacote_intermediario->slug.'.operational',
+                'commercial'=>$pacote_intermediario->slug.'.commercial',
+                'administrative'=>$pacote_intermediario->slug.'.administrative',
+            ],
+            'avancado'=>[
+                'user'=>$pacote_avancado->slug.'.user',
+                'operational'=>$pacote_avancado->slug.'.operational',
+                'commercial'=>$pacote_avancado->slug.'.commercial',
+                'administrative'=>$pacote_avancado->slug.'.administrative',
+            ],
+        ];
 
         // Configurações das permissões
         $roles = [];
@@ -83,86 +107,100 @@ class SubscriptionSeeder extends Seeder
             [
             'group'=>"food",
             'permissions'=>[
-                'list food' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'show food' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'create food' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'update food' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'delete food' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'change food status' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
+                'list food' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'view food' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'create food' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'update food' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'delete food' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'change food status' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
             ]],
             [
             'group'=>"schedule",
             'permissions'=>[
-                'list schedule' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'show schedule' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'create schedule' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'update schedule' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'delete schedule' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'change schedule status' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
+                'list schedule' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'create schedule' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'update schedule' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'delete schedule' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'change schedule status' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
             ]],
             [
             'group'=>"guest",
             'permissions'=>[
-                'create guest' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'change guest status' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
+                'create guest' => [],
+                'change guest status' => [],
+                'list booking guests' => [],
             ]],
             [
-            'group'=>"",
+            'group'=>"decoration",
             'permissions'=>[
-                'list decoration' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'show decoration' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'create decoration' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'update decoration' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'delete decoration' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'change decoration status' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
+                'list decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'view decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'create decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'update decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'delete decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'change decoration status' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
             ]],
             [
             'group'=>"booking",
             'permissions'=>[
-                'list booking' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'show booking' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'create booking' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'update booking' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'cancel booking' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'change booking status' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'show party mode' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'view pendent bookings' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'view next bookings' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
+                'create booking' => [$name_roles['basico']['user'], $name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'list bookings' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'view next bookings' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'list my bookings' => [$name_roles['basico']['user'], $name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'list user bookings' => [],
+                'show party mode' => [],
+                'view pendent bookings' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'view booking' => [$name_roles['basico']['user'], $name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'update booking' => [$name_roles['basico']['user'], $name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'cancel booking' => [$name_roles['basico']['user'], $name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'change booking status' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'view booking recommendations' => [],
             ]],
             [
             'group'=>"recommendation",
             'permissions'=>[
-                'list recommendation' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'show recommendation' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'create recommendation' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'update recommendation' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'delete recommendation' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
+                'list recommendation' => [],
+                'view recommendation' => [],
+                'create recommendation' => [],
+                'update recommendation' => [],
+                'delete recommendation' => [],
+                'change recommendation status' => [],
             ]],
             [
             'group'=>"satisfaction survey",
             'permissions'=>[
-                'list all survey question' => [$pacote_amor->slug.'.user'],
-                'list all buffet survey question' => [$pacote_amor->slug.'.user'],
-                'show survey question' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'create survey question' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'update survey question' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'delete survey question' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                'answer survey question' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
+                'list all survey question' => [],
+                'list all buffet survey question' => [],
+                'view survey question' => [],
+                'create survey question' => [],
+                'update survey question' => [],
+                'delete survey question' => [],
+                'answer survey question' => [],
+                'change survey question status' => [],
             ]],
             [
-                'group'=>'buffet',
-                'permissions'=>[
-                    'update buffet commercial'=>[$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                ]
-            ],
+            'group'=>"employee",
+            'permissions'=>[
+                'list employee' => [],
+                'view employee' => [],
+                'create employee' => [],
+                'update employee' => [],
+                'change buffet user role' => [],
+                'delete employee' => [],
+            ]],
             [
-                'group'=>"employee",
-                'permissions'=>[
-                    'list employee' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                    'show employee' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                    'create employee' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                    'update employee' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
-                    'delete employee' => [$pacote_alegria->slug.'.user', $pacote_alegria->slug.'.commercial', $pacote_alegria->slug.'.operational', $pacote_alegria->slug.'.administrative'],
+            'group'=>"user",
+            'permissions'=>[
+                'list buffet user' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'view buffet user' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
+                'create buffet user' => [$name_roles['basico']['administrative']],
+                'update buffet user' => [$name_roles['basico']['administrative']],
+                'delete buffet user' => [$name_roles['basico']['administrative']],
+            ]],
+            [
+            'group'=>"buffet",
+            'permissions'=>[
+                'update buffet commercial' => [$name_roles['basico']['administrative']],
             ]],
         ];
 
