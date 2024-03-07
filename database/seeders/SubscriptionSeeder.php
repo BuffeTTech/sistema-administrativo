@@ -108,7 +108,7 @@ class SubscriptionSeeder extends Seeder
             'group'=>"food",
             'permissions'=>[
                 'list food' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
-                'show food' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'view food' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
                 'create food' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
                 'update food' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
                 'delete food' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
@@ -134,7 +134,7 @@ class SubscriptionSeeder extends Seeder
             'group'=>"decoration",
             'permissions'=>[
                 'list decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
-                'show decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
+                'view decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['operational'], $name_roles['basico']['administrative']],
                 'create decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
                 'update decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
                 'delete decoration' => [$name_roles['basico']['commercial'], $name_roles['basico']['administrative']],
