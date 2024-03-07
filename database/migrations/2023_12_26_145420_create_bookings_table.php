@@ -17,16 +17,19 @@ return new class extends Migration
             $table->string('name_birthdayperson', 255);
             $table->string('years_birthdayperson', 255);
             $table->integer('num_guests'); 
-            $table->date('party_day', 0);
-            $table->foreignId('schedule_id')->constrained(
-                table: 'buffet_schedules', indexName: 'bookings_schedule_id'
-            );
-            $table->enum('status', array_column(BookingStatus::cases(), 'name'));
+            $table->integer('num_extra_guests'); 
+            $table->date('party_day');
+            $table->time('party_start_time');
+            $table->integer('party_duration'); 
             $table->foreignId('buffet_id')->constrained(
                 table: 'buffets', indexName: 'booking_buffet_id'
             );
-            $table->float('price'); 
+            $table->float('price_schedule'); 
+            $table->float('price_decoration'); 
+            $table->float('price_food'); 
+            $table->float('total_price');
             $table->float('discount');
+            $table->enum('status', array_column(BookingStatus::cases(), 'name'));
             $table->timestamps();
         });
     }
