@@ -33,11 +33,11 @@ class SubscriptionSeeder extends Seeder
             "status"=>SubscriptionStatus::ACTIVE->name,
         ]);
         $pacote_basico_configs = SubscriptionConfiguration::create([
-            "max_employees"=>6,
-            "max_food_photos"=>1,
-            "max_decoration_photos"=>1,
-            "max_recommendations"=>4,
-            "max_survey_questions"=>0,
+            "max_employees"=>5,
+            "max_food_photos"=>3,
+            "max_decoration_photos"=>3,
+            "max_recommendations"=>3,
+            "max_survey_questions"=>3,
             "subscription_id"=>$pacote_basico->id,
         ]);
         event(new SubscriptionCreatedEvent($pacote_basico, $pacote_basico_configs));
@@ -181,12 +181,12 @@ class SubscriptionSeeder extends Seeder
             [
             'group'=>"employee",
             'permissions'=>[
-                'list employee' => [],
-                'view employee' => [],
-                'create employee' => [],
-                'update employee' => [],
-                'change buffet user role' => [],
-                'delete employee' => [],
+                'list employee' => [$name_roles['basico']['administrative']],
+                'view employee' => [$name_roles['basico']['administrative']],
+                'create employee' => [$name_roles['basico']['administrative']],
+                'update employee' => [$name_roles['basico']['administrative']],
+                'change buffet user role' => [$name_roles['basico']['administrative']],
+                'delete employee' => [$name_roles['basico']['administrative']],
             ]],
             [
             'group'=>"user",
