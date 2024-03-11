@@ -81,6 +81,37 @@ class DatabaseSeeder extends Seeder
             'expires_in'=>Carbon::now()->addMonth(3)
         ]);
         event(new BuffetCreatedEvent(buffet: $buffet_alegria, subscription: $subscription, buffet_subscription: $buffet_subscription));
+        $buffet_fazendinha_address = Address::create([
+            "zipcode"=>fake()->postcode(),
+            "street"=>fake()->streetName(),
+            "number"=>fake()->buildingNumber(),
+            "neighborhood"=>fake()->secondaryAddress(),
+            "state"=>fake()->state(),
+            "city"=>fake()->city(),
+            "country"=>fake()->country(),
+            "complement"=>""
+        ]);
+      
+        $buffet_fazendinha_phone1 = Phone::create(['number'=>'(19) 99999-9999']);
+
+        $buffet_fazendinha = Buffet::create([
+            'trading_name' => 'Buffet Fazendinha',
+            'email' => 'buffet@fazendinha.com',
+            'slug' => 'buffet-fazendinha',
+            'document' => "89.500.215/0001-85",
+            'owner_id' => $user->id,
+            'status' => BuffetStatus::ACTIVE->name,
+            'phone1'=>$buffet_fazendinha_phone1->id,
+            'address'=>$buffet_fazendinha_address->id
+        ]);
+        $subscription = Subscription::where('slug', 'pacote-basico')->get()->first();
+        $buffet_subscription = BuffetSubscription::create([
+            'buffet_id'=>$buffet_fazendinha->id,
+            'subscription_id'=>$subscription->id,
+            'expires_in'=>Carbon::now()->addMonth(3)
+        ]);
+        event(new BuffetCreatedEvent(buffet: $buffet_fazendinha, subscription: $subscription, buffet_subscription: $buffet_subscription));
+        
         sleep(5);
         $data = [
             [
@@ -383,42 +414,40 @@ class DatabaseSeeder extends Seeder
                         'user_id'=>0,
                         'guests'=>[
                             [
-                                [
-                                    'name'=> 'João',
-                                    'document'=>'292.795.610-30',
-                                    'age'=> 32,
-                                    'status'=>"CONFIRMED"
-                                ],
-                                [
-                                    'name'=> 'Hamilton',
-                                    'document'=>'280.244.380-11',
-                                    'age'=> 55,
-                                    'status'=>"PRESENT"
-                                ],
-                                [
-                                    'name'=> 'Maria Flor',
-                                    'document'=>'000.841.410-69',
-                                    'age'=> 6,
-                                    'status'=>"ABSENT"
-                                ],
-                                [
-                                    'name'=> 'Robson',
-                                    'document'=>'030.410.060-90',
-                                    'age'=> 40,
-                                    'status'=>"BLOCKED"
-                                ],
-                                [
-                                    'name'=> 'Fernanda',
-                                    'document'=>'195.544.410-29',
-                                    'age'=> 20,
-                                    'status'=>"CONFIRMED"
-                                ],
-                                [
-                                    'name'=> 'Prado',
-                                    'document'=>'425.114.870-39',
-                                    'age'=> 18,
-                                    'status'=>"PENDENT"
-                                ]
+                                'name'=> 'João',
+                                'document'=>'292.795.610-30',
+                                'age'=> 32,
+                                'status'=>"CONFIRMED"
+                            ],
+                            [
+                                'name'=> 'Hamilton',
+                                'document'=>'280.244.380-11',
+                                'age'=> 55,
+                                'status'=>"PRESENT"
+                            ],
+                            [
+                                'name'=> 'Maria Flor',
+                                'document'=>'000.841.410-69',
+                                'age'=> 6,
+                                'status'=>"ABSENT"
+                            ],
+                            [
+                                'name'=> 'Robson',
+                                'document'=>'030.410.060-90',
+                                'age'=> 40,
+                                'status'=>"BLOCKED"
+                            ],
+                            [
+                                'name'=> 'Fernanda',
+                                'document'=>'195.544.410-29',
+                                'age'=> 20,
+                                'status'=>"CONFIRMED"
+                            ],
+                            [
+                                'name'=> 'Prado',
+                                'document'=>'425.114.870-39',
+                                'age'=> 18,
+                                'status'=>"PENDENT"
                             ]
                         ],
                         'survey_answers'=>[
@@ -530,6 +559,109 @@ class DatabaseSeeder extends Seeder
                     //     'content'=>'',
                     //     'status'=>'',
                     // ],
+                ],
+            ],
+            [
+                'buffet'=>$buffet_fazendinha,
+                'owner'=>[
+                    'name' => "José",
+                    'email' => "jose@dono.com",
+                    'password' => 'password',
+                    'document' => "393.492.780-73",
+                    'document_type' => "CPF",
+                    'status' => "ACTIVE",
+                    'phones'=>[
+                        ['number'=>'(19) 99999-9999']
+                    ],
+                    'address'=>[
+                        "zipcode"=>"a",
+                        "street"=>"a",
+                        "number"=>5,
+                        "complement"=>"a",
+                        "neighborhood"=>"a",
+                        "state"=>"a",
+                        "city"=>"a",
+                        "country"=>"a",
+                    ]
+                ],
+                'users'=>[
+                    [
+                        'user'=>[
+                            'name' => "Robson",
+                            'email' => "robson@teste.com",
+                            'password' => 'password',
+                            'document' => "894.916.640-26",
+                            'document_type' => "CPF",
+                            'status' => "ACTIVE",
+                            'role' => 'user'
+                        ],
+                        'address'=>[],
+                        'phones'=>[
+                            ['number'=>'(19) 99999-9999']
+                        ]
+                    ],
+                ],
+                'foods'=>[
+                    [
+                        "name_food"=>"Pacote Amizade",
+                        "food_description"=>"<ul>
+                            <li><strong>Entrada:</strong> Salada Caesar</li>
+                            <li><strong>Prato Principal:</strong> Filé Mignon grelhado com molho de cogumelos</li>
+                            <li><strong>Acompanhamento:</strong> Risoto de funghi</li>
+                            <li><strong>Sobremesa:</strong> Cheesecake de morango</li>
+                        </ul>",
+                        "beverages_description"=>"<ul>
+                            <li><strong>Vinho:</strong> Cabernet Sauvignon</li>
+                            <li><strong>Cerveja:</strong> IPA Artesanal</li>
+                            <li><strong>Refrigerante:</strong> Coca-Cola, Pepsi</li>
+                            <li><strong>Água:</strong> Mineral com e sem gás</li>
+                        </ul>",
+                        "status"=>"ACTIVE",
+                        "price"=>55,
+                        "slug"=>"pacote-amizade",
+                        'photos'=>[]
+                    ],
+                ],
+                'decorations'=>[
+                    [
+                        "main_theme"=>"Heróis",
+                        "slug"=>"herois",
+                        "description"=>"<ul>
+                            <li><strong>Temática:</strong> Super-Heróis</li>
+                            <li><strong>Balões:</strong> Arcos de balões coloridos</li>
+                            <li><strong>Mesas:</strong> Mesas decoradas com toalhas e enfeites temáticos</li>
+                            <li><strong>Painéis:</strong> Painéis com imagens dos personagens favoritos</li>
+                            <li><strong>Centros de Mesa:</strong> Centros de mesa com personagens em miniatura</li>
+                            <li><strong>Bolo:</strong> Bolo temático de super-herói</li>
+                        </ul>",
+                        "price"=>30,
+                        "status"=>"ACTIVE",
+                        'photos'=>[]
+                    ],
+                ],
+                'schedules'=>[
+                    [
+                        'day_week'=>"SUNDAY",
+                        'start_time'=>'12:00',
+                        'duration'=>120,
+                        'status'=>'ACTIVE'
+                    ]
+                ],
+                'survey_questions'=>[
+                    [
+                        "question"=>"Qual a sua opinião sobre a comida",
+                        "status"=>true,
+                        "answers"=>0,
+                        "question_type"=>"M",
+                    ],
+                ],
+                'bookings'=>[
+                ],
+                'recommendations'=>[
+                    [
+                        'content'=>'<p>🎉 Prepare-se para a festa mais divertida do ano! Estamos animados para convidar todos os pequenos a se juntarem a nós em uma celebração cheia de cores, brincadeiras e sorrisos. Não perca essa festa incrível!</p>',
+                        'status'=>'ACTIVE',
+                    ],
                 ],
             ]
         ];

@@ -70,12 +70,13 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
 
 Route::get('/aaa', function(){
     $buffet_alegria = Buffet::where('slug', 'buffet-alegria')->get()->first();
+    $buffet_fazendinha = Buffet::where('slug', 'buffet-fazendinha')->get()->first();
     $data = [
         [
             'buffet'=>$buffet_alegria,
             'owner'=>[
                 'name' => "José",
-                'email' => "josé@dono.com",
+                'email' => "jose@dono.com",
                 'password' => 'password',
                 'document' => "393.492.780-73",
                 'document_type' => "CPF",
@@ -253,51 +254,61 @@ Route::get('/aaa', function(){
                     'day_week'=>"SUNDAY",
                     'start_time'=>'12:00',
                     'duration'=>120,
+                    'status'=>'ACTIVE'
                 ],
                 [
                     'day_week'=>"SUNDAY",
                     'start_time'=>'19:00',
                     'duration'=>240,
+                    'status'=>'ACTIVE'
                 ],
                 [
                     'day_week'=>"MONDAY",
                     'start_time'=>'18:00',
                     'duration'=>240,
+                    'status'=>'ACTIVE'
                 ],
                 [
                     'day_week'=>"TUESDAY", 
                     'start_time'=>'15:10',
                     'duration'=>120,
+                    'status'=>'ACTIVE'
                 ],
                 [
                     'day_week'=>"WEDNESDAY",
                     'start_time'=>'18:00',
                     'duration'=>240,
+                    'status'=>'ACTIVE'
                 ],
                 [
-                    'day_week'=>"THRUSDAY",
+                    'day_week'=>"THURSDAY",
                     'start_time'=>'18:00',
                     'duration'=>240,
+                    'status'=>'ACTIVE'
                 ],
                 [
                     'day_week'=>"FRIDAY",
                     'start_time'=>'14:00',
                     'duration'=>240,
+                    'status'=>'ACTIVE'
                 ],
                 [
                     'day_week'=>"FRIDAY",
                     'start_time'=>'19:00',
                     'duration'=>240,
+                    'status'=>'ACTIVE'
                 ],
                 [
                     'day_week'=>"SATURDAY",
                     'start_time'=>'14:00',
                     'duration'=>240,
+                    'status'=>'ACTIVE'
                 ],
                 [
                     'day_week'=>"SATURDAY",
                     'start_time'=>'19:00',
                     'duration'=>240,
+                    'status'=>'ACTIVE'
                 ]
             ],
             'survey_questions'=>[
@@ -361,42 +372,40 @@ Route::get('/aaa', function(){
                     'user_id'=>0,
                     'guests'=>[
                         [
-                            [
-                                'name'=> 'João',
-                                'document'=>'292.795.610-30',
-                                'age'=> 32,
-                                'status'=>"CONFIRMED"
-                            ],
-                            [
-                                'name'=> 'Hamilton',
-                                'document'=>'280.244.380-11',
-                                'age'=> 55,
-                                'status'=>"PRESENT"
-                            ],
-                            [
-                                'name'=> 'Maria Flor',
-                                'document'=>'000.841.410-69',
-                                'age'=> 6,
-                                'status'=>"ABSENT"
-                            ],
-                            [
-                                'name'=> 'Robson',
-                                'document'=>'030.410.060-90',
-                                'age'=> 40,
-                                'status'=>"BLOCKED"
-                            ],
-                            [
-                                'name'=> 'Fernanda',
-                                'document'=>'195.544.410-29',
-                                'age'=> 20,
-                                'status'=>"CONFIRMED"
-                            ],
-                            [
-                                'name'=> 'Prado',
-                                'document'=>'425.114.870-39',
-                                'age'=> 18,
-                                'status'=>"PENDENT"
-                            ]
+                            'name'=> 'João',
+                            'document'=>'292.795.610-30',
+                            'age'=> 32,
+                            'status'=>"CONFIRMED"
+                        ],
+                        [
+                            'name'=> 'Hamilton',
+                            'document'=>'280.244.380-11',
+                            'age'=> 55,
+                            'status'=>"PRESENT"
+                        ],
+                        [
+                            'name'=> 'Maria Flor',
+                            'document'=>'000.841.410-69',
+                            'age'=> 6,
+                            'status'=>"ABSENT"
+                        ],
+                        [
+                            'name'=> 'Robson',
+                            'document'=>'030.410.060-90',
+                            'age'=> 40,
+                            'status'=>"BLOCKED"
+                        ],
+                        [
+                            'name'=> 'Fernanda',
+                            'document'=>'195.544.410-29',
+                            'age'=> 20,
+                            'status'=>"CONFIRMED"
+                        ],
+                        [
+                            'name'=> 'Prado',
+                            'document'=>'425.114.870-39',
+                            'age'=> 18,
+                            'status'=>"PENDENT"
                         ]
                     ],
                     'survey_answers'=>[
@@ -508,6 +517,109 @@ Route::get('/aaa', function(){
                 //     'content'=>'',
                 //     'status'=>'',
                 // ],
+            ],
+        ],
+        [
+            'buffet'=>$buffet_fazendinha,
+            'owner'=>[
+                'name' => "José",
+                'email' => "jose@dono.com",
+                'password' => 'password',
+                'document' => "393.492.780-73",
+                'document_type' => "CPF",
+                'status' => "ACTIVE",
+                'phones'=>[
+                    ['number'=>'(19) 99999-9999']
+                ],
+                'address'=>[
+                    "zipcode"=>"a",
+                    "street"=>"a",
+                    "number"=>5,
+                    "complement"=>"a",
+                    "neighborhood"=>"a",
+                    "state"=>"a",
+                    "city"=>"a",
+                    "country"=>"a",
+                ]
+            ],
+            'users'=>[
+                [
+                    'user'=>[
+                        'name' => "Robson",
+                        'email' => "robson@teste.com",
+                        'password' => 'password',
+                        'document' => "894.916.640-26",
+                        'document_type' => "CPF",
+                        'status' => "ACTIVE",
+                        'role' => 'user'
+                    ],
+                    'address'=>[],
+                    'phones'=>[
+                        ['number'=>'(19) 99999-9999']
+                    ]
+                ],
+            ],
+            'foods'=>[
+                [
+                    "name_food"=>"Pacote Amizade",
+                    "food_description"=>"<ul>
+                        <li><strong>Entrada:</strong> Salada Caesar</li>
+                        <li><strong>Prato Principal:</strong> Filé Mignon grelhado com molho de cogumelos</li>
+                        <li><strong>Acompanhamento:</strong> Risoto de funghi</li>
+                        <li><strong>Sobremesa:</strong> Cheesecake de morango</li>
+                    </ul>",
+                    "beverages_description"=>"<ul>
+                        <li><strong>Vinho:</strong> Cabernet Sauvignon</li>
+                        <li><strong>Cerveja:</strong> IPA Artesanal</li>
+                        <li><strong>Refrigerante:</strong> Coca-Cola, Pepsi</li>
+                        <li><strong>Água:</strong> Mineral com e sem gás</li>
+                    </ul>",
+                    "status"=>"ACTIVE",
+                    "price"=>55,
+                    "slug"=>"pacote-amizade",
+                    'photos'=>[]
+                ],
+            ],
+            'decorations'=>[
+                [
+                    "main_theme"=>"Heróis",
+                    "slug"=>"herois",
+                    "description"=>"<ul>
+                        <li><strong>Temática:</strong> Super-Heróis</li>
+                        <li><strong>Balões:</strong> Arcos de balões coloridos</li>
+                        <li><strong>Mesas:</strong> Mesas decoradas com toalhas e enfeites temáticos</li>
+                        <li><strong>Painéis:</strong> Painéis com imagens dos personagens favoritos</li>
+                        <li><strong>Centros de Mesa:</strong> Centros de mesa com personagens em miniatura</li>
+                        <li><strong>Bolo:</strong> Bolo temático de super-herói</li>
+                    </ul>",
+                    "price"=>30,
+                    "status"=>"ACTIVE",
+                    'photos'=>[]
+                ],
+            ],
+            'schedules'=>[
+                [
+                    'day_week'=>"SUNDAY",
+                    'start_time'=>'12:00',
+                    'duration'=>120,
+                    'status'=>'ACTIVE'
+                ]
+            ],
+            'survey_questions'=>[
+                [
+                    "question"=>"Qual a sua opinião sobre a comida",
+                    "status"=>true,
+                    "answers"=>0,
+                    "question_type"=>"M",
+                ],
+            ],
+            'bookings'=>[
+            ],
+            'recommendations'=>[
+                [
+                    'content'=>'<p>🎉 Prepare-se para a festa mais divertida do ano! Estamos animados para convidar todos os pequenos a se juntarem a nós em uma celebração cheia de cores, brincadeiras e sorrisos. Não perca essa festa incrível!</p>',
+                    'status'=>'ACTIVE',
+                ],
             ],
         ]
     ];
