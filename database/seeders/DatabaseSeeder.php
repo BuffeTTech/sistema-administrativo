@@ -229,7 +229,29 @@ class DatabaseSeeder extends Seeder
                         "status"=>"ACTIVE",
                         "price"=>55,
                         "slug"=>"pacote-alegria",
-                        'photos'=>[]
+                        'photos'=>[
+                            [
+                                'file_name'=>'batata1.jpeg',
+                                'file_path'=>'/batata1.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'40847',
+                            ],
+                            [
+                                'file_name'=>'bolo1.webp',
+                                'file_path'=>'/bolo1.webp',
+                                'file_extension'=>'webp',
+                                'mime_type'=>'image/webp',
+                                'file_size'=>'31904',
+                            ],
+                            [
+                                'file_name'=>'suco1.avif',
+                                'file_path'=>'/suco1.avif',
+                                'file_extension'=>'avif',
+                                'mime_type'=>'image/avif',
+                                'file_size'=>'31904',
+                            ]
+                        ]
                     ],
                     [
                         "name_food"=>"Pacote Felicidade",
@@ -238,7 +260,29 @@ class DatabaseSeeder extends Seeder
                         "status"=>"ACTIVE",
                         "price"=>35,
                         "slug"=>"pacote-felicidade",
-                        'photos'=>[]
+                        'photos'=>[
+                            [
+                                'file_name'=>'batata2.jpeg',
+                                'file_path'=>'/batata2.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'40847',
+                            ],
+                            [
+                                'file_name'=>'bolinha de queijo2.jpeg',
+                                'file_path'=>'/bolinha de queijo2.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'31904',
+                            ],
+                            [
+                                'file_name'=>'bolo2.webp',
+                                'file_path'=>'/bolo2.webp',
+                                'file_extension'=>'webp',
+                                'mime_type'=>'image/webp',
+                                'file_size'=>'31904',
+                            ]
+                        ]
                     ],
                     [
                         "name_food"=>"Pacote Familia",
@@ -247,7 +291,29 @@ class DatabaseSeeder extends Seeder
                         "status"=>"ACTIVE",
                         "price"=>65,
                         "slug"=>"pacote-familia",
-                        'photos'=>[]
+                        'photos'=>[
+                            [
+                                'file_name'=>'batata3.jpeg',
+                                'file_path'=>'/batata3.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'40847',
+                            ],
+                            [
+                                'file_name'=>'mesafrios3.jpeg',
+                                'file_path'=>'/mesafrios3.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'31904',
+                            ],
+                            [
+                                'file_name'=>'bolo3.webp',
+                                'file_path'=>'/bolo3.webp',
+                                'file_extension'=>'webp',
+                                'mime_type'=>'image/webp',
+                                'file_size'=>'31904',
+                            ]
+                        ]
                     ],
                     // [
                     //     "name_food"=>"",
@@ -265,7 +331,29 @@ class DatabaseSeeder extends Seeder
                         "description"=>"Decoração com bonecos e personagens da Marvel",
                         "price"=>30,
                         "status"=>"ACTIVE",
-                        'photos'=>[]
+                        'photos'=>[
+                            [
+                                'file_name'=>'marvel1.jpeg',
+                                'file_path'=>'/marvel1.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'191250',
+                            ],
+                            [
+                                'file_name'=>'marvel2.webp',
+                                'file_path'=>'/marvel2.webp',
+                                'file_extension'=>'webp',
+                                'mime_type'=>'image/webp',
+                                'file_size'=>'113155',
+                            ],
+                            [
+                                'file_name'=>'marvel3.webp',
+                                'file_path'=>'/marvel3.webp',
+                                'file_extension'=>'webp',
+                                'mime_type'=>'image/webp',
+                                'file_size'=>'113155',
+                            ]
+                        ]
                     ],
                     [
                         "main_theme"=>"Minnie",
@@ -273,7 +361,29 @@ class DatabaseSeeder extends Seeder
                         "description"=>"Decoração com bonecos e personagens da Minnie",
                         "price"=>30,
                         "status"=>"ACTIVE",
-                        'photos'=>[]
+                        'photos'=>[
+                            [
+                                'file_name'=>'minnie1.webp',
+                                'file_path'=>'/minnie1.webp',
+                                'file_extension'=>'webp',
+                                'mime_type'=>'image/webp',
+                                'file_size'=>'191250',
+                            ],
+                            [
+                                'file_name'=>'minnie2.webp',
+                                'file_path'=>'/minnie2.webp',
+                                'file_extension'=>'webp',
+                                'mime_type'=>'image/webp',
+                                'file_size'=>'113155',  
+                            ],
+                            [
+                                'file_name'=>'minnie 3.jpeg',
+                                'file_path'=>'/minnie 3.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'113155',
+                            ]
+                        ]
                     ],
                     [
                         "main_theme"=>"Moana",
@@ -281,7 +391,29 @@ class DatabaseSeeder extends Seeder
                         "description"=>"Decoração com bonecos e personagens da Moana",
                         "price"=>30,
                         "status"=>"ACTIVE",
-                        'photos'=>[]
+                        'photos'=>[
+                            [
+                                'file_name'=>'moana.jpeg',
+                                'file_path'=>'/moana.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'191250',
+                            ],
+                            [
+                                'file_name'=>'moana2.jpeg',
+                                'file_path'=>'/moana2.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'113155',
+                            ],
+                            [
+                                'file_name'=>'moana3.jpeg',
+                                'file_path'=>'/moana3.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
+                                'file_size'=>'113155',
+                            ]
+                        ]
                     ],
                     // [
                     //     "main_theme"=>"",

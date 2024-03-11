@@ -187,7 +187,29 @@ Route::get('/aaa', function(){
                     "status"=>"ACTIVE",
                     "price"=>55,
                     "slug"=>"pacote-alegria",
-                    'photos'=>[]
+                    'photos'=>[
+                        [
+                            'file_name'=>'batata1,2,3.jpeg',
+                            'file_path'=>'/batata1,2,3.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'40847',
+                        ],
+                        [
+                            'file_name'=>'bolo123.webp',
+                            'file_path'=>'/bolo123.webp',
+                            'file_extension'=>'webp',
+                            'mime_type'=>'image/webp',
+                            'file_size'=>'31904',
+                        ],
+                        [
+                            'file_name'=>'bolo123.webp',
+                            'file_path'=>'/bolo123.webp',
+                            'file_extension'=>'webp',
+                            'mime_type'=>'image/webp',
+                            'file_size'=>'31904',
+                        ]
+                    ]
                 ],
                 [
                     "name_food"=>"Pacote Felicidade",
@@ -196,7 +218,29 @@ Route::get('/aaa', function(){
                     "status"=>"ACTIVE",
                     "price"=>35,
                     "slug"=>"pacote-felicidade",
-                    'photos'=>[]
+                    'photos'=>[
+                        [
+                            'file_name'=>'batata1,2,3.jpeg',
+                            'file_path'=>'/batata1,2,3.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'40847',
+                        ],
+                        [
+                            'file_name'=>'bolinha de queijo2.jpeg',
+                            'file_path'=>'/bolinha de queijo2.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'31904',
+                        ],
+                        [
+                            'file_name'=>'bolo123.webp',
+                            'file_path'=>'/bolo123.webp',
+                            'file_extension'=>'webp',
+                            'mime_type'=>'image/webp',
+                            'file_size'=>'31904',
+                        ]
+                    ]
                 ],
                 [
                     "name_food"=>"Pacote Familia",
@@ -205,7 +249,29 @@ Route::get('/aaa', function(){
                     "status"=>"ACTIVE",
                     "price"=>65,
                     "slug"=>"pacote-familia",
-                    'photos'=>[]
+                    'photos'=>[
+                        [
+                            'file_name'=>'batata1,2,3.jpeg',
+                            'file_path'=>'/batata1,2,3.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'40847',
+                        ],
+                        [
+                            'file_name'=>'mesafrios3.jpeg',
+                            'file_path'=>'/mesafrios3.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'31904',
+                        ],
+                        [
+                            'file_name'=>'bolo123.webp',
+                            'file_path'=>'/bolo123.webp',
+                            'file_extension'=>'webp',
+                            'mime_type'=>'image/webp',
+                            'file_size'=>'31904',
+                        ]
+                    ]
                 ],
                 // [
                 //     "name_food"=>"",
@@ -223,7 +289,29 @@ Route::get('/aaa', function(){
                     "description"=>"Decoração com bonecos e personagens da Marvel",
                     "price"=>30,
                     "status"=>"ACTIVE",
-                    'photos'=>[]
+                    'photos'=>[
+                        [
+                            'file_name'=>'marvel1.jpeg',
+                            'file_path'=>'/marvel1.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'191250',
+                        ],
+                        [
+                            'file_name'=>'marvel2.webp',
+                            'file_path'=>'/marvel2.webp',
+                            'file_extension'=>'webp',
+                            'mime_type'=>'image/webp',
+                            'file_size'=>'113155',
+                        ],
+                        [
+                            'file_name'=>'marvel3.webp',
+                            'file_path'=>'/marvel3.webp',
+                            'file_extension'=>'webp',
+                            'mime_type'=>'image/webp',
+                            'file_size'=>'113155',
+                        ]
+                    ]
                 ],
                 [
                     "main_theme"=>"Minnie",
@@ -231,7 +319,29 @@ Route::get('/aaa', function(){
                     "description"=>"Decoração com bonecos e personagens da Minnie",
                     "price"=>30,
                     "status"=>"ACTIVE",
-                    'photos'=>[]
+                    'photos'=>[
+                        [
+                            'file_name'=>'minnie1.webp',
+                            'file_path'=>'/minnie1.webp',
+                            'file_extension'=>'webp',
+                            'mime_type'=>'image/webp',
+                            'file_size'=>'191250',
+                        ],
+                        [
+                            'file_name'=>'minnie2.webp',
+                            'file_path'=>'/minnie2.webp',
+                            'file_extension'=>'webp',
+                            'mime_type'=>'image/webp',
+                            'file_size'=>'113155',  
+                        ],
+                        [
+                            'file_name'=>'minnie 3.jpeg',
+                            'file_path'=>'/minnie 3.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'113155',
+                        ]
+                    ]
                 ],
                 [
                     "main_theme"=>"Moana",
@@ -239,7 +349,29 @@ Route::get('/aaa', function(){
                     "description"=>"Decoração com bonecos e personagens da Moana",
                     "price"=>30,
                     "status"=>"ACTIVE",
-                    'photos'=>[]
+                    'photos'=>[
+                        [
+                            'file_name'=>'moana.jpeg',
+                            'file_path'=>'/moana.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'191250',
+                        ],
+                        [
+                            'file_name'=>'moana2.jpeg',
+                            'file_path'=>'/moana2.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'113155',
+                        ],
+                        [
+                            'file_name'=>'moana3.jpeg',
+                            'file_path'=>'/moana3.jpeg',
+                            'file_extension'=>'jpeg',
+                            'mime_type'=>'image/jpeg',
+                            'file_size'=>'113155',
+                        ]
+                    ]
                 ],
                 // [
                 //     "main_theme"=>"",
