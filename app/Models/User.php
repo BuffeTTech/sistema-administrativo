@@ -3,13 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -22,6 +24,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'document',
+        'document_type',
+        'phone1',
+        'phone2',
+        'address',
+        'status',
+        'email_verified_at'
     ];
 
     /**
@@ -43,4 +52,42 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function representative() {
+        return $this->hasOne(User::class);
+    }
+    public function commercial() {
+        return $this->hasOne(User::class);
+    }
+
+    public function user_phone1() {
+        return $this->belongsTo(Phone::class, 'phone1');
+    }
+    public function user_phone2() {
+        return $this->belongsTo(Phone::class, 'phone2');
+    }
+    public function user_address() {
+        return $this->belongsTo(Address::class, 'address');
+    }
+    public function buffets() {
+        return $this->hasMany(Buffet::class, 'owner_id');
+    }
+
+    public function isBuffet(){
+        return $this->hasRole('buffet');
+    }
+
+
+    // public function getPassword()
+    // {
+    //     // Usado para compartilhamento de senha entre sistemas
+    //     $this->setHidden([]);
+
+    //     $password = $this->password;
+
+    //     $this->setHidden(['password', 'remember_token']);
+
+    //     return $password;
+    // }
+
 }

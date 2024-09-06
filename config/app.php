@@ -5,6 +5,8 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    'commercial_url' => env('COMMERCIAL_URL', 'http://comercial-laravel.test-1'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -70,7 +72,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Sao_Paulo',
 
     /*
     |--------------------------------------------------------------------------
@@ -168,7 +170,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Spatie\Permission\PermissionServiceProvider::class
+        Spatie\Permission\PermissionServiceProvider::class,
+        LaravelLegends\PtBrValidator\ValidatorProvider::class
     ])->toArray(),
 
     /*

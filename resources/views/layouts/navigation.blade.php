@@ -16,6 +16,55 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @can('list representative')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('representative.index')" :active="request()->routeIs('representative.index')">
+                            {{ __('Representantes') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('list buffet')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('buffet.index')" :active="request()->routeIs('buffet.index')">
+                            {{ __('Buffets') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('list commercial')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('commercial.index')" :active="request()->routeIs('commercial.index')">
+                            {{ __('Comercial') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('list handout')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('handout.index')" :active="request()->routeIs('handout.index')">
+                        {{ __('Comunicados') }}
+                    </x-nav-link>
+                </div>
+                @endcan
+                @can('list subscription')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('buffet.subscription.index')" :active="request()->routeIs('buffet.subscription.index')">
+                            {{ __('Inscrições') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('list permissions')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('buffet.permissions.index')" :active="request()->routeIs('buffet.permissions.index')">
+                            {{ __('Permissões') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('list roles')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('buffet.roles.index')" :active="request()->routeIs('buffet.roles.index')">
+                            {{ __('Cargos') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->
