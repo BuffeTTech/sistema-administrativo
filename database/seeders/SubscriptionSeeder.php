@@ -201,6 +201,7 @@ class SubscriptionSeeder extends Seeder
             'group'=>"buffet",
             'permissions'=>[
                 'update buffet commercial' => [$name_roles['basico']['administrative']],
+                'list buffet configs' => [$name_roles['basico']['administrative']]
             ]],
         ];
 
