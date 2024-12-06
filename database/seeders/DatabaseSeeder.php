@@ -529,174 +529,174 @@ class DatabaseSeeder extends Seeder
                     //     "question_type"=>"",
                     // ],
                 ],
-                'bookings'=>[
-                    [
-                        'name_birthdayperson'=>'Tasso',
-                        'years_birthdayperson'=>15,
-                        'num_guests'=>50,
-                        'party_day'=>'2024-09-02',
-                        'food_id'=>0,
-                        'price_food'=>55,
-                        'decoration_id'=>0,
-                        'price_decoration'=>30,
-                        'schedule_id'=>2,
-                        'price_schedule'=>0,
-                        'discount'=>0,
-                        'status'=>"FINISHED",
-                        'user_id'=>0,
-                        'guests'=>[
-                            [
-                                'name'=> 'João',
-                                'document'=>'292.795.610-30',
-                                'age'=> 32,
-                                'status'=>"CONFIRMED"
-                            ],
-                            [
-                                'name'=> 'Hamilton',
-                                'document'=>'280.244.380-11',
-                                'age'=> 55,
-                                'status'=>"PRESENT"
-                            ],
-                            [
-                                'name'=> 'Maria Flor',
-                                'document'=>'000.841.410-69',
-                                'age'=> 6,
-                                'status'=>"ABSENT"
-                            ],
-                            [
-                                'name'=> 'Robson',
-                                'document'=>'030.410.060-90',
-                                'age'=> 40,
-                                'status'=>"BLOCKED"
-                            ],
-                            [
-                                'name'=> 'Fernanda',
-                                'document'=>'195.544.410-29',
-                                'age'=> 20,
-                                'status'=>"CONFIRMED"
-                            ],
-                            [
-                                'name'=> 'Prado',
-                                'document'=>'425.114.870-39',
-                                'age'=> 18,
-                                'status'=>"PENDENT"
-                            ]
-                        ],
-                        'survey_answers'=>[
-                            [
-                                "question_id"=>0,
-                                "answer"=>"0-25",
-                            ],
-                        ],
-                    ],
-                    [
-                        'name_birthdayperson'=>'Luiza',
-                        'years_birthdayperson'=>6,
-                        'num_guests'=>100,
-                        'party_day'=>'2024-09-20',
-                        'food_id'=>2,
-                        'price_food'=>65,
-                        'decoration_id'=>2,
-                        'price_decoration'=>30,
-                        'schedule_id'=>6,
-                        'price_schedule'=>0,
-                        'discount'=>0,
-                        'status'=>"PENDENT",
-                        'user_id'=>0,
-                        'survey_answers'=>[ ],
-                    ],
-                    [
-                        'name_birthdayperson'=>'Silvia',
-                        'years_birthdayperson'=>10,
-                        'num_guests'=>70,
-                        'party_day'=>'2024-09-20',
-                        'food_id'=>2,
-                        'price_food'=>35,
-                        'decoration_id'=>2,
-                        'price_decoration'=>30,
-                        'schedule_id'=>6,
-                        'price_schedule'=>0,
-                        'discount'=>0,
-                        'status'=>"PENDENT",
-                        'user_id'=>1,
-                        'survey_answers'=>[],
-                    ],
-                    [
-                        'name_birthdayperson'=>'André',
-                        'years_birthdayperson'=>15,
-                        'num_guests'=>50,
-                        'party_day'=>'2024-09-26',
-                        'food_id'=>0,
-                        'price_food'=>65,
-                        'decoration_id'=>0,
-                        'price_decoration'=>30,
-                        'schedule_id'=>5,
-                        'price_schedule'=>0,
-                        'discount'=>0,
-                        'status'=>"APPROVED",
-                        'user_id'=>0,
-                        'survey_answers'=>[],
-                        'guests'=>[
-                            [
-                                'name'=> 'Pedro',
-                                'document'=>'292.795.610-30',
-                                'age'=> 32,
-                                'status'=>"CONFIRMED"
-                            ],
-                            [
-                                'name'=> 'Hamilton',
-                                'document'=>'280.244.380-11',
-                                'age'=> 55,
-                                'status'=>"PRESENT"
-                            ],
-                            [
-                                'name'=> 'Maria Clara',
-                                'document'=>'000.841.410-69',
-                                'age'=> 6,
-                                'status'=>"ABSENT"
-                            ],
-                            [
-                                'name'=> 'Marcos',
-                                'document'=>'030.410.060-90',
-                                'age'=> 40,
-                                'status'=>"BLOCKED"
-                            ],
-                            [
-                                'name'=> 'Fernanda',
-                                'document'=>'195.544.410-29',
-                                'age'=> 20,
-                                'status'=>"CONFIRMED"
-                            ],
-                            [
-                                'name'=> 'Prado',
-                                'document'=>'425.114.870-39',
-                                'age'=> 18,
-                                'status'=>"PENDENT"
-                            ]
-                        ],
-                    ],
-                    [
-                        'name_birthdayperson'=>'Yuri',
-                        'years_birthdayperson'=>15,
-                        'num_guests'=>50,
-                        'party_day'=>'2024-09-15',
-                        'food_id'=>0,
-                        'price_food'=>55,
-                        'decoration_id'=>0,
-                        'price_decoration'=>30,
-                        'schedule_id'=>0,
-                        'price_schedule'=>0,
-                        'discount'=>0,
-                        'status'=>"APPROVED",
-                        'user_id'=>1,
-                        'survey_answers'=>[
-                            [
-                                "question_id"=>0,
-                                "answer"=>"0-25",
-                            ],
-                        ],
-                    ]
-                ],
+                // 'bookings'=>[
+                //     [
+                //         'name_birthdayperson'=>'Tasso',
+                //         'years_birthdayperson'=>15,
+                //         'num_guests'=>50,
+                //         'party_day'=>'2024-09-02',
+                //         'food_id'=>0,
+                //         'price_food'=>55,
+                //         'decoration_id'=>0,
+                //         'price_decoration'=>30,
+                //         'schedule_id'=>2,
+                //         'price_schedule'=>0,
+                //         'discount'=>0,
+                //         'status'=>"FINISHED",
+                //         'user_id'=>0,
+                //         'guests'=>[
+                //             [
+                //                 'name'=> 'João',
+                //                 'document'=>'292.795.610-30',
+                //                 'age'=> 32,
+                //                 'status'=>"CONFIRMED"
+                //             ],
+                //             [
+                //                 'name'=> 'Hamilton',
+                //                 'document'=>'280.244.380-11',
+                //                 'age'=> 55,
+                //                 'status'=>"PRESENT"
+                //             ],
+                //             [
+                //                 'name'=> 'Maria Flor',
+                //                 'document'=>'000.841.410-69',
+                //                 'age'=> 6,
+                //                 'status'=>"ABSENT"
+                //             ],
+                //             [
+                //                 'name'=> 'Robson',
+                //                 'document'=>'030.410.060-90',
+                //                 'age'=> 40,
+                //                 'status'=>"BLOCKED"
+                //             ],
+                //             [
+                //                 'name'=> 'Fernanda',
+                //                 'document'=>'195.544.410-29',
+                //                 'age'=> 20,
+                //                 'status'=>"CONFIRMED"
+                //             ],
+                //             [
+                //                 'name'=> 'Prado',
+                //                 'document'=>'425.114.870-39',
+                //                 'age'=> 18,
+                //                 'status'=>"PENDENT"
+                //             ]
+                //         ],
+                //         'survey_answers'=>[
+                //             [
+                //                 "question_id"=>0,
+                //                 "answer"=>"0-25",
+                //             ],
+                //         ],
+                //     ],
+                //     [
+                //         'name_birthdayperson'=>'Luiza',
+                //         'years_birthdayperson'=>6,
+                //         'num_guests'=>100,
+                //         'party_day'=>'2024-09-20',
+                //         'food_id'=>2,
+                //         'price_food'=>65,
+                //         'decoration_id'=>2,
+                //         'price_decoration'=>30,
+                //         'schedule_id'=>6,
+                //         'price_schedule'=>0,
+                //         'discount'=>0,
+                //         'status'=>"PENDENT",
+                //         'user_id'=>0,
+                //         'survey_answers'=>[ ],
+                //     ],
+                //     [
+                //         'name_birthdayperson'=>'Silvia',
+                //         'years_birthdayperson'=>10,
+                //         'num_guests'=>70,
+                //         'party_day'=>'2024-09-20',
+                //         'food_id'=>2,
+                //         'price_food'=>35,
+                //         'decoration_id'=>2,
+                //         'price_decoration'=>30,
+                //         'schedule_id'=>6,
+                //         'price_schedule'=>0,
+                //         'discount'=>0,
+                //         'status'=>"PENDENT",
+                //         'user_id'=>1,
+                //         'survey_answers'=>[],
+                //     ],
+                //     [
+                //         'name_birthdayperson'=>'André',
+                //         'years_birthdayperson'=>15,
+                //         'num_guests'=>50,
+                //         'party_day'=>'2024-09-26',
+                //         'food_id'=>0,
+                //         'price_food'=>65,
+                //         'decoration_id'=>0,
+                //         'price_decoration'=>30,
+                //         'schedule_id'=>5,
+                //         'price_schedule'=>0,
+                //         'discount'=>0,
+                //         'status'=>"APPROVED",
+                //         'user_id'=>0,
+                //         'survey_answers'=>[],
+                //         'guests'=>[
+                //             [
+                //                 'name'=> 'Pedro',
+                //                 'document'=>'292.795.610-30',
+                //                 'age'=> 32,
+                //                 'status'=>"CONFIRMED"
+                //             ],
+                //             [
+                //                 'name'=> 'Hamilton',
+                //                 'document'=>'280.244.380-11',
+                //                 'age'=> 55,
+                //                 'status'=>"PRESENT"
+                //             ],
+                //             [
+                //                 'name'=> 'Maria Clara',
+                //                 'document'=>'000.841.410-69',
+                //                 'age'=> 6,
+                //                 'status'=>"ABSENT"
+                //             ],
+                //             [
+                //                 'name'=> 'Marcos',
+                //                 'document'=>'030.410.060-90',
+                //                 'age'=> 40,
+                //                 'status'=>"BLOCKED"
+                //             ],
+                //             [
+                //                 'name'=> 'Fernanda',
+                //                 'document'=>'195.544.410-29',
+                //                 'age'=> 20,
+                //                 'status'=>"CONFIRMED"
+                //             ],
+                //             [
+                //                 'name'=> 'Prado',
+                //                 'document'=>'425.114.870-39',
+                //                 'age'=> 18,
+                //                 'status'=>"PENDENT"
+                //             ]
+                //         ],
+                //     ],
+                //     [
+                //         'name_birthdayperson'=>'Yuri',
+                //         'years_birthdayperson'=>15,
+                //         'num_guests'=>50,
+                //         'party_day'=>'2024-09-15',
+                //         'food_id'=>0,
+                //         'price_food'=>55,
+                //         'decoration_id'=>0,
+                //         'price_decoration'=>30,
+                //         'schedule_id'=>0,
+                //         'price_schedule'=>0,
+                //         'discount'=>0,
+                //         'status'=>"APPROVED",
+                //         'user_id'=>1,
+                //         'survey_answers'=>[
+                //             [
+                //                 "question_id"=>0,
+                //                 "answer"=>"0-25",
+                //             ],
+                //         ],
+                //     ]
+                // ],
                 'recommendations'=>[
                     [
                         'content'=>'<p>🎉 Prepare-se para a festa mais divertida do ano! Estamos animados para convidar todos os pequenos a se juntarem a nós em uma celebração cheia de cores, brincadeiras e sorrisos. Não perca essa festa incrível!</p>',
