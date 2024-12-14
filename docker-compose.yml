@@ -47,13 +47,13 @@ services:
         networks:
             - src_default
 
-    # mailpit:
-    #     image: 'axllent/mailpit:latest'
-    #     ports:
-    #         - '${FORWARD_MAILPIT_PORT:-1025}:1025'
-    #         - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
-    #     networks:
-    #         - src_default
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - src_default
 
 networks:
     src_default:

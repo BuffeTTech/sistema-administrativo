@@ -10,8 +10,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -89,5 +90,26 @@ class User extends Authenticatable implements MustVerifyEmail
 
     //     return $password;
     // }
+
+    /**
+     * Retorna a chave primária do JWT (geralmente o ID do usuário).
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Retorna as claims adicionais que você deseja adicionar ao payload do JWT.
+     */
+    public function getJWTCustomClaims()
+    {
+        return [
+            'name'=>$this->name,
+            'email'=>$this->email,
+            'document'=>$this->document,
+            'status'=>$this->status,
+        ];
+    }
 
 }

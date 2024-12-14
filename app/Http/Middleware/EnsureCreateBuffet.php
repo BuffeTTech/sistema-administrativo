@@ -7,6 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class EnsureCreateBuffet
 {
@@ -33,7 +34,16 @@ class EnsureCreateBuffet
                     }
 
                     // redirecionar para o outro sistema aqui
-                    return $next($request);
+                    $token = JWTAuth::fromUser(auth()->user());
+                    $commercialUrl = rtrim(config('app.commercial_url'), '/'); // Remove a barra final, se existir
+                    $queryParams = [
+                        'token' => $token,
+                    ];
+                    $redirectUrl = $commercialUrl . '/login_api?' . http_build_query($queryParams);
+                    
+                    return redirect()->away($redirectUrl);
+
+                    // return $next($request);
                 }
                 return redirect()->route('auth.buffet.store');
             }
