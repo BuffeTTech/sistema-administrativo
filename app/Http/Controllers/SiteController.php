@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Buffet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class SiteController extends Controller
 {
