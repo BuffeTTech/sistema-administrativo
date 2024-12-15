@@ -14,13 +14,13 @@
         
         <meta property="og:title" content="BuffetTech - A melhor forma de gerenciar seu buffet de festas infantis.">
         <meta property="og:description" content="BuffetTech é o sistema ideal para a gestão de buffets de festas infantis. Organize reservas, cardápios personalizados, pagamentos e estoque de forma eficiente.">
-        <meta property="og:image" content="{{ asset('img/identidade-visual/buffettech_logo_vertical.png') }}">
+        <meta property="og:image" content="{{ asset('img//dark-mode/identidade-visual/buffettech_logo_vertical.png') }}">
         <meta property="og:url" content="{{ config('app.administrative_url') }}">
         <meta property="og:type" content="website">
         
         <meta name="twitter:title" content="BuffetTech - A melhor forma de gerenciar seu buffet de festas infantis.">
         <meta name="twitter:description" content="BuffetTech é o sistema ideal para a gestão de buffets de festas infantis. Organize reservas, cardápios personalizados, pagamentos e estoque de forma eficiente.">
-        <meta name="twitter:image" content="{{ asset('img/identidade-visual/buffettech_logo_vertical.png') }}">
+        <meta name="twitter:image" content="{{ asset('img//dark-mode/identidade-visual/buffettech_logo_vertical.png') }}">
         <meta name="twitter:card" content="summary_large_image">
 
         <title>{{ config('app.name', 'BuffeTTech') }}</title>

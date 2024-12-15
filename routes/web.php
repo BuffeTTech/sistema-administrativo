@@ -23,6 +23,9 @@ use Carbon\Carbon;
 Route::get('/', function () {
     return view('welcome');
 })->name('landing_page');
+Route::get('/contato', function () {
+    return view('welcome');
+})->name('contact');
 
 
 // Route::get('/dashboard', function () {
