@@ -13,57 +13,381 @@
         
         <meta property="og:title" content="BuffetTech - A melhor forma de gerenciar seu buffet de festas infantis.">
         <meta property="og:description" content="BuffetTech é o sistema ideal para a gestão de buffets de festas infantis. Organize reservas, cardápios personalizados, pagamentos e estoque de forma eficiente.">
-        <meta property="og:image" content="{{ asset('img/identidade-visual/buffettech_logo_vertical.png') }}">
+        <meta property="og:image" content="{{ asset('img/dark-mode/identidade-visual/buffettech_logo_vertical.png') }}">
         <meta property="og:url" content="{{ config('app.administrative_url') }}">
         <meta property="og:type" content="website">
         
         <meta name="twitter:title" content="BuffetTech - A melhor forma de gerenciar seu buffet de festas infantis.">
         <meta name="twitter:description" content="BuffetTech é o sistema ideal para a gestão de buffets de festas infantis. Organize reservas, cardápios personalizados, pagamentos e estoque de forma eficiente.">
-        <meta name="twitter:image" content="{{ asset('img/identidade-visual/buffettech_logo_vertical.png') }}">
+        <meta name="twitter:image" content="{{ asset('img/dark-mode/identidade-visual/buffettech_logo_vertical.png') }}">
         <meta name="twitter:card" content="summary_large_image">
 
         <title>BuffeTTech - A melhor gestão do seu buffet!</title>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=open-sans:400,500,600,700,800" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <!-- Styles -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         <style>
-            /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Figtree, sans-serif;font-feature-settings:normal}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::-webkit-backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.relative{position:relative}.mx-auto{margin-left:auto;margin-right:auto}.mx-6{margin-left:1.5rem;margin-right:1.5rem}.ml-4{margin-left:1rem}.mt-16{margin-top:4rem}.mt-6{margin-top:1.5rem}.mt-4{margin-top:1rem}.-mt-px{margin-top:-1px}.mr-1{margin-right:0.25rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.h-16{height:4rem}.h-7{height:1.75rem}.h-6{height:1.5rem}.h-5{height:1.25rem}.min-h-screen{min-height:100vh}.w-auto{width:auto}.w-16{width:4rem}.w-7{width:1.75rem}.w-6{width:1.5rem}.w-5{width:1.25rem}.max-w-7xl{max-width:80rem}.shrink-0{flex-shrink:0}.scale-100{--tw-scale-x:1;--tw-scale-y:1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.items-center{align-items:center}.justify-center{justify-content:center}.gap-6{gap:1.5rem}.gap-4{gap:1rem}.self-center{align-self:center}.rounded-lg{border-radius:0.5rem}.rounded-full{border-radius:9999px}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity))}.bg-dots-darker{background-image:url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E")}.from-gray-700\/50{--tw-gradient-from:rgb(55 65 81 / 0.5);--tw-gradient-to:rgb(55 65 81 / 0);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0);--tw-gradient-stops:var(--tw-gradient-from), transparent, var(--tw-gradient-to)}.bg-center{background-position:center}.stroke-red-500{stroke:#ef4444}.stroke-gray-400{stroke:#9ca3af}.p-6{padding:1.5rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.text-center{text-align:center}.text-right{text-align:right}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-gray-500\/20{--tw-shadow-color:rgb(107 114 128 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.selection\:bg-red-500 *::selection{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.selection\:bg-red-500::selection{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.hover\:text-gray-900:hover{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity))}.hover\:text-gray-700:hover{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity))}.focus\:rounded-sm:focus{border-radius:0.125rem}.focus\:outline:focus{outline-style:solid}.focus\:outline-2:focus{outline-width:2px}.focus\:outline-red-500:focus{outline-color:#ef4444}.group:hover .group-hover\:stroke-gray-600{stroke:#4b5563}.z-10{z-index: 10}@media (prefers-reduced-motion: no-preference){.motion-safe\:hover\:scale-\[1\.01\]:hover{--tw-scale-x:1.01;--tw-scale-y:1.01;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}}@media (prefers-color-scheme: dark){.dark\:bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity))}.dark\:bg-gray-800\/50{background-color:rgb(31 41 55 / 0.5)}.dark\:bg-red-800\/20{background-color:rgb(153 27 27 / 0.2)}.dark\:bg-dots-lighter{background-image:url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E")}.dark\:bg-gradient-to-bl{background-image:linear-gradient(to bottom left, var(--tw-gradient-stops))}.dark\:stroke-gray-600{stroke:#4b5563}.dark\:text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity))}.dark\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:shadow-none{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.dark\:ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.dark\:ring-inset{--tw-ring-inset:inset}.dark\:ring-white\/5{--tw-ring-color:rgb(255 255 255 / 0.05)}.dark\:hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity))}.group:hover .dark\:group-hover\:stroke-gray-400{stroke:#9ca3af}}@media (min-width: 640px){.sm\:fixed{position:fixed}.sm\:top-0{top:0px}.sm\:right-0{right:0px}.sm\:ml-0{margin-left:0px}.sm\:flex{display:flex}.sm\:items-center{align-items:center}.sm\:justify-center{justify-content:center}.sm\:justify-between{justify-content:space-between}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:gap-8{gap:2rem}.lg\:p-8{padding:2rem}}
+          html {
+              scroll-behavior: smooth !important;
+          }
         </style>
+
     </head>
-    <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                        asda
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+    <body class="h-full" style="background-color: #EEEEEE">
+        
+        <div class="bg-white">
+            <nav>
+                <ul class="flex text-center justify-center text-2xl">
+                    <li class="px-2"><a href="https://www.linkedin.com/company/buffettech"><i class="fa-brands fa-linkedin"></i></a></li>
+                    <li class="px-2"><a href="https://github.com/BuffeTTech"><i class="fa-brands fa-github"></i></a></li>
+                    {{-- <li class="px-2"><a href=""><i class="fa-brands fa-instagram"></i></a></li> --}}
+                    {{-- <li class="px-2"><a href=""><i class="fa-brands fa-whatsapp"></i></a></li> --}}
+                </ul>
+            </nav>
+        </div>
+        <section class="relative h-[90vh] bg-black">
+            <!-- Camada de imagem com opacidade -->
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('img/background-landingpage.png') }}'); opacity: 0.2;"></div>
+            
+            <!-- Conteúdo Principal -->
+            <div class="relative z-10 h-full">
+                <!-- Header Principal -->
+                <header class="bg-transparent">
+                    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                        <!-- Logotipo -->
+                        <div>
+                            <a href="{{ route('landing_page') }}">
+                                <img src="{{ asset('img/identidade-visual/light-mode/buffettech_logo_vertical.png') }}" 
+                                     alt="Logo"
+                                     class="w-[300px] md:w-[430px] h-auto max-w-full">
+                            </a>
+                        </div>
+                
+                        <!-- Botão Hamburger -->
+                        <div class="md:hidden">
+                            <button id="menu-toggle" class="text-white focus:outline-none">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                
+                        <!-- Links de Navegação e Botões -->
+                        <nav id="menu" class="hidden md:flex flex-col md:flex-row md:space-x-6 absolute md:relative top-20 left-0 w-full md:top-0 md:w-auto bg-gray-900 md:bg-transparent z-50 mt-2 items-center">
+                            <a href="#sobre" class="block px-3 py-2 text-white hover:text-yellow-500">Sobre</a>
+                            <a href="#planos" class="block px-3 py-2 text-white hover:text-yellow-500">Planos</a>
+                            {{-- <a href="#blog" class="block px-3 py-2 text-white hover:text-yellow-500">Blog</a> --}}
+                            <a href="{{ route('contact') }}" class="block px-3 py-2 text-white hover:text-yellow-500">Fale conosco</a>
+                        
+                            @if (Route::has('login'))
+                                @auth
+                                    <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 px-4 my-auto">
+                                        <a href="{{ route('dashboard') }}" class="px-4 py-2 text-white border rounded hover:bg-white hover:text-gray-800 text-center">Dashboard</a>
+                                    </div>
+                                @else
+                                    <!-- Botões de Ação -->
+                                    <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 px-4 my-auto">
+                                        <a href="{{ route('login') }}" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-center">Login</a>
+                                        <a href="{{ route('register') }}" class="px-4 py-2 text-white border rounded hover:bg-white hover:text-gray-800 text-center">Registrar</a>
+                                    </div>
+                                @endauth
+                            @endif
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Registro</a>
-                        @endif
-                    @endauth
+                        </nav>
+                    </div>
+                </header>
+        
+                <!-- Seção Hero -->
+                <section class="flex items-center justify-center h-[calc(90vh-180px)]">
+                    <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center justify-center z-10">
+                        <!-- Conteúdo Hero -->
+                        <div class="w-full lg:w-1/2 text-white text-center lg:text-left">
+                            <h1 class="text-4xl lg:text-6xl font-bold mb-4">A organização que o seu buffet precisa.</h1>
+                            <p class="text-lg mb-6">BuffeTTech é a melhor forma de conectar seus clientes ao seu negócio.</p>
+                            <a href="#planos" class="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600">Saiba mais</a>
+                        </div>
+                        <!-- Retângulo Placeholder -->
+                        <div class="hidden lg:block w-full lg:w-1/2">
+                            <div class="bg-white h-64 w-full rounded-lg shadow-lg"></div>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </section>
+        <section id="sobre">
+            <div class="overflow-hidden bg-white py-12 sm:pt-24 sm:pb-12">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                  <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                    <div class="lg:pr-8 lg:pt-4">
+                      <div class="lg:max-w-lg">
+                        <h2 class="text-base/7 font-semibold text-yellow-600">Sobre o BuffeTTech</h2>
+                        <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Transformando a gestão de buffets infantis</p>
+                        <p class="mt-6 text-lg/8 text-gray-600">BuffeTTech é uma solução inovadora para buffets infantis a gestão de maneira eficiente e integrada.</p>
+                        <dl class="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
+                          <div class="relative pl-9">
+                            <dt class="inline font-semibold text-gray-900">
+                                <svg class="w-6 absolute left-1 top-1 size-5 text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                  <path fill-rule="evenodd" d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm3.75-2.75a.75.75 0 0 0 1.5 0V9.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0l-3.25 3.5a.75.75 0 1 0 1.1 1.02l1.95-2.1v4.59Z" clip-rule="evenodd" />
+                                </svg>
+                                Agendamento Online
+                            </dt>
+                            <dd class="inline">Facilite a reserva de datas e horários para festas infantis, de forma rápida e sem complicações.</dd>
+                            </div>
+                            <div class="relative pl-9">
+                                <dt class="inline font-semibold text-gray-900">
+                                  <svg class="w-6 absolute left-1 top-1 size-5 text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clip-rule="evenodd" />
+                                  </svg>
+                                  Gestão Financeira
+                                </dt>
+                                <dd class="inline">Controle fácil de orçamentos e pagamentos para cada evento, garantindo transparência e organização.</dd>
+                            </div>
+                            <div class="relative pl-9">
+                                <dt class="inline font-semibold text-gray-900">
+                                  <svg class="w-6 absolute left-1 top-1 size-5 text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path d="M4.632 3.533A2 2 0 0 1 6.577 2h6.846a2 2 0 0 1 1.945 1.533l1.976 8.234A3.489 3.489 0 0 0 16 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234Z" />
+                                    <path fill-rule="evenodd" d="M4 13a2 2 0 1 0 0 4h12a2 2 0 1 0 0-4H4Zm11.24 2a.75.75 0 0 1 .75-.75H16a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75h-.01a.75.75 0 0 1-.75-.75V15Zm-2.25-.75a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 0 0 .75-.75V15a.75.75 0 0 0-.75-.75h-.01Z" clip-rule="evenodd" />
+                                  </svg>
+                                  Controle de Estoque
+                                </dt>
+                                <dd class="inline">Gerencie de forma simples o estoque de produtos e serviços necessários para cada festa.</dd>
+                              </div>
+                        </dl>
+                      </div>
+                    </div>
+                    <img src="{{ asset('img/dashboard_landingpage.png') }}" alt="Product screenshot" class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0" width="2432" height="1442">
+                  </div>
                 </div>
-            @endif
-
-            <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                <div class="text-center">
-                    <h1 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Landing Page</h1>
-                    <h3 class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">Em Espera</h3>
+              </div>
+              <div class="overflow-hidden bg-white py-12 sm:pt-12 sm:pb-12">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                        <!-- Imagem à esquerda -->
+                        <img 
+                        src="{{ asset('img/criar_reserva_landingpage.png') }}" 
+                        alt="Product screenshot" 
+                        class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] -ml-16 lg:ml-[-18rem]" 
+                        width="2432" 
+                        height="1442">                        
+                        <!-- Texto à direita -->
+                        <div class="lg:pl-8 lg:pt-4">
+                            <div class="lg:max-w-lg">
+                                <h2 class="text-base/7 font-semibold text-yellow-600">Benefícios para o Buffet</h2>
+                                <p class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Eficiência e Praticidade no seu Buffet Infantil</p>
+                                <p class="mt-6 text-lg/8 text-gray-600">BuffeTTech foi projetado para ajudar a otimizar a gestão de buffets infantis, garantindo mais organização e controle.</p>
+                                <dl class="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
+                                    <div class="relative pl-9">
+                                      <dt class="inline font-semibold text-gray-900">
+                                        <svg class="w-6 absolute left-1 top-1 size-5 text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                          <path fill-rule="evenodd" d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm3.75-2.75a.75.75 0 0 0 1.5 0V9.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0l-3.25 3.5a.75.75 0 1 0 1.1 1.02l1.95-2.1v4.59Z" clip-rule="evenodd" />
+                                        </svg>
+                                        Agendamento Simplificado
+                                      </dt>
+                                      <dd class="inline">Reserve facilmente as datas, sem precisar de processos manuais complexos.</dd>
+                                    </div>
+                                    <div class="relative pl-9">
+                                      <dt class="inline font-semibold text-gray-900">
+                                        <svg class="w-6 absolute left-1 top-1 size-5 text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                          <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clip-rule="evenodd" />
+                                        </svg>
+                                        Finanças Organizadas
+                                      </dt>
+                                      <dd class="inline">Acompanhe de perto os fluxos financeiros de cada evento e mantenha o controle de receitas e despesas.</dd>
+                                    </div>
+                                    <div class="relative pl-9">
+                                      <dt class="inline font-semibold text-gray-900">
+                                        <svg class="w-6 absolute left-1 top-1 size-5 text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                          <path d="M4.632 3.533A2 2 0 0 1 6.577 2h6.846a2 2 0 0 1 1.945 1.533l1.976 8.234A3.489 3.489 0 0 0 16 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234Z" />
+                                          <path fill-rule="evenodd" d="M4 13a2 2 0 1 0 0 4h12a2 2 0 1 0 0-4H4Zm11.24 2a.75.75 0 0 1 .75-.75H16a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75h-.01a.75.75 0 0 1-.75-.75V15Zm-2.25-.75a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 0 0 .75-.75V15a.75.75 0 0 0-.75-.75h-.01Z" clip-rule="evenodd" />
+                                        </svg>
+                                        Eficiência no Estoque
+                                      </dt>
+                                      <dd class="inline">Evite desperdícios controlando a utilização de materiais e alimentos de forma eficaz.</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            
+              
+        </section>
+
+        <section id="planos">
+            <div class="relative isolate bg-white px-6 py-12 sm:py-12 lg:px-8">
+                <div class="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl" aria-hidden="true">
+                  <div class="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#e0ba31] to-[#9089fc] opacity-30" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+                </div>
+                <div class="mx-auto max-w-4xl text-center">
+                  <h2 class="text-base/7 font-semibold text-yellow-600">Preços</h2>
+                  <p class="mt-2 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-6xl">Escolha o melhor plano para seu buffet</p>
+                </div>
+                <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-600 sm:text-xl/8">Escolha um plano acessível que inclua os melhores recursos para envolver seu público, fidelizar o cliente e impulsionar as vendas.</p>
+                <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
+                  <div class="rounded-3xl rounded-t-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-bl-3xl lg:rounded-tr-none">
+                    <h3 id="tier-hobby" class="text-base/7 font-semibold text-yellow-600">Clássico</h3>
+                    <p class="mt-4 flex items-baseline gap-x-2">
+                      <span class="text-5xl font-semibold tracking-tight text-gray-900">R$ 49,90</span>
+                      <span class="text-base text-gray-500">/mês</span>
+                    </p>
+                    <p class="mt-6 text-base/7 text-gray-600">Plano introdutório para conhecer as funcionalidades do sistema.</p>
+                    <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10">
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Reserva de festas
+                      </li>
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Gestão de horários
+                      </li>
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Gestão de até 10 funcionários
+                      </li>
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Formulário de Atendimento
+                      </li>
+                    </ul>
+                    <a href="{{ route('register') }}" aria-describedby="tier-hobby" class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-yellow-600 ring-1 ring-inset ring-yellow-200 hover:ring-yellow-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600 sm:mt-10">Melhore seu buffet agora</a>
+                  </div>
+                  <div class="relative rounded-3xl bg-gray-900 p-8 shadow-2xl ring-1 ring-gray-900/10 sm:p-10">
+                    <h3 id="tier-enterprise" class="text-base/7 font-semibold text-yellow-400">Luxo</h3>
+                    <p class="mt-4 flex items-baseline gap-x-2">
+                      <span class="text-5xl font-semibold tracking-tight text-white">R$ 99,00</span>
+                      <span class="text-base text-gray-400">/mês</span>
+                    </p>
+                    <p class="mt-6 text-base/7 text-gray-300">Plano avançado para melhorar a eficiência de seu buffet.</p>
+                    <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-300 sm:mt-10">
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Reserva de festas
+                      </li>
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Gestão de horários
+                      </li>
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Gestão de funcionários
+                      </li>
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Formulário de Atendimento
+                      </li>
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Convite Virtual
+                      </li>
+                      <li class="flex gap-x-3">
+                        <svg class="h-6 w-5 flex-none text-yellow-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                        </svg>
+                        Software Financeiro
+                      </li>
+                    </ul>
+                    <a href="{{ route('register') }}" aria-describedby="tier-enterprise" class="mt-8 block rounded-md bg-yellow-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500 sm:mt-10">Melhore seu buffet agora</a>
+                  </div>
+                </div>
+              </div>
+        </section>
+
+        <footer class="bg-gray-800 text-white py-8">
+          <div
+            class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center px-4"
+          >
+            <!-- Seção Esquerda -->
+            <div class="space-y-2 py-2 items-center">
+              <!-- Logo -->
+                <div>
+                  <a href="{{ route('landing_page') }}">
+                      <img src="{{ asset('img/identidade-visual/light-mode/buffettech_logo_vertical.png') }}" 
+                           alt="Logo"
+                           class="w-[300px] md:w-[430px] h-auto max-w-full">
+                  </a>
+                </div>
+                <div class="px-8 space-y-3">
+
+                 <!-- Horário -->
+                  <p class="flex items-center space-x-2">
+                    <span><i class="fa-solid fa-clock"></i></span>
+                    <span>Segunda à Sexta, exceto feriados, das 8h até as 19h</span>
+                  </p>
+                  <!-- Endereço -->
+                  <p class="flex items-center space-x-2">
+                    <span><i class="fa-solid fa-location-dot"></i></span>
+                    <span>
+                      Rua Professor Doutor Euryclides de Jesus Zerbini, 1516 | Pq. Rural
+                      Fazenda Santa Cândida | Campinas - SP | CEP: 13087-571
+                    </span>
+                  </p>
+                  <!-- Telefone -->
+                  <p class="flex items-center space-x-2">
+                    <span><i class="fa-brands fa-whatsapp"></i></span>
+                    <span>+55 19 12345-6789</span>
+                  </p>
+                  <!-- E-mail -->
+                  <p class="flex items-center space-x-2">
+                    <span><i class="fa-solid fa-envelope"></i></span>
+                    <span>contato@buffettech.com.br</span>
+                  </p>
+                </div>
+                </div>
+    
+            <!-- Seção Direita -->
+            <div class="mt-8 md:mt-0">
+              <h2 class="text-lg font-bold mb-4">Sobre o BuffeTTech</h2>
+              <ul class="space-y-2">
+                <li>
+                  <a href="#" class="hover:text-yellow-400 transition">Sobre</a>
+                </li>
+                <li>
+                  <a href="#" class="hover:text-yellow-400 transition">Planos</a>
+                </li>
+                {{-- <li>
+                  <a href="#" class="hover:text-yellow-400 transition">Blog</a>
+                </li> --}}
+                <li>
+                  <a href="#" class="hover:text-yellow-400 transition"
+                    >Fale conosco</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+        
+        <script>
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.getElementById('menu');
+        
+            menuToggle.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        </script>
     </body>
 </html>
