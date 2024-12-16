@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\BuffetCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\UserCreated;
+use App\Models\Buffet;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
