@@ -42,10 +42,10 @@
         <div class="bg-white">
             <nav>
                 <ul class="flex text-center justify-center text-2xl">
-                    <li class="px-2"><a href=""><i class="fa-brands fa-linkedin"></i></a></li>
-                    <li class="px-2"><a href=""><i class="fa-brands fa-github"></i></a></li>
-                    <li class="px-2"><a href=""><i class="fa-brands fa-instagram"></i></a></li>
-                    <li class="px-2"><a href=""><i class="fa-brands fa-whatsapp"></i></a></li>
+                    <li class="px-2"><a href="https://www.linkedin.com/company/buffettech"><i class="fa-brands fa-linkedin"></i></a></li>
+                    <li class="px-2"><a href="https://github.com/BuffeTTech"><i class="fa-brands fa-github"></i></a></li>
+                    {{-- <li class="px-2"><a href=""><i class="fa-brands fa-instagram"></i></a></li> --}}
+                    {{-- <li class="px-2"><a href=""><i class="fa-brands fa-whatsapp"></i></a></li> --}}
                 </ul>
             </nav>
         </div>
@@ -80,7 +80,7 @@
                         <nav id="menu" class="hidden md:flex flex-col md:flex-row md:space-x-6 absolute md:relative top-20 left-0 w-full md:top-0 md:w-auto bg-gray-900 md:bg-transparent z-50 mt-2 items-center">
                             <a href="#sobre" class="block px-3 py-2 text-white hover:text-yellow-500">Sobre</a>
                             <a href="#planos" class="block px-3 py-2 text-white hover:text-yellow-500">Planos</a>
-                            <a href="#blog" class="block px-3 py-2 text-white hover:text-yellow-500">Blog</a>
+                            {{-- <a href="#blog" class="block px-3 py-2 text-white hover:text-yellow-500">Blog</a> --}}
                             <a href="{{ route('contact') }}" class="block px-3 py-2 text-white hover:text-yellow-500">Fale conosco</a>
                         
                             @if (Route::has('login'))
@@ -368,9 +368,9 @@
                 <li>
                   <a href="#" class="hover:text-yellow-400 transition">Planos</a>
                 </li>
-                <li>
+                {{-- <li>
                   <a href="#" class="hover:text-yellow-400 transition">Blog</a>
-                </li>
+                </li> --}}
                 <li>
                   <a href="#" class="hover:text-yellow-400 transition"
                     >Fale conosco</a
