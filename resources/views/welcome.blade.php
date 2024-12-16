@@ -106,8 +106,8 @@
                     <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center justify-center z-10">
                         <!-- Conteúdo Hero -->
                         <div class="w-full lg:w-1/2 text-white text-center lg:text-left">
-                            <h1 class="text-4xl lg:text-6xl font-bold mb-4">Lorem ipsum dolor sit amet.</h1>
-                            <p class="text-lg mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <h1 class="text-4xl lg:text-6xl font-bold mb-4">A organização que o seu buffet precisa.</h1>
+                            <p class="text-lg mb-6">BuffeTTech é a melhor forma de conectar seus clientes ao seu negócio.</p>
                             <a href="#planos" class="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600">Saiba mais</a>
                         </div>
                         <!-- Retângulo Placeholder -->
