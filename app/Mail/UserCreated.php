@@ -30,7 +30,7 @@ class UserCreated extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('noreply@buffets.com', 'BuffeTTech'),
+            from: new Address('buffetech@gmail.com', 'BuffeTTech'),
             subject: 'Usuário Criado',
         );
     }

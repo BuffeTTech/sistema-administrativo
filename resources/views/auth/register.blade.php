@@ -11,8 +11,8 @@
             </div>
 
             <!-- Parte direita -->
-            <div class="w-full md:w-1/2 min-h-screen bg-white flex justify-center items-center rounded-l-lg py-16">
-                <div class="w-3/4">
+            <div class="w-full md:w-1/2 h-screen bg-white flex justify-center items-center rounded-l-lg overflow-y-auto">
+                <div class="w-3/4 h-screen px-4 py-16">
                     <div class="text-left mb-4">
                         <h4 class="text-2xl font-bold">Registro de buffet</h4>
                         <div class="text-black">
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="p-6 bg-gray-50 rounded-lg shadow-md ">
-                        <form role="form" method="POST" action="{{ route('login') }}">
+                        <form role="form" method="POST" action="{{ route('register') }}" id="form">
                             @csrf
                             @method('post')
                             <div >
@@ -90,12 +90,54 @@
                     </div>
                     <div class="text-center mt-4">
                         <p class="text-sm text-gray-600">
-                            Não tem uma conta? 
-                            <a href="{{ route('register') }}" class="text-blue-500 font-bold hover:underline">Cadastre-se!</a>
+                            Já tem uma conta? 
+                            <a href="{{ route('login') }}" class="text-blue-500 font-bold hover:underline">Logue-se!</a>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    <script>
+        const doc = document.querySelector("#document")
+        const doc_error = document.querySelector("#document-error")
+        const form = document.querySelector("#form")
+        const phone1 = document.querySelector("#phone1")
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault()
+
+            const document_valid = validarCPF(doc.value)
+            if(!document_valid) {
+                error("O documento é invalido")
+                return;
+            }
+
+            if(document.querySelector("#password").value !== document.querySelector("#password_confirmation").value) {
+                error("As senhas não são iguais")
+                return;
+            }
+
+            this.submit();
+        })
+
+        doc.addEventListener('input', (e)=>{
+            e.target.value = replaceCPF(e.target.value);
+            return;
+        })
+        phone1.addEventListener('input', (e)=>{
+            e.target.value = replacePhone(e.target.value);
+            return;
+        })
+
+        doc.addEventListener('focusout', (e)=>{
+            const cpf_valid = validarCPF(doc.value)
+            if(!cpf_valid) {
+                doc_error.innerHTML = "Documento inválido"
+                return
+            }
+            doc_error.innerHTML = ""
+            return;
+        })
+    </script>
 @endsection
