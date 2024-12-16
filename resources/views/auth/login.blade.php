@@ -14,7 +14,7 @@
             <div class="w-full md:w-1/2 min-h-screen bg-white flex justify-center items-center rounded-l-lg">
                 <div class="w-3/4">
                     <div class="text-left mb-4">
-                        <h4 class="text-2xl font-bold">Log-in</h4>
+                        <h4 class="text-2xl font-bold">Log-in administrativo</h4>
                         <p class="text-sm text-gray-600">Insira seu e-mail e senha para logar</p>
                     </div>
                     <div class="p-6 bg-gray-50 rounded-lg shadow-md">
