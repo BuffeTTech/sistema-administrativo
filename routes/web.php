@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepresentativeController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SubscriptionController;
+use App\Mail\UserCreated;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\Facades\Hash;
@@ -19,12 +20,15 @@ use App\Models\Phone;
 use App\Models\Subscription;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('landing_page');
+Route::get('/contato', function () {
+    return view('welcome');
+})->name('contact');
 
-Route::get('/dashboard', [SiteController::class, 'dashboard'])->middleware(['auth', 'verified', 'buffet.created'])->name('dashboard');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -41,8 +45,9 @@ Route::middleware(['auth', 'verified', 'buffet.not_created'])->group(function(){
     Route::post('/auth/create-buffet/subscription', [BuffetController::class, 'store_select_subscription_on_register'])->name('auth.buffet.select_subscription');
 });
 
-
 Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
+    Route::get('/dashboard', [SiteController::class, 'dashboard'])->name('dashboard');
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -71,6 +76,7 @@ Route::middleware(['auth', 'verified', 'buffet.created'])->group(function () {
 Route::get('/aaa', function(){
     $buffet_alegria = Buffet::where('slug', 'buffet-alegria')->get()->first();
     $buffet_fazendinha = Buffet::where('slug', 'buffet-fazendinha')->get()->first();
+
     $data = [
         [
             'buffet'=>$buffet_alegria,
@@ -189,24 +195,24 @@ Route::get('/aaa', function(){
                     "slug"=>"pacote-alegria",
                     'photos'=>[
                         [
-                            'file_name'=>'batata1,2,3.jpeg',
-                            'file_path'=>'/batata1,2,3.jpeg',
+                            'file_name'=>'batata1.jpeg',
+                            'file_path'=>'/batata1.jpeg',
                             'file_extension'=>'jpeg',
                             'mime_type'=>'image/jpeg',
                             'file_size'=>'40847',
                         ],
                         [
-                            'file_name'=>'bolo123.webp',
-                            'file_path'=>'/bolo123.webp',
+                            'file_name'=>'bolo1.webp',
+                            'file_path'=>'/bolo1.webp',
                             'file_extension'=>'webp',
                             'mime_type'=>'image/webp',
                             'file_size'=>'31904',
                         ],
                         [
-                            'file_name'=>'bolo123.webp',
-                            'file_path'=>'/bolo123.webp',
-                            'file_extension'=>'webp',
-                            'mime_type'=>'image/webp',
+                            'file_name'=>'suco1.avif',
+                            'file_path'=>'/suco1.avif',
+                            'file_extension'=>'avif',
+                            'mime_type'=>'image/avif',
                             'file_size'=>'31904',
                         ]
                     ]
@@ -220,8 +226,8 @@ Route::get('/aaa', function(){
                     "slug"=>"pacote-felicidade",
                     'photos'=>[
                         [
-                            'file_name'=>'batata1,2,3.jpeg',
-                            'file_path'=>'/batata1,2,3.jpeg',
+                            'file_name'=>'batata2.jpeg',
+                            'file_path'=>'/batata2.jpeg',
                             'file_extension'=>'jpeg',
                             'mime_type'=>'image/jpeg',
                             'file_size'=>'40847',
@@ -234,8 +240,8 @@ Route::get('/aaa', function(){
                             'file_size'=>'31904',
                         ],
                         [
-                            'file_name'=>'bolo123.webp',
-                            'file_path'=>'/bolo123.webp',
+                            'file_name'=>'bolo2.webp',
+                            'file_path'=>'/bolo2.webp',
                             'file_extension'=>'webp',
                             'mime_type'=>'image/webp',
                             'file_size'=>'31904',
@@ -251,8 +257,8 @@ Route::get('/aaa', function(){
                     "slug"=>"pacote-familia",
                     'photos'=>[
                         [
-                            'file_name'=>'batata1,2,3.jpeg',
-                            'file_path'=>'/batata1,2,3.jpeg',
+                            'file_name'=>'batata3.jpeg',
+                            'file_path'=>'/batata3.jpeg',
                             'file_extension'=>'jpeg',
                             'mime_type'=>'image/jpeg',
                             'file_size'=>'40847',
@@ -265,8 +271,8 @@ Route::get('/aaa', function(){
                             'file_size'=>'31904',
                         ],
                         [
-                            'file_name'=>'bolo123.webp',
-                            'file_path'=>'/bolo123.webp',
+                            'file_name'=>'bolo3.webp',
+                            'file_path'=>'/bolo3.webp',
                             'file_extension'=>'webp',
                             'mime_type'=>'image/webp',
                             'file_size'=>'31904',
@@ -390,7 +396,7 @@ Route::get('/aaa', function(){
                 ],
                 [
                     'day_week'=>"SUNDAY",
-                    'start_time'=>'19:00',
+                    'start_time'=>'18:00',
                     'duration'=>240,
                     'status'=>'ACTIVE'
                 ],
@@ -402,8 +408,8 @@ Route::get('/aaa', function(){
                 ],
                 [
                     'day_week'=>"TUESDAY", 
-                    'start_time'=>'15:10',
-                    'duration'=>120,
+                    'start_time'=>'10:00',
+                    'duration'=>240,
                     'status'=>'ACTIVE'
                 ],
                 [
@@ -414,7 +420,7 @@ Route::get('/aaa', function(){
                 ],
                 [
                     'day_week'=>"THURSDAY",
-                    'start_time'=>'18:00',
+                    'start_time'=>'12:00',
                     'duration'=>240,
                     'status'=>'ACTIVE'
                 ],
@@ -489,18 +495,25 @@ Route::get('/aaa', function(){
             ],
             'bookings'=>[
                 [
-                    'name_birthdayperson'=>'Tasso',
+                    'name_birthdayperson'=>'Raphael',
                     'years_birthdayperson'=>15,
+                    'birthday_date' =>'2009-12-17',
                     'num_guests'=>50,
-                    'party_day'=>'2024-02-26',
+                    'party_day'=>'2024-12-17',
                     'food_id'=>0,
+                    'external_food'=>false,
+                    'dietary_restrictions'=>false,
                     'price_food'=>55,
                     'decoration_id'=>0,
+                    'external_decoration'=>false,
                     'price_decoration'=>30,
-                    'schedule_id'=>6,
+                    'schedule_id'=>3,
                     'price_schedule'=>0,
                     'discount'=>0,
                     'status'=>"FINISHED",
+                    'daytime_preference'=> null,
+                    'additional_food_observations'=>null,
+                    'final_notes'=>null,
                     'user_id'=>0,
                     'guests'=>[
                         [
@@ -546,91 +559,114 @@ Route::get('/aaa', function(){
                             "answer"=>"0-25",
                         ],
                     ],
-                ],
-                [
-                    'name_birthdayperson'=>'Luiza',
-                    'years_birthdayperson'=>6,
-                    'num_guests'=>100,
-                    'party_day'=>'2024-03-23',
-                    'food_id'=>2,
-                    'price_food'=>65,
-                    'decoration_id'=>2,
-                    'price_decoration'=>30,
-                    'schedule_id'=>6,
-                    'price_schedule'=>0,
-                    'discount'=>0,
-                    'status'=>"PENDENT",
-                    'user_id'=>0,
-                    'survey_answers'=>[
-                        [
-                            "question_id"=>0,
-                            "answer"=>"0-25",
-                        ],
-                    ],
-                ],
-                [
-                    'name_birthdayperson'=>'Silvia',
-                    'years_birthdayperson'=>10,
-                    'num_guests'=>70,
-                    'party_day'=>'2024-03-23',
-                    'food_id'=>2,
-                    'price_food'=>35,
-                    'decoration_id'=>2,
-                    'price_decoration'=>30,
-                    'schedule_id'=>6,
-                    'price_schedule'=>0,
-                    'discount'=>0,
-                    'status'=>"PENDENT",
-                    'user_id'=>1,
-                    'survey_answers'=>[
-                        [
-                            "question_id"=>0,
-                            "answer"=>"0-25",
-                        ],
-                    ],
-                ],
-                [
-                    'name_birthdayperson'=>'André',
-                    'years_birthdayperson'=>15,
-                    'num_guests'=>50,
-                    'party_day'=>'2024-03-12',
-                    'food_id'=>0,
-                    'price_food'=>65,
-                    'decoration_id'=>0,
-                    'price_decoration'=>30,
-                    'schedule_id'=>4,
-                    'price_schedule'=>0,
-                    'discount'=>0,
-                    'status'=>"APPROVED",
-                    'user_id'=>0,
-                    'survey_answers'=>[
-                        [
-                            "question_id"=>0,
-                            "answer"=>"0-25",
-                        ],
-                    ],
-                ],
-                [
-                    'name_birthdayperson'=>'Yuri',
-                    'years_birthdayperson'=>15,
-                    'num_guests'=>50,
-                    'party_day'=>'2024-04-26',
-                    'food_id'=>0,
-                    'price_food'=>55,
-                    'decoration_id'=>0,
-                    'price_decoration'=>30,
-                    'schedule_id'=>6,
-                    'price_schedule'=>0,
-                    'discount'=>0,
-                    'status'=>"APPROVED",
-                    'user_id'=>1,
-                    'survey_answers'=>[
-                        [
-                            "question_id"=>0,
-                            "answer"=>"0-25",
-                        ],
-                    ],
                 ]
+                // [
+                //     'name_birthdayperson'=>'Luiza',
+                //     'years_birthdayperson'=>6,
+                //     'num_guests'=>100,
+                //     'party_day'=>'2024-09-20',
+                //     'food_id'=>2,
+                //     'price_food'=>65,
+                //     'decoration_id'=>2,
+                //     'price_decoration'=>30,
+                //     'schedule_id'=>6,
+                //     'price_schedule'=>0,
+                //     'discount'=>0,
+                //     'status'=>"PENDENT",
+                //     'user_id'=>0,
+                //     'survey_answers'=>[ ],
+                // ],
+                // [
+                //     'name_birthdayperson'=>'Silvia',
+                //     'years_birthdayperson'=>10,
+                //     'num_guests'=>70,
+                //     'party_day'=>'2024-09-20',
+                //     'food_id'=>2,
+                //     'price_food'=>35,
+                //     'decoration_id'=>2,
+                //     'price_decoration'=>30,
+                //     'schedule_id'=>6,
+                //     'price_schedule'=>0,
+                //     'discount'=>0,
+                //     'status'=>"PENDENT",
+                //     'user_id'=>1,
+                //     'survey_answers'=>[],
+                // ],
+                // [
+                //     'name_birthdayperson'=>'André',
+                //     'years_birthdayperson'=>15,
+                //     'num_guests'=>50,
+                //     'party_day'=>'2024-09-26',
+                //     'food_id'=>0,
+                //     'price_food'=>65,
+                //     'decoration_id'=>0,
+                //     'price_decoration'=>30,
+                //     'schedule_id'=>5,
+                //     'price_schedule'=>0,
+                //     'discount'=>0,
+                //     'status'=>"APPROVED",
+                //     'user_id'=>0,
+                //     'survey_answers'=>[],
+                //     'guests'=>[
+                //         [
+                //             'name'=> 'Pedro',
+                //             'document'=>'292.795.610-30',
+                //             'age'=> 32,
+                //             'status'=>"CONFIRMED"
+                //         ],
+                //         [
+                //             'name'=> 'Hamilton',
+                //             'document'=>'280.244.380-11',
+                //             'age'=> 55,
+                //             'status'=>"PRESENT"
+                //         ],
+                //         [
+                //             'name'=> 'Maria Clara',
+                //             'document'=>'000.841.410-69',
+                //             'age'=> 6,
+                //             'status'=>"ABSENT"
+                //         ],
+                //         [
+                //             'name'=> 'Marcos',
+                //             'document'=>'030.410.060-90',
+                //             'age'=> 40,
+                //             'status'=>"BLOCKED"
+                //         ],
+                //         [
+                //             'name'=> 'Fernanda',
+                //             'document'=>'195.544.410-29',
+                //             'age'=> 20,
+                //             'status'=>"CONFIRMED"
+                //         ],
+                //         [
+                //             'name'=> 'Prado',
+                //             'document'=>'425.114.870-39',
+                //             'age'=> 18,
+                //             'status'=>"PENDENT"
+                //         ]
+                //     ],
+                // ],
+                // [
+                //     'name_birthdayperson'=>'Yuri',
+                //     'years_birthdayperson'=>15,
+                //     'num_guests'=>50,
+                //     'party_day'=>'2024-09-15',
+                //     'food_id'=>0,
+                //     'price_food'=>55,
+                //     'decoration_id'=>0,
+                //     'price_decoration'=>30,
+                //     'schedule_id'=>0,
+                //     'price_schedule'=>0,
+                //     'discount'=>0,
+                //     'status'=>"APPROVED",
+                //     'user_id'=>1,
+                //     'survey_answers'=>[
+                //         [
+                //             "question_id"=>0,
+                //             "answer"=>"0-25",
+                //         ],
+                //     ],
+                // ]
             ],
             'recommendations'=>[
                 [
@@ -755,6 +791,7 @@ Route::get('/aaa', function(){
             ],
         ]
     ];
+
     $response = Http::acceptJson()->post(config('app.commercial_url').'/api/presentation', ['data'=>$data]);
     dd($response->body());
     dd($data);
