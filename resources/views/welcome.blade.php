@@ -112,7 +112,7 @@
                         </div>
                         <!-- Retângulo Placeholder -->
                         <div class="hidden lg:block w-full lg:w-1/2">
-                            <div class="bg-white h-64 w-full rounded-lg shadow-lg"></div>
+                          <img src="{{ asset('img/calendario_landingpage.png') }}" alt="" class="h-[350px] w-full rounded-lg shadow-lg">
                         </div>
                     </div>
                 </section>
