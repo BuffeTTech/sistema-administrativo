@@ -238,17 +238,17 @@ class DatabaseSeeder extends Seeder
                                 'file_size'=>'40847',
                             ],
                             [
-                                'file_name'=>'bolo1.webp',
-                                'file_path'=>'/bolo1.webp',
-                                'file_extension'=>'webp',
-                                'mime_type'=>'image/webp',
+                                'file_name'=>'bolo1.jpeg',
+                                'file_path'=>'/bolo1.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
                                 'file_size'=>'31904',
                             ],
                             [
-                                'file_name'=>'suco1.avif',
-                                'file_path'=>'/suco1.avif',
-                                'file_extension'=>'avif',
-                                'mime_type'=>'image/avif',
+                                'file_name'=>'pastel1.jpeg',
+                                'file_path'=>'/pastel1.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
                                 'file_size'=>'31904',
                             ]
                         ]
@@ -262,10 +262,10 @@ class DatabaseSeeder extends Seeder
                         "slug"=>"pacote-felicidade",
                         'photos'=>[
                             [
-                                'file_name'=>'batata2.jpeg',
-                                'file_path'=>'/batata2.jpeg',
-                                'file_extension'=>'jpeg',
-                                'mime_type'=>'image/jpeg',
+                                'file_name'=>'batata2.webp',
+                                'file_path'=>'/batata2.webp',
+                                'file_extension'=>'webp',
+                                'mime_type'=>'image/webp',
                                 'file_size'=>'40847',
                             ],
                             [
@@ -293,10 +293,10 @@ class DatabaseSeeder extends Seeder
                         "slug"=>"pacote-familia",
                         'photos'=>[
                             [
-                                'file_name'=>'batata3.jpeg',
-                                'file_path'=>'/batata3.jpeg',
-                                'file_extension'=>'jpeg',
-                                'mime_type'=>'image/jpeg',
+                                'file_name'=>'batata3.jpg',
+                                'file_path'=>'/batata3.jpg',
+                                'file_extension'=>'jpg',
+                                'mime_type'=>'image/jpg',
                                 'file_size'=>'40847',
                             ],
                             [
@@ -340,17 +340,17 @@ class DatabaseSeeder extends Seeder
                                 'file_size'=>'191250',
                             ],
                             [
-                                'file_name'=>'marvel2.webp',
-                                'file_path'=>'/marvel2.webp',
-                                'file_extension'=>'webp',
-                                'mime_type'=>'image/webp',
+                                'file_name'=>'marvel2.jpeg',
+                                'file_path'=>'/marvel2.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
                                 'file_size'=>'113155',
                             ],
                             [
-                                'file_name'=>'marvel3.webp',
-                                'file_path'=>'/marvel3.webp',
-                                'file_extension'=>'webp',
-                                'mime_type'=>'image/webp',
+                                'file_name'=>'marvel3.jpeg',
+                                'file_path'=>'/marvel3.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
                                 'file_size'=>'113155',
                             ]
                         ]
@@ -363,17 +363,17 @@ class DatabaseSeeder extends Seeder
                         "status"=>"ACTIVE",
                         'photos'=>[
                             [
-                                'file_name'=>'minnie1.webp',
-                                'file_path'=>'/minnie1.webp',
-                                'file_extension'=>'webp',
-                                'mime_type'=>'image/webp',
+                                'file_name'=>'minnie1.jpeg',
+                                'file_path'=>'/minnie1.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
                                 'file_size'=>'191250',
                             ],
                             [
-                                'file_name'=>'minnie2.webp',
-                                'file_path'=>'/minnie2.webp',
-                                'file_extension'=>'webp',
-                                'mime_type'=>'image/webp',
+                                'file_name'=>'minnie2.jpeg',
+                                'file_path'=>'/minnie2.jpeg',
+                                'file_extension'=>'jpeg',
+                                'mime_type'=>'image/jpeg',
                                 'file_size'=>'113155',  
                             ],
                             [
